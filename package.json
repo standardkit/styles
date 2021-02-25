@@ -1,6 +1,6 @@
 {
   "name": "@standardkit/styles",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "SCSS framework for the StandardKit Design & Component System",
   "main": "index.js",
   "scripts": {

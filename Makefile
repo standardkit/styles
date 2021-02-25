@@ -4,4 +4,4 @@ watch : ; npm run watch
 
 server : ; php -S localhost:19111
 
-publish : ; npm run build && npm publish
+publish : ; npm run build && npm publish --access public

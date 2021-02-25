@@ -1,8 +1,7 @@
 {
   "name": "@standardkit/styles",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "SCSS framework for the StandardKit Design & Component System",
-  "main": "index.js",
   "scripts": {
     "watch": "node-sass --watch scss/*.scss -o dist --output-style compressed",
     "build": "node-sass scss/*.scss -o dist --output-style compressed",
@@ -21,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/standardkit/styles/issues"
   },
-  "homepage": "https://github.com/standardkit/styles#readme",
+  "homepage": "https://standardkit.io",
   "devDependencies": {
     "node-sass": "^5.0.0"
   }

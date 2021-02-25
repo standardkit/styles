@@ -1,0 +1,6 @@
+.idea/
+node_modules/
+.editorconfig
+.gitignore
+Makefile
+package-lock.json

@@ -8,8 +8,7 @@
 
   border-bottom: 1px solid; // TODO: put in variable
 
-  &:not(.fill-plain):not(.fill-outline),
-  &.fill--fill {
+  &:not(.fill-plain):not(.fill-outline) {
     @each $key, $color in map-get($colors, navigation) {
       &.color--#{$key} {
         color: map-get($color, contrast);

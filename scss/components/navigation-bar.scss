@@ -1,0 +1,47 @@
+.navigation-bar {
+  display: flex;
+  padding: 1rem;
+  width: 100vw;
+
+  align-items: center;
+  box-sizing: border-box;
+
+  border-bottom: 1px solid; // TODO: put in variable
+
+  &:not(.fill--fill):not(.fill--outline) {
+    @each $key, $color in map-get($colors, navigation) {
+      &.color--#{$key} {
+        color: map-get($color, primary);
+        background-color: map-get($color, secondary);
+        border-color: map-get($color, secondary);
+      }
+    }
+  }
+
+  &.fill--fill {
+    @each $key, $color in map-get($colors, navigation) {
+      &.color--#{$key} {
+        color: map-get($color, contrast);
+        background-color: map-get($color, primary);
+        border-color: map-get($color, primary);
+      }
+    }
+  }
+
+  &.fill--outline {
+    @each $key, $color in map-get($colors, navigation) {
+      &.color--#{$key} {
+        color: map-get($color, primary);
+        background-color: transparent;
+        border-color: map-get($color, primary);
+      }
+    }
+  }
+
+  @each $size, $value in $sizes {
+    &.size--#{$size} {
+      font-size: $value;
+    }
+  }
+}
+

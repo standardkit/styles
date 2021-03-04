@@ -15,10 +15,16 @@ $default-colors: (
     warning: make-color-map($color--warning),
     success: make-color-map($color--success),
     info: make-color-map($color--info)
+  ),
+  navigation: (
+    primary: make-color-map(green),
+    secondary: make-color-map(orange),
+    contrast: make-color-map(purple)
   )
 );
 $colors: () !default;
 $colors: make-complete-color-sets($colors, alert);
+$colors: make-complete-color-sets($colors, navigation);
 $colors: map-deep-merge($default-colors, $colors);
 
 /**
@@ -67,11 +73,11 @@ $paddings: map-merge($default-paddings, $paddings);
 /**
  * Sizes
  */
-$size--xs: 0.5rem !default;
-$size--s: 0.75rem !default;
-$size--m: 1rem !default;
-$size--l: 1.5rem !default;
-$size--xl: 2rem !default;
+$size--xs: .75rem !default;
+$size--s: 1rem !default;
+$size--m: 1.25rem !default;
+$size--l: 2rem !default;
+$size--xl: 3rem !default;
 
 $default-sizes: (
   xs: $size--xs,

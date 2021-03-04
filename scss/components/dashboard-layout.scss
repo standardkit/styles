@@ -1,0 +1,35 @@
+.dashboard-layout {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  .dashboard-layout__header {
+    position: sticky;
+    top: 0;
+  }
+
+  main {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+
+    .dashboard-layout__sidebar {
+      position: sticky;
+      top: 0;
+    }
+
+    .dashboard-layout__content {
+      height: 100%;
+      padding: 2rem;
+      overflow: auto;
+    }
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
+    height: 100%;
+  }
+}

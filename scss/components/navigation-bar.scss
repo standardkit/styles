@@ -8,22 +8,23 @@
 
   border-bottom: 1px solid; // TODO: put in variable
 
-  &:not(.fill--fill):not(.fill--outline) {
-    @each $key, $color in map-get($colors, navigation) {
-      &.color--#{$key} {
-        color: map-get($color, primary);
-        background-color: map-get($color, secondary);
-        border-color: map-get($color, secondary);
-      }
-    }
-  }
-
+  &:not(.fill-plain):not(.fill-outline),
   &.fill--fill {
     @each $key, $color in map-get($colors, navigation) {
       &.color--#{$key} {
         color: map-get($color, contrast);
         background-color: map-get($color, primary);
         border-color: map-get($color, primary);
+      }
+    }
+  }
+
+  &.fill-plain {
+    @each $key, $color in map-get($colors, navigation) {
+      &.color--#{$key} {
+        color: map-get($color, primary);
+        background-color: map-get($color, secondary);
+        border-color: map-get($color, secondary);
       }
     }
   }

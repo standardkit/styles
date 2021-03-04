@@ -36,7 +36,7 @@
 
   @each $key, $color in $color-config {
     @if not is-map($color) {
-      $color-map: map-deep-merge($color-map, (alert: ($key: make-color-map($color))));
+      $color-map: map-deep-merge($color-map, ($config-key: ($key: make-color-map($color))));
     }
     @if is-map($color) {
       @if not map-has-key($color, primary){

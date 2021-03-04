@@ -27,7 +27,7 @@
   $color-config: map-get($color-map, $config-key);
 
   @if $color-config == null {
-    @return ();
+    @return $color-map;
   }
 
   @if not is-map($color-config) {

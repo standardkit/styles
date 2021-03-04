@@ -26,10 +26,12 @@
     }
   }
 
+  // TODO: Move basic functionality to sidebar.scss and only keep overrides here
   .sidebar {
     display: flex;
     flex-direction: column;
     width: 20vw;
     height: 100%;
+    padding: 2rem 0;
   }
 }

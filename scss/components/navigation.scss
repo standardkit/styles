@@ -1,0 +1,9 @@
+.navigation {
+  display: flex;
+  flex-direction: column;
+
+  .navigation-item {
+    display: block;
+    padding: 0.5rem 1rem; // TODO: move to variable
+  }
+}

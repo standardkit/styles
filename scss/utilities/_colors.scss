@@ -7,10 +7,10 @@
 }
 
 @function get-contrast($color) {
-  $invertedColor: invert($color);
-  $contrast: hsl(hue($invertedColor), saturation($invertedColor), 95%);
+  $inverted-color: invert($color);
+  $contrast: hsl(hue($inverted-color), saturation($inverted-color), 95%);
   @if lightness($color) > 60% {
-    $contrast: hsl(hue($invertedColor), saturation($invertedColor), 5%);
+    $contrast: hsl(hue($inverted-color), saturation($inverted-color), 5%);
   }
   @return $contrast;
 }

@@ -9,7 +9,7 @@ $color--warning: #FF9800 !default;
 $color--success: #4CAF50 !default;
 $color--info: #2196F3 !default;
 
-$defaultColors: (
+$default-colors: (
   alert: (
     error: make-color-map($color--error),
     warning: make-color-map($color--warning),
@@ -19,12 +19,12 @@ $defaultColors: (
 );
 $colors: () !default;
 $colors: make-complete-color-sets($colors, alert);
-$colors: map-deep-merge($defaultColors, $colors);
+$colors: map-deep-merge($default-colors, $colors);
 
 /**
  * FillTypes
  */
-$fillTypes: (plain, fill, outline);
+$fill-types: (plain, fill, outline);
 
 /**
  * Margins
@@ -35,7 +35,7 @@ $margin--m: 2rem !default;
 $margin--l: 3.5rem !default;
 $margin--xl: 6rem !default;
 
-$defaultMargins: (
+$default-margins: (
   xs: $margin--xs,
   s: $margin--s,
   m: $margin--m,
@@ -43,7 +43,7 @@ $defaultMargins: (
   xl:$margin--xl
 );
 $margins: () !default;
-$margins: map-merge($defaultMargins, $margins);
+$margins: map-merge($default-margins, $margins);
 
 /**
  * Paddings
@@ -54,7 +54,7 @@ $padding--m: 1rem !default;
 $padding--l: 1.5rem !default;
 $padding--xl: 2rem !default;
 
-$defaultPaddings: (
+$default-paddings: (
   xs: $padding--xs,
   s: $padding--s,
   m: $padding--m,
@@ -62,7 +62,7 @@ $defaultPaddings: (
   xl: $padding--xl
 );
 $paddings: () !default;
-$paddings: map-merge($defaultPaddings, $paddings);
+$paddings: map-merge($default-paddings, $paddings);
 
 /**
  * Sizes
@@ -73,7 +73,7 @@ $size--m: 1rem !default;
 $size--l: 1.5rem !default;
 $size--xl: 2rem !default;
 
-$defaultSizes: (
+$default-sizes: (
   xs: $size--xs,
   s: $size--s,
   m: $size--m,
@@ -81,4 +81,4 @@ $defaultSizes: (
   xl: $size--xl
 );
 $sizes: () !default;
-$sizes: map-merge($defaultSizes, $sizes);
+$sizes: map-merge($default-sizes, $sizes);

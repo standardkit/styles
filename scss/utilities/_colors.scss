@@ -1,0 +1,47 @@
+@function get-contrast($color) {
+  // TODO: complement of primary, darkened or lightened. Stronger then secondary
+  $contrast: invert($color);
+  $contrast: hsl(hue($contrast), saturation($contrast), 92%);
+  @if lightness($color) > 60% {
+    $contrast: hsl(hue($contrast), saturation($contrast), 8%);
+  }
+  @return $contrast;
+}
+
+@function get-secondary($color) {
+  // TODO: afgezwakte versie van primary maar wel contrast
+  $secondary: hsl(hue($color), saturation($color), 92%);
+  @if lightness($color) > 60% {
+    $secondary: hsl(hue($color), saturation($color), 8%);
+  }
+  @return $secondary;
+}
+
+@function make-color-map($color) {
+  @return (
+    primary: $color,
+    secondary: get-secondary($color),
+    contrast: get-contrast($color)
+  );
+}
+
+@function make-complete-color-sets($colors) {
+  // TODO: make this more versatile. Not it only works for the alert colors
+  @each $key, $color in map-get($colors, alert) {
+    @if not is-map($color) {
+      $colors: map-deep-merge($colors, (alert: ($key: make-color-map($color))));
+    }
+    @if is-map($color) {
+      @if not map-has-key($color, primary){
+        @error 'Key "primary" not defined in map "#{$key}"';
+      }
+      @if not map-has-key($color, secondary){
+        @error 'Key "secondary" not defined in map "#{$key}"';
+      }
+      @if not map-has-key($color, accent){
+        @error 'Key "accent" not defined in map "#{$key}"';
+      }
+    }
+  }
+  @return $colors;
+}

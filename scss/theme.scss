@@ -9,23 +9,35 @@ $color--warning: #FF9800 !default;
 $color--success: #4CAF50 !default;
 $color--info: #2196F3 !default;
 
-$default-colors: (
-  alert: (
-    error: make-color-map($color--error),
-    warning: make-color-map($color--warning),
-    success: make-color-map($color--success),
-    info: make-color-map($color--info)
-  ),
-  navigation: (
-    primary: make-color-map(green),
-    secondary: make-color-map(orange),
-    contrast: make-color-map(purple)
-  )
-);
 $colors: () !default;
-$colors: make-complete-color-sets($colors, alert);
-$colors: make-complete-color-sets($colors, navigation);
-$colors: map-deep-merge($default-colors, $colors);
+$themeColors: () !default;
+$default-colors: (
+  error: $color--error,
+  warning: $color--warning,
+  success: $color--success,
+  info: $color--info,
+  primary: navy,
+  secondary: orange,
+  contrast: black
+);
+$themeColors: map-deep-merge($themeColors, $colors);
+$default-colors: map-deep-merge($default-colors, $themeColors);
+$color-sets: make-complete-color-sets($default-colors);
+
+/**
+ * Fonts
+ */
+$font--roboto-slab: 'Roboto Slab', sans-serif !default;
+$font--open-sans: 'Open Sans', sans-serif !default;
+
+$fonts: () !default;
+$theme-fonts: () !default;
+$default-fonts: (
+  title: $font--roboto-slab,
+  text: $font--open-sans
+);
+$theme-fonts: map-deep-merge($theme-fonts, $fonts);
+$font-families: map-deep-merge($default-fonts, $theme-fonts);
 
 /**
  * FillTypes

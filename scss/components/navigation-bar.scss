@@ -9,7 +9,7 @@
   border-bottom: 1px solid; // TODO: put in variable
 
   &:not(.fill-plain):not(.fill-outline) {
-    @each $key, $color in map-get($colors, navigation) {
+    @each $key, $color in $color-sets {
       &.color--#{$key} {
         color: map-get($color, contrast);
         background-color: map-get($color, primary);
@@ -19,7 +19,7 @@
   }
 
   &.fill-plain {
-    @each $key, $color in map-get($colors, navigation) {
+    @each $key, $color in $color-sets {
       &.color--#{$key} {
         color: map-get($color, primary);
         background-color: map-get($color, secondary);
@@ -29,7 +29,7 @@
   }
 
   &.fill--outline {
-    @each $key, $color in map-get($colors, navigation) {
+    @each $key, $color in $color-sets {
       &.color--#{$key} {
         color: map-get($color, primary);
         background-color: transparent;

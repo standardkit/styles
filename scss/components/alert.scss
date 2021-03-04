@@ -42,7 +42,7 @@
   }
 
   &:not(.fill--fill):not(.fill--outline) {
-    @each $key, $color in map-get($colors, alert) {
+    @each $key, $color in $color-sets {
       &.alert--#{$key} {
         color: map-get($color, primary);
         background-color: map-get($color, secondary);
@@ -52,7 +52,7 @@
   }
 
   &.fill--fill {
-    @each $key, $color in map-get($colors, alert) {
+    @each $key, $color in $color-sets {
       &.alert--#{$key} {
         color: map-get($color, contrast);
         background-color: map-get($color, primary);
@@ -62,7 +62,7 @@
   }
 
   &.fill--outline {
-    @each $key, $color in map-get($colors, alert) {
+    @each $key, $color in $color-sets {
       &.alert--#{$key} {
         color: map-get($color, primary);
         background-color: transparent;

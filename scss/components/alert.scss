@@ -6,8 +6,22 @@
     flex: 1 1 auto;
   }
 
+  .alert__dismiss {
+    cursor: pointer;
+  }
+
   &.full-width {
     display: flex;
+  }
+
+  &:not(.fill--fill):not(.fill--outline) {
+    @each $key, $color in map-get($colors, alert) {
+      &.alert--#{$key} {
+        color: map-get($color, primary);
+        background-color: map-get($color, secondary);
+        border-color: map-get($color, secondary);
+      }
+    }
   }
 
   &.fill--fill {
@@ -16,10 +30,6 @@
         color: map-get($color, contrast);
         background-color: map-get($color, primary);
         border-color: map-get($color, primary);
-
-        //color: map-get($color, secondary);
-        //background-color: map-get($color, primary);
-        //border-color: map-get($color, primary);
       }
     }
   }
@@ -30,16 +40,6 @@
         color: map-get($color, primary);
         background-color: transparent;
         border-color: map-get($color, primary);
-      }
-    }
-  }
-
-  &.fill--plain {
-    @each $key, $color in map-get($colors, alert) {
-      &.alert--#{$key} {
-        color: map-get($color, primary);
-        background-color: map-get($color, secondary);
-        border-color: darken(map-get($color, secondary), 5%);
       }
     }
   }

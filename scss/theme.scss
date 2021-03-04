@@ -7,7 +7,7 @@ $color: red !default;
 $color--error: #F44336 !default;
 $color--warning: #FF9800 !default;
 $color--success: #4CAF50 !default;
-$color--info: #8f8f8f !default;
+$color--info: #2196F3 !default;
 
 $defaultColors: (
   alert: (
@@ -18,9 +18,7 @@ $defaultColors: (
   )
 );
 $colors: () !default;
-@if is-map($colors) {
-  $colors: make-complete-color-sets($colors);
-}
+$colors: make-complete-color-sets($colors, alert);
 $colors: map-deep-merge($defaultColors, $colors);
 
 /**

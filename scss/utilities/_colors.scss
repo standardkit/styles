@@ -1,20 +1,18 @@
-@function get-contrast($color) {
-  // TODO: complement of primary, darkened or lightened. Stronger then secondary
-  $contrast: invert($color);
-  $contrast: hsl(hue($contrast), saturation($contrast), 92%);
-  @if lightness($color) > 60% {
-    $contrast: hsl(hue($contrast), saturation($contrast), 8%);
-  }
-  @return $contrast;
-}
-
 @function get-secondary($color) {
-  // TODO: afgezwakte versie van primary maar wel contrast
   $secondary: hsl(hue($color), saturation($color), 92%);
   @if lightness($color) > 60% {
     $secondary: hsl(hue($color), saturation($color), 8%);
   }
   @return $secondary;
+}
+
+@function get-contrast($color) {
+  $invertedColor: invert($color);
+  $contrast: hsl(hue($invertedColor), saturation($invertedColor), 95%);
+  @if lightness($color) > 60% {
+    $contrast: hsl(hue($invertedColor), saturation($invertedColor), 5%);
+  }
+  @return $contrast;
 }
 
 @function make-color-map($color) {
@@ -25,23 +23,32 @@
   );
 }
 
-@function make-complete-color-sets($colors) {
-  // TODO: make this more versatile. Not it only works for the alert colors
-  @each $key, $color in map-get($colors, alert) {
+@function make-complete-color-sets($color-map, $config-key) {
+  $color-config: map-get($color-map, $config-key);
+
+  @if $color-config == null {
+    @return ();
+  }
+
+  @if not is-map($color-config) {
+    @return map-merge($color-map, ($config-key: make-color-map($color-config)));
+  }
+
+  @each $key, $color in $color-config {
     @if not is-map($color) {
-      $colors: map-deep-merge($colors, (alert: ($key: make-color-map($color))));
+      $color-map: map-deep-merge($color-map, (alert: ($key: make-color-map($color))));
     }
     @if is-map($color) {
       @if not map-has-key($color, primary){
-        @error 'Key "primary" not defined in map "#{$key}"';
+        @error 'Key "primary" not defined in map "#{$config-key}.#{$key}"';
       }
       @if not map-has-key($color, secondary){
-        @error 'Key "secondary" not defined in map "#{$key}"';
+        @error 'Key "secondary" not defined in map "#{$config-key}.#{$key}"';
       }
-      @if not map-has-key($color, accent){
-        @error 'Key "accent" not defined in map "#{$key}"';
+      @if not map-has-key($color, contrast){
+        @error 'Key "contrast" not defined in map "#{$config-key}.#{$key}"';
       }
     }
   }
-  @return $colors;
+  @return $color-map;
 }

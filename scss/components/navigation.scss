@@ -5,5 +5,14 @@
   .navigation-item {
     display: block;
     padding: 0.5rem 1rem; // TODO: move to variable
+
+    .navigation-item__icon {
+      margin-right: 1rem; // TODO: use configuration
+    }
+
+    &.navigation-item--active {
+      background-color: map-get(map-get($color-sets, primary), primary);
+      color: map-get(map-get($color-sets, primary), contrast);
+    }
   }
 }

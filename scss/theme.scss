@@ -52,6 +52,25 @@ $margins: () !default;
 $margins: map-merge($default-margins, $margins);
 
 /**
+ * Typography margins
+ */
+$typography-margin--xs: 0.3rem !default;
+$typography-margin--s: 0.6rem !default;
+$typography-margin--m: 1rem !default;
+$typography-margin--l: 1.5rem !default;
+$typography-margin--xl: 2rem !default;
+
+$default-typography-margins: (
+  xs: $typography-margin--xs,
+  s: $typography-margin--s,
+  m: $typography-margin--m,
+  l: $typography-margin--l,
+  xl:$typography-margin--xl
+);
+$typography-margins: () !default;
+$typography-margins: map-merge($default-typography-margins, $typography-margins);
+
+/**
  * Paddings
  */
 $padding--xs: 0.5rem !default;

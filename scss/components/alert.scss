@@ -1,0 +1,101 @@
+.alert {
+  display: inline-flex;
+  border: 1px solid; // TODO: implement border configuration
+
+  .alert__icon {
+    &.alert__icon--top {
+      align-self: flex-start;
+    }
+
+    &.alert__icon--middle {
+      align-self: center;
+    }
+
+    &.alert__icon--bottom {
+      align-self: flex-end;
+    }
+  }
+
+  .alert__content {
+    flex: 1 1 auto;
+  }
+
+  .alert__dismiss {
+    cursor: pointer;
+
+    &:not(.alert__dismiss--middle):not(.alert__dismiss--bottom),
+    &.alert__dismiss--top {
+      align-self: flex-start;
+    }
+
+    &.alert__dismiss--middle {
+      align-self: center;
+    }
+
+    &.alert__dismiss--bottom {
+      align-self: flex-end;
+    }
+  }
+
+  &.full-width {
+    display: flex;
+  }
+
+  &:not(.fill--fill):not(.fill--outline) {
+    @each $key, $color in $color-sets {
+      &.alert--#{$key} {
+        color: map-get($color, primary);
+        background-color: map-get($color, secondary);
+        border-color: map-get($color, secondary);
+      }
+    }
+  }
+
+  &.fill--fill {
+    @each $key, $color in $color-sets {
+      &.alert--#{$key} {
+        color: map-get($color, contrast);
+        background-color: map-get($color, primary);
+        border-color: map-get($color, primary);
+      }
+    }
+  }
+
+  &.fill--outline {
+    @each $key, $color in $color-sets {
+      &.alert--#{$key} {
+        color: map-get($color, primary);
+        background-color: transparent;
+        border-color: map-get($color, primary);
+      }
+    }
+  }
+
+  @each $size, $value in $sizes {
+    &.size--#{$size} {
+      font-size: $value;
+    }
+  }
+
+  @each $size, $margin in $margins {
+    &.margin--#{$size} {
+      margin-bottom: $margin;
+    }
+  }
+
+  @each $size, $padding in $paddings {
+    &.padding--#{$size} {
+      .alert__icon {
+        padding: $padding 0 $padding $padding;
+      }
+
+      .alert__content,
+      .alert__dismiss {
+        padding: $padding;
+      }
+    }
+  }
+}
+
+
+

@@ -1,2 +1,153 @@
 $background-color: white !default;
 $color: red !default;
+
+/**
+ * Breakpoints
+ */
+$breakpoint--xs: 0 !default;
+$breakpoint--s: 576px !default;
+$breakpoint--m: 768px !default;
+$breakpoint--l: 992px !default;
+$breakpoint--xl: 1200px !default;
+$breakpoint--xxl: 1400px !default;
+
+$breakpoints: () !default;
+$theme-breakpoints: () !default;
+$default-breakpoints: (
+  xs: $breakpoint--xs,
+  s: $breakpoint--s,
+  m: $breakpoint--m,
+  l: $breakpoint--l,
+  xl: $breakpoint--xl,
+  xxl: $breakpoint--xxl
+);
+$theme-breakpoints: map-deep-merge($theme-breakpoints, $breakpoints);
+$default-breakpoints: map-deep-merge($default-breakpoints, $theme-breakpoints);
+
+/**
+ * Colors
+ */
+$color--error: #F44336 !default;
+$color--warning: #FF9800 !default;
+$color--success: #4CAF50 !default;
+$color--info: #2196F3 !default;
+
+$colors: () !default;
+$theme-colors: () !default;
+$default-colors: (
+  error: $color--error,
+  warning: $color--warning,
+  success: $color--success,
+  info: $color--info,
+  primary: navy,
+  secondary: orange,
+  contrast: black,
+  background: #FFFFFF,
+  text: #000000
+);
+$theme-colors: map-deep-merge($theme-colors, $colors);
+$default-colors: map-deep-merge($default-colors, $theme-colors);
+$color-sets: make-complete-color-sets($default-colors);
+
+/**
+ * Fonts
+ */
+$font--roboto-slab: 'Roboto Slab', sans-serif !default;
+$font--open-sans: 'Open Sans', sans-serif !default;
+
+$fonts: () !default;
+$theme-fonts: () !default;
+$default-fonts: (
+  title: $font--roboto-slab,
+  text: $font--open-sans
+);
+$theme-fonts: map-deep-merge($theme-fonts, $fonts);
+$font-families: map-deep-merge($default-fonts, $theme-fonts);
+
+/**
+ * FillTypes
+ */
+$fill-types: (plain, fill, outline);
+
+/**
+ * Margins
+ */
+$margin--xs: 0.5rem !default;
+$margin--s: 1rem !default;
+$margin--m: 2rem !default;
+$margin--l: 3.5rem !default;
+$margin--xl: 6rem !default;
+
+$default-margins: (
+  xs: $margin--xs,
+  s: $margin--s,
+  m: $margin--m,
+  l: $margin--l,
+  xl:$margin--xl
+);
+$margins: () !default;
+$margins: map-merge($default-margins, $margins);
+
+/**
+ * Typography margins
+ */
+$typography-margin--xs: 0.3rem !default;
+$typography-margin--s: 0.6rem !default;
+$typography-margin--m: 1rem !default;
+$typography-margin--l: 1.5rem !default;
+$typography-margin--xl: 2rem !default;
+
+$default-typography-margins: (
+  xs: $typography-margin--xs,
+  s: $typography-margin--s,
+  m: $typography-margin--m,
+  l: $typography-margin--l,
+  xl:$typography-margin--xl
+);
+$typography-margins: () !default;
+$typography-margins: map-merge($default-typography-margins, $typography-margins);
+
+/**
+ * Paddings
+ */
+$padding--xs: 0.5rem !default;
+$padding--s: 0.75rem !default;
+$padding--m: 1rem !default;
+$padding--l: 1.5rem !default;
+$padding--xl: 2rem !default;
+
+$default-paddings: (
+  xs: $padding--xs,
+  s: $padding--s,
+  m: $padding--m,
+  l: $padding--l,
+  xl: $padding--xl
+);
+$paddings: () !default;
+$paddings: map-merge($default-paddings, $paddings);
+
+/**
+ * Sizes
+ */
+$size--xs: .75rem !default;
+$size--s: 1rem !default;
+$size--m: 1.25rem !default;
+$size--l: 2rem !default;
+$size--xl: 3rem !default;
+
+$default-sizes: (
+  xs: $size--xs,
+  s: $size--s,
+  m: $size--m,
+  l: $size--l,
+  xl: $size--xl
+);
+$sizes: () !default;
+$sizes: map-merge($default-sizes, $sizes);
+
+// TODO: move to different file
+html,
+body {
+  background-color: map-get(map-get($color-sets, background), primary);
+  color: map-get(map-get($color-sets, text), primary);
+}

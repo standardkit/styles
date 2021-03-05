@@ -1,0 +1,35 @@
+.case--capitalize {
+  text-transform: capitalize;
+}
+
+.case--lowercase {
+  text-transform: lowercase;
+}
+
+.case--uppercase {
+  text-transform: uppercase;
+}
+
+.font--title {
+  font-family: map-get($font-families, title);
+}
+
+.font--text {
+  font-family: map-get($font-families, text);
+}
+
+* {
+  @extend .font--text;
+}
+
+.title,
+.subtitle {
+  margin-bottom: $typography-margin--m;
+  @extend .font--title;
+
+  @each $size, $margin in $typography-margins {
+    &.margin--#{$size} {
+      margin-bottom: $margin;
+    }
+  }
+}

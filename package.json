@@ -1,6 +1,6 @@
 {
   "name": "@standardkit/styles",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "SCSS framework for the StandardKit Design & Component System",
   "scripts": {
     "watch": "node-sass --watch scss/style.scss -o dist --output-style compressed",

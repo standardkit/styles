@@ -13,6 +13,7 @@
     display: flex;
     flex-direction: row;
     overflow: hidden;
+    position: relative;
 
     .dashboard-layout__sidebar {
       position: sticky;
@@ -30,8 +31,43 @@
   .sidebar {
     display: flex;
     flex-direction: column;
-    width: 20vw;
+    width: 22vw;
     height: 100%;
-    padding: 2rem 0;
+    padding: 2rem 0; // TODO: use configuration
+  }
+
+  .navigation-bar__toggle {
+    display: none;
+    padding: 0 .75rem; // TODO: use configuration
+    margin-left: .25rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+  }
+
+  @each $breakpoint, $value in $default-breakpoints {
+    &.dashboard-layout__expand--#{$breakpoint} {
+      @media only screen and (max-width: map-get($default-breakpoints, $breakpoint)) {
+        .navigation-bar__toggle {
+          display: block;
+        }
+
+        .dashboard-layout__sidebar.dashboard-layout__sidebar--expanded {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: #FFFFFF; // TODO: use configuration
+
+          .sidebar {
+            width: 100%;
+          }
+        }
+
+        .dashboard-layout__sidebar:not(.dashboard-layout__sidebar--expanded) {
+          display: none;
+        }
+      }
+    }
   }
 }

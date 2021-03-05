@@ -24,7 +24,7 @@
 
 .title,
 .subtitle {
-  margin-bottom: $typography-margin--m;
+  margin-bottom: map-get($typography-margins, m);
   @extend .font--title;
 
   @each $size, $margin in $typography-margins {
@@ -32,4 +32,8 @@
       margin-bottom: $margin;
     }
   }
+}
+
+.brand {
+    @extend .font--title;
 }

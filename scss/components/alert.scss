@@ -1,6 +1,7 @@
 .alert {
   display: inline-flex;
   border: 1px solid; // TODO: implement border configuration
+  margin-bottom: map-get($margins, m);
 
   .alert__icon {
     &.alert__icon--top {

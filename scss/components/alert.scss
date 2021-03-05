@@ -83,6 +83,16 @@
     }
   }
 
+  $padding: map-get($paddings, m);
+  .alert__icon {
+    padding: $padding 0 $padding $padding;
+  }
+
+  .alert__content,
+  .alert__dismiss {
+    padding: $padding;
+  }
+
   @each $size, $padding in $paddings {
     &.padding--#{$size} {
       .alert__icon {

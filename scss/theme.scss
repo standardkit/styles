@@ -41,7 +41,9 @@ $default-colors: (
   info: $color--info,
   primary: navy,
   secondary: orange,
-  contrast: black
+  contrast: black,
+  background: #FFFFFF,
+  text: #000000
 );
 $theme-colors: map-deep-merge($theme-colors, $colors);
 $default-colors: map-deep-merge($default-colors, $theme-colors);
@@ -142,3 +144,10 @@ $default-sizes: (
 );
 $sizes: () !default;
 $sizes: map-merge($default-sizes, $sizes);
+
+// TODO: move to different file
+html,
+body {
+  background-color: map-get(map-get($color-sets, background), primary);
+  color: map-get(map-get($color-sets, text), primary);
+}

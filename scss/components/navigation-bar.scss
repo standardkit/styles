@@ -18,7 +18,7 @@
     }
   }
 
-  &:not(.fill-plain):not(.fill-outline) {
+  &:not(.fill--plain):not(.fill--outline) {
     @each $key, $color in $color-sets {
       &.color--#{$key} {
         color: map-get($color, contrast);
@@ -28,7 +28,7 @@
     }
   }
 
-  &.fill-plain {
+  &.fill--plain {
     @each $key, $color in $color-sets {
       &.color--#{$key} {
         color: map-get($color, primary);

@@ -43,7 +43,9 @@ $default-colors: (
   secondary: orange,
   contrast: black,
   background: #FFFFFF,
-  text: #000000
+  border: #dedfdc,
+  text: #000000,
+  highlight: $color--info
 );
 $theme-colors: map-deep-merge($theme-colors, $colors);
 $default-colors: map-deep-merge($default-colors, $theme-colors);
@@ -52,14 +54,16 @@ $color-sets: make-complete-color-sets($default-colors);
 /**
  * Fonts
  */
-$font--roboto-slab: 'Roboto Slab', sans-serif !default;
-$font--open-sans: 'Open Sans', sans-serif !default;
+$font--title: 'Roboto Slab', sans-serif !default;
+$font--text: 'Open Sans', sans-serif !default;
+$font--monospace: 'Courier New', monospace !default;
 
 $fonts: () !default;
 $theme-fonts: () !default;
 $default-fonts: (
-  title: $font--roboto-slab,
-  text: $font--open-sans
+  title: $font--title,
+  text: $font--text,
+  monospace: $font--monospace
 );
 $theme-fonts: map-deep-merge($theme-fonts, $fonts);
 $font-families: map-deep-merge($default-fonts, $theme-fonts);

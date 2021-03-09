@@ -18,6 +18,10 @@
   font-family: map-get($font-families, text);
 }
 
+.font--monospace {
+  font-family: map-get($font-families, monospace);
+}
+
 * {
   @extend .font--text;
 }
@@ -35,5 +39,5 @@
 }
 
 .brand {
-    @extend .font--title;
+  @extend .font--title;
 }

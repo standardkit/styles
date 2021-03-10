@@ -8,7 +8,7 @@ $fonts: map-deep-merge($theme-fonts, $fonts);
 @use '../themes/default/typography' as theme;
 
 /* Map user configuration onto default theme */
-$fonts: map-deep-merge(map-deep-merge((), theme.$theme-fonts), $fonts);
+$fonts: map-deep-merge(theme.$theme-fonts, $fonts);
 
 /**
  * Typography margins

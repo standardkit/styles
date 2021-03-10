@@ -8,7 +8,7 @@ $colors: map-deep-merge($theme-colors, $colors);
 @use '../themes/default/colors' as theme;
 
 /* Map user configuration onto default theme */
-$colors: map-deep-merge(map-deep-merge((), theme.$theme-colors), $colors);
+$colors: map-deep-merge(theme.$theme-colors, $colors);
 
 /* Create the full sets where hex values are provided */
 $colors: complete-color-sets($colors);

@@ -1,0 +1,17 @@
+/* Fill for each color & fill combination */
+@each $color, $color-set in $colors {
+  @each $fill, $fill-color-keys in $fill-types {
+    .fill--#{$color}--#{$fill} {
+      color: get-color($color, map-get($fill-color-keys, text));
+      border-color: get-color($color, map-get($fill-color-keys, border));
+
+      // Apply background transparency when the fill key is set to none
+      $background-color-key: map-get($fill-color-keys, background);
+      @if $background-color-key != none {
+        background-color: get-color($color, $background-color-key);
+      } @else {
+        background-color: transparent;
+      }
+    }
+  }
+}

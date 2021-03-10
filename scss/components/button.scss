@@ -1,4 +1,3 @@
 .button {
-  background-color: get-color();
-  color: get-color(primary, contrast);
+  @include type-color-fill(primary, fill, button);
 }

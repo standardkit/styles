@@ -1,0 +1,30 @@
+$fonts: () !default; // User supplied fonts
+$theme-fonts: () !default; // User supplied theme fonts
+
+/* Map the user colors onto the user supplied theme */
+$fonts: map-deep-merge($theme-fonts, $fonts);
+
+/* Import default theme */
+@use '../themes/default/typography' as theme;
+
+/* Map user configuration onto default theme */
+$fonts: map-deep-merge(theme.$theme-fonts, $fonts);
+
+/**
+ * Typography margins
+ */
+$typography-margin--xs: 0.3rem !default;
+$typography-margin--s: 0.6rem !default;
+$typography-margin--m: 1rem !default;
+$typography-margin--l: 1.5rem !default;
+$typography-margin--xl: 2rem !default;
+
+$default-typography-margins: (
+  xs: $typography-margin--xs,
+  s: $typography-margin--s,
+  m: $typography-margin--m,
+  l: $typography-margin--l,
+  xl:$typography-margin--xl
+);
+$typography-margins: () !default;
+$typography-margins: map-merge($default-typography-margins, $typography-margins);

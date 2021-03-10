@@ -1,0 +1,46 @@
+/* Color Generation */
+@function generate-complement-color($color) {
+  $secondary: hsl(hue($color), saturation($color), 92%);
+  @if lightness($color) > 60% {
+    $secondary: hsl(hue($color), saturation($color), 8%);
+  }
+  @return $secondary;
+}
+
+@function generate-contrast-color($color) {
+  $inverted-color: invert($color);
+  $contrast: hsl(hue($inverted-color), saturation($inverted-color), 95%);
+  @if lightness($color) > 60% {
+    $contrast: hsl(hue($inverted-color), saturation($inverted-color), 5%);
+  }
+  @return $contrast;
+}
+
+@function generate-color-set($color) {
+  @return (
+    main: $color,
+    complement: generate-complement-color($color),
+    contrast: generate-contrast-color($color)
+  );
+}
+
+@function complete-color-sets($color-sets) {
+  @each $key, $color in $color-sets {
+    @if not is-map($color) {
+      $color-sets: map-deep-merge($color-sets, ($key: generate-color-set($color)));
+    } @else {
+      @if not map-has-key($color, main) {
+        @error 'Key "main" not defined in map "#{$key}"';
+      }
+      @if not map-has-key($color, complement) {
+        $complement: generate-complement-color(map-get($color, main));
+        $color: map-merge($color, (complement: $complement));
+      }
+      @if not map-has-key($color, contrast) {
+        $contrast: generate-contrast-color(map-get($color, main));
+        $color: map-merge($color, (complement: $contrast));
+      }
+    }
+  }
+  @return $color-sets;
+}

@@ -1,0 +1,9 @@
+$theme-font--title: 'Roboto Slab';
+$theme-font--text: 'Open Sans';
+$theme-font--monospace: 'Roboto Mono';
+
+$theme-fonts: (
+  title: $theme-font--title,
+  text: $theme-font--text,
+  monospace: $theme-font--monospace
+)

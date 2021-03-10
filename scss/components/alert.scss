@@ -79,6 +79,20 @@
       }
     }
   }
+
+  &.corner--round {
+    border-radius: 999rem;
+  }
+
+  &.corner--sharp {
+    border-radius: 0;
+  }
+
+  @each $corner, $value in $corners {
+    &.corner--#{$corner} {
+      border-radius: $value;
+    }
+  }
 }
 
 

@@ -81,7 +81,19 @@
   }
 
   &.corner--round {
-    border-radius: 999rem;
+    border-radius: 3rem;
+  }
+
+  &.corner--oval {
+    border-radius: 50%;
+  }
+
+  &.corner--leaf {
+    border-radius: 0.3rem 2rem;
+  }
+
+  &.corner--inverted-leaf {
+    border-radius: 2rem 0.3rem;
   }
 
   &.corner--sharp {

@@ -1,7 +1,7 @@
 .alert {
   display: inline-flex;
   border: 1px solid; // TODO: implement border configuration
-  margin-bottom: map-get($margins, m);
+  margin-bottom: get-margin();
 
   .alert__icon {
     &.alert__icon--top {
@@ -57,7 +57,7 @@
     }
   }
 
-  $padding: map-get($paddings, m);
+  $padding: get-padding();
 
   .alert__icon {
     padding: $padding 0 $padding $padding;

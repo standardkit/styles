@@ -11,8 +11,8 @@
     }
 
     &.navigation-item--active {
-      background-color: map-get(map-get($color-sets, primary), primary);
-      color: map-get(map-get($color-sets, primary), contrast);
+      background-color: get-color();
+      color: get-color(primary, contrast);
     }
   }
 }

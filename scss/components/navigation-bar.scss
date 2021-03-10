@@ -19,31 +19,31 @@
   }
 
   &:not(.fill--plain):not(.fill--outline) {
-    @each $key, $color in $color-sets {
+    @each $key, $color in $colors {
       &.color--#{$key} {
         color: map-get($color, contrast);
-        background-color: map-get($color, primary);
-        border-color: map-get($color, primary);
+        background-color: map-get($color, main);
+        border-color: map-get($color, main);
       }
     }
   }
 
   &.fill--plain {
-    @each $key, $color in $color-sets {
+    @each $key, $color in $colors {
       &.color--#{$key} {
-        color: map-get($color, primary);
-        background-color: map-get($color, secondary);
-        border-color: map-get($color, secondary);
+        color: map-get($color, main);
+        background-color: map-get($color, complement);
+        border-color: map-get($color, complement);
       }
     }
   }
 
   &.fill--outline {
-    @each $key, $color in $color-sets {
+    @each $key, $color in $colors {
       &.color--#{$key} {
-        color: map-get($color, primary);
+        color: map-get($color, main);
         background-color: transparent;
-        border-color: map-get($color, primary);
+        border-color: map-get($color, main);
       }
     }
   }

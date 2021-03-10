@@ -1,4 +1,4 @@
 .button {
-  background-color: $background-color;
-  color: $color;
+  background-color: get-color();
+  color: get-color(primary, contrast);
 }

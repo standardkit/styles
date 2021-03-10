@@ -29,16 +29,20 @@
       $color-sets: map-deep-merge($color-sets, ($key: make-color-map($color)));
     }
     @if is-map($color) {
-      @if not map-has-key($color, primary){
+      @if not map-has-key($color, primary) {
         @error 'Key "primary" not defined in map "#{$key}"';
       }
-      @if not map-has-key($color, secondary){
+      @if not map-has-key($color, secondary) {
         @error 'Key "secondary" not defined in map "#{$key}"';
       }
-      @if not map-has-key($color, contrast){
+      @if not map-has-key($color, contrast) {
         @error 'Key "contrast" not defined in map "#{$key}"';
       }
     }
   }
   @return $color-sets;
+}
+
+@function get-color($color-sets, $set, $color) {
+  @return map-get(map-get($color-sets, $set), $color);
 }

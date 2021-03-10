@@ -1,3 +1,4 @@
 .button {
   @include type-color-fill(primary, fill, button);
+  @include default-corner(s);
 }

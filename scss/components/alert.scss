@@ -42,35 +42,7 @@
     display: flex;
   }
 
-  &:not(.fill--fill):not(.fill--outline) {
-    @each $key, $color in $colors {
-      &.alert--#{$key} {
-        color: map-get($color, main);
-        background-color: map-get($color, complement);
-        border-color: map-get($color, complement);
-      }
-    }
-  }
-
-  &.fill--fill {
-    @each $key, $color in $colors {
-      &.alert--#{$key} {
-        color: map-get($color, contrast);
-        background-color: map-get($color, main);
-        border-color: map-get($color, main);
-      }
-    }
-  }
-
-  &.fill--outline {
-    @each $key, $color in $colors {
-      &.alert--#{$key} {
-        color: map-get($color, main);
-        background-color: transparent;
-        border-color: map-get($color, main);
-      }
-    }
-  }
+  @include type-color-fill(info, plain, alert);
 
   @each $size, $value in $sizes {
     &.size--#{$size} {
@@ -85,6 +57,7 @@
   }
 
   $padding: map-get($paddings, m);
+
   .alert__icon {
     padding: $padding 0 $padding $padding;
   }

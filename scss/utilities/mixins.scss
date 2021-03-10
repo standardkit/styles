@@ -1,0 +1,23 @@
+@mixin type-color-fill($default-type, $default-fill, $prefix) {
+  /* Fill styles */
+  &:not([class*='#{$prefix}--']) {
+    @extend .fill--#{$default-type}--#{$default-fill};
+  }
+  @each $fill in map-keys($fill-types) {
+    &.fill--#{$fill}:not([class*='#{$prefix}--']) {
+      @extend .fill--info--#{$fill} !optional;
+    }
+  }
+
+  @each $color in map-keys($colors) {
+    @each $fill in map-keys($fill-types) {
+
+      &--#{$color}:not([class*='fill--']) {
+        @extend .fill--#{$color}--#{$default-fill} !optional;
+      }
+      &--#{$color}.fill--#{$fill} {
+        @extend .fill--#{$color}--#{$fill} !optional;
+      }
+    }
+  }
+}

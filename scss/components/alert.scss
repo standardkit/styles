@@ -43,6 +43,7 @@
   }
 
   @include type-color-fill(info, plain, alert);
+  @include default-corner(s);
 
   @each $size, $value in $sizes {
     &.size--#{$size} {
@@ -77,32 +78,6 @@
       .alert__dismiss {
         padding: $padding;
       }
-    }
-  }
-
-  &.corner--round {
-    border-radius: 3rem;
-  }
-
-  &.corner--oval {
-    border-radius: 50%;
-  }
-
-  &.corner--leaf {
-    border-radius: 0.3rem 2rem;
-  }
-
-  &.corner--inverted-leaf {
-    border-radius: 2rem 0.3rem;
-  }
-
-  &.corner--sharp {
-    border-radius: 0;
-  }
-
-  @each $corner, $value in $corners {
-    &.corner--#{$corner} {
-      border-radius: $value;
     }
   }
 }

@@ -54,18 +54,3 @@ $default-sizes: (
 );
 $sizes: () !default;
 $sizes: map-merge($default-sizes, $sizes);
-
-/**
- * Corners
- */
-$theme-corners: () !default; // Supplied by user imported theme
-$corners: () !default; // Custom overrides created by user
-
-/* Map the user corners onto the user supplied theme */
-$corners: map-deep-merge($theme-corners, $corners);
-
-/* Import the default theme */
-@use '../themes/default/corners' as theme;
-
-/* Map user configuration onto default theme */
-$corners: map-deep-merge(theme.$theme-corners, $corners);

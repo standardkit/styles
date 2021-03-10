@@ -21,3 +21,11 @@
     }
   }
 }
+
+@mixin default-corner($default-corner) {
+  @if map-has-key($corners, $default-corner) {
+    &:not([class*='corner--']) {
+      @extend .corner--#{$default-corner};
+    }
+  }
+}

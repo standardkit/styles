@@ -12,24 +12,3 @@ $theme-colors: (
   highlight: #2196F3,
   link: #2196F3
 );
-
-// TODO: These variables and $default-colors are not used anywhere
-$color--error: #F44336 !default;
-$color--warning: #FF9800 !default;
-$color--success: #4CAF50 !default;
-$color--info: #2196F3 !default;
-
-$default-colors: (
-  error: $color--error,
-  warning: $color--warning,
-  success: $color--success,
-  info: $color--info,
-  primary: navy,
-  secondary: orange,
-  contrast: black,
-  background: #FFFFFF,
-  border: #dedfdc,
-  text: #000000,
-  highlight: $color--info,
-  link: $color--info
-);

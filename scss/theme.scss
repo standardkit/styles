@@ -45,7 +45,8 @@ $default-colors: (
   background: #FFFFFF,
   border: #dedfdc,
   text: #000000,
-  highlight: $color--info
+  highlight: $color--info,
+  link: $color--info
 );
 $theme-colors: map-deep-merge($theme-colors, $colors);
 $default-colors: map-deep-merge($default-colors, $theme-colors);

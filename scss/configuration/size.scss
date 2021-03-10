@@ -1,0 +1,56 @@
+/**
+ * Margins
+ */
+$margin--xs: 0.5rem !default;
+$margin--s: 1rem !default;
+$margin--m: 2rem !default;
+$margin--l: 3.5rem !default;
+$margin--xl: 6rem !default;
+
+$default-margins: (
+  xs: $margin--xs,
+  s: $margin--s,
+  m: $margin--m,
+  l: $margin--l,
+  xl:$margin--xl
+);
+$margins: () !default;
+$margins: map-merge($default-margins, $margins);
+
+/**
+ * Paddings
+ */
+$padding--xs: 0.5rem !default;
+$padding--s: 0.75rem !default;
+$padding--m: 1rem !default;
+$padding--l: 1.5rem !default;
+$padding--xl: 2rem !default;
+
+$default-paddings: (
+  xs: $padding--xs,
+  s: $padding--s,
+  m: $padding--m,
+  l: $padding--l,
+  xl: $padding--xl
+);
+$paddings: () !default;
+$paddings: map-merge($default-paddings, $paddings);
+
+/**
+ * Sizes
+ */
+$size--xs: .75rem !default;
+$size--s: 1rem !default;
+$size--m: 1.25rem !default;
+$size--l: 2rem !default;
+$size--xl: 3rem !default;
+
+$default-sizes: (
+  xs: $size--xs,
+  s: $size--s,
+  m: $size--m,
+  l: $size--l,
+  xl: $size--xl
+);
+$sizes: () !default;
+$sizes: map-merge($default-sizes, $sizes);

@@ -11,15 +11,15 @@
 }
 
 .font--title {
-  font-family: map-get($font-families, title);
+  font-family: get-font(title), serif;
 }
 
 .font--text {
-  font-family: map-get($font-families, text);
+  font-family: get-font(), sans-serif;
 }
 
 .font--monospace {
-  font-family: map-get($font-families, monospace);
+  font-family: get-font(monospace), monospace;
 }
 
 * {

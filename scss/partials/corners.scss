@@ -1,0 +1,5 @@
+@each $key, $border-radius in $corners {
+  .corner--#{$key} {
+    border-radius: $border-radius;
+  }
+}

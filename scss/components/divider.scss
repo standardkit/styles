@@ -1,4 +1,4 @@
 .divider {
   border: 1px solid get-color(border);
-  margin: $margin--s 0 $margin--m;
+  margin: get-margin(s) 0 get-margin();
 }

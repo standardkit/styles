@@ -8,6 +8,7 @@
   .list-item {
     display: flex;
     flex-direction: row;
+    @include type-color-fill(text, outline, list-item);
 
     .list-item__content {
       flex: 1 1 auto;

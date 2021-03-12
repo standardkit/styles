@@ -29,3 +29,11 @@
     }
   }
 }
+
+@mixin default-elevation($default-elevation) {
+  @if map-has-key($elevations, $default-elevation) {
+    &:not([class*='elevation--']) {
+      @extend .elevation--#{$default-elevation};
+    }
+  }
+}

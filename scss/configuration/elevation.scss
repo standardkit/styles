@@ -1,0 +1,14 @@
+/**
+ * Corners
+ */
+$theme-elevations: () !default; // Supplied by user imported theme
+$elevations: () !default; // Custom overrides created by user
+
+/* Map the user elevations onto the user supplied theme */
+$elevations: map-deep-merge($theme-elevations, $elevations);
+
+/* Import the default theme */
+@use '../themes/default/elevation' as theme;
+
+/* Map user configuration onto default theme */
+$elevations: map-deep-merge(theme.$theme-elevations, $elevations);

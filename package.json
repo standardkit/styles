@@ -1,10 +1,10 @@
 {
   "name": "@standardkit/styles",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "SCSS framework for the StandardKit Design & Component System",
   "scripts": {
-    "watch": "node-sass --watch scss/style.scss -o dist --output-style compressed",
-    "build": "node-sass scss/style.scss -o dist --output-style compressed"
+    "watch": "sass --watch scss/style.scss dist/style.css -s compressed",
+    "build": "sass scss/style.scss dist/style.css -s compressed"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,6 @@
   },
   "homepage": "https://standardkit.io",
   "devDependencies": {
-    "node-sass": "^5.0.0"
+    "sass": "^1.32.8"
   }
 }

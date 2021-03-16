@@ -4,7 +4,9 @@
 
   .navigation-item {
     display: block;
-    padding: 0.5rem 1rem; // TODO: move to variable
+    padding: get-padding();
+    margin-left: - get-padding-x();
+    margin-right: - get-padding-x();
 
     .navigation-item__icon {
       margin-right: 1rem; // TODO: use configuration

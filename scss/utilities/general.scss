@@ -33,3 +33,13 @@
 @function get-padding($padding: m) {
   @return map-get($paddings, $padding);
 }
+
+@function get-padding-x($size: m) {
+  $padding: map-get($paddings, $size);
+  @return nth($padding, 2);
+}
+
+@function get-padding-y($size: m) {
+  $padding: map-get($paddings, $size);
+  @return nth($padding, 1);
+}

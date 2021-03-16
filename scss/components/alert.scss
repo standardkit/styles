@@ -1,39 +1,46 @@
 .alert {
   display: inline-flex;
   border: 1px solid; // TODO: implement border configuration
-  margin-bottom: get-margin();
+  vertical-align: top;
+  align-items: center;
+  @include type-color-fill(info, plain, alert);
+  @include default-corner();
+  @include default-padding();
+  @include default-margin(xs);
+
+  .alert__content {
+    flex-grow: 1;
+  }
 
   .alert__icon {
-    &.alert__icon--top {
+    align-self: flex-start;
+
+    &--top {
       align-self: flex-start;
     }
 
-    &.alert__icon--middle {
+    &--middle {
       align-self: center;
     }
 
-    &.alert__icon--bottom {
+    &--bottom {
       align-self: flex-end;
     }
   }
 
-  .alert__content {
-    flex: 1 1 auto;
-  }
-
   .alert__dismiss {
+    align-self: flex-start;
     cursor: pointer;
 
-    &:not(.alert__dismiss--middle):not(.alert__dismiss--bottom),
-    &.alert__dismiss--top {
+    &--top {
       align-self: flex-start;
     }
 
-    &.alert__dismiss--middle {
+    &--middle {
       align-self: center;
     }
 
-    &.alert__dismiss--bottom {
+    &--bottom {
       align-self: flex-end;
     }
   }
@@ -42,41 +49,21 @@
     display: flex;
   }
 
-  @include type-color-fill(info, plain, alert);
-  @include default-corner(s);
-
-  @each $size, $value in $sizes {
-    &.size--#{$size} {
-      font-size: $value;
-    }
-  }
-
-  @each $size, $margin in $margins {
-    &.margin--#{$size} {
-      margin-bottom: $margin;
-    }
-  }
-
-  $padding: get-padding();
-
-  .alert__icon {
-    padding: $padding 0 $padding $padding;
-  }
-
-  .alert__content,
-  .alert__dismiss {
-    padding: $padding;
-  }
-
   @each $size, $padding in $paddings {
     &.padding--#{$size} {
+      $padding-x: get-padding-x($size);
+      $padding-y: get-padding-y($size);
+
       .alert__icon {
-        padding: $padding 0 $padding $padding;
+        margin-left: -$padding-x * .2;
+        padding-right: $padding-x * .8;
       }
 
-      .alert__content,
       .alert__dismiss {
-        padding: $padding;
+        margin-right: -$padding-x;
+        margin-top: -$padding-y;
+        margin-bottom: -$padding-y;
+        padding: $padding-y $padding-x * .8;
       }
     }
   }

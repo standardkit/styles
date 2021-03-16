@@ -19,11 +19,5 @@
   }
 
   @include type-color-fill(primary, fill, navigation-bar);
-
-  @each $size, $value in $sizes {
-    &.size--#{$size} {
-      font-size: $value;
-    }
-  }
 }
 

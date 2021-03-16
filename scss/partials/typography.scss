@@ -29,16 +29,23 @@
 
 .title,
 .subtitle {
-  margin-bottom: map-get($typography-margins, m);
   @extend .font--title;
-
-  @each $size, $margin in $typography-margins {
-    &.margin--#{$size} {
-      margin-bottom: $margin;
-    }
-  }
+  @include default-text-margin();
+  // TODO : Configurable padding & border
 }
 
 .brand {
   @extend .font--title;
+}
+
+@each $size, $font-size in $text-sizes {
+  .text-size--#{$size} {
+    font-size: $font-size;
+  }
+}
+
+@each $size, $margin in $text-margins {
+  .text-margin--#{$size} {
+    margin: $margin;
+  }
 }

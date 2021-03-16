@@ -1,0 +1,5 @@
+@each $size, $padding in $paddings {
+  .padding--#{$size} {
+    padding: $padding;
+  }
+}

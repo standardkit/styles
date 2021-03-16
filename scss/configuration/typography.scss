@@ -1,30 +1,33 @@
+/* Import default typography */
+@use '../themes/default/typography' as theme;
+
 $fonts: () !default; // User supplied fonts
 $theme-fonts: () !default; // User supplied theme fonts
 
 /* Map the user colors onto the user supplied theme */
 $fonts: map-deep-merge($theme-fonts, $fonts);
 
-/* Import default theme */
-@use '../themes/default/typography' as theme;
-
 /* Map user configuration onto default theme */
 $fonts: map-deep-merge(theme.$theme-fonts, $fonts);
 
-/**
- * Typography margins
- */
-$typography-margin--xs: 0.3rem !default;
-$typography-margin--s: 0.6rem !default;
-$typography-margin--m: 1rem !default;
-$typography-margin--l: 1.5rem !default;
-$typography-margin--xl: 2rem !default;
 
-$default-typography-margins: (
-  xs: $typography-margin--xs,
-  s: $typography-margin--s,
-  m: $typography-margin--m,
-  l: $typography-margin--l,
-  xl:$typography-margin--xl
-);
-$typography-margins: () !default;
-$typography-margins: map-merge($default-typography-margins, $typography-margins);
+/* Text Margins */
+$theme-text-margins: () !default; // Supplied by user imported theme
+$text-margins: () !default; // Custom overrides created by user
+
+/* Map the user paddings onto the user supplied theme */
+$text-margins: map-deep-merge($theme-text-margins, $text-margins);
+
+/* Map user configuration onto default theme */
+$text-margins: map-deep-merge(theme.$theme-text-margins, $text-margins);
+
+
+/* Text Sizes */
+$theme-text-sizes: () !default; // Supplied by user imported theme
+$text-sizes: () !default; // Custom overrides created by user
+
+/* Map the user paddings onto the user supplied theme */
+$text-sizes: map-deep-merge($theme-text-sizes, $text-sizes);
+
+/* Map user configuration onto default theme */
+$text-sizes: map-deep-merge(theme.$theme-text-sizes, $text-sizes);

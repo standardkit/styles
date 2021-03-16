@@ -1,0 +1,11 @@
+@each $size, $margin in $margins {
+  .margin--#{$size} {
+    margin: $margin;
+  }
+}
+
+@each $size, $margin in $text-margins {
+  .text-margin--#{$size} {
+    margin: $margin;
+  }
+}

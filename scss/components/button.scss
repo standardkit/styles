@@ -1,18 +1,21 @@
 .button {
   @include type-color-fill(primary, fill, button);
-  @include default-corner(s);
-  @include default-elevation(s);
-  border:2px solid;
-  padding: get-padding(s);
-  margin: get-margin(xs); // TODO : change the way it works (small element margins)
-  font-size: 1rem; // TODO : Configurable
+  @include default-corner();
+  @include default-elevation();
+  @include default-text-size();
+  @include default-padding();
+  @include default-margin(xs);
+  border: 2px solid;
+
   &:hover {
     filter: brightness(115%); // TODO : Add in the color fill on selectable matcher
   }
+
   &:disabled {
     opacity: 65%; // TODO : Configurable
     filter: brightness(100%);
     cursor: not-allowed;
   }
+
   // TODO : Add version for perfectly round button with icon inside (icon slot?)
 }

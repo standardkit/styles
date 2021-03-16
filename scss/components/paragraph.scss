@@ -1,7 +1,3 @@
 .paragraph {
-  @each $size, $margin in $typography-margins {
-    &.margin--#{$size} {
-      margin-bottom: $margin;
-    }
-  }
+  @include default-text-margin();
 }

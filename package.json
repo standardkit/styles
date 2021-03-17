@@ -1,6 +1,6 @@
 {
   "name": "@standardkit/styles",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "SCSS framework for the StandardKit Design & Component System",
   "scripts": {
     "watch": "sass --watch scss/style.scss dist/style.css -s compressed",

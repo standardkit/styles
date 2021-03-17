@@ -1,0 +1,41 @@
+.table {
+
+  width: 100%;
+  overflow-y: scroll;
+  padding: 0;
+  border-collapse: collapse;
+
+  &--striped {
+    td {
+      border-bottom: 1px solid get-color(border);
+    }
+  }
+
+  @include default-margin(vertical-m);
+
+  &--fit {
+    width: unset;
+    overflow: auto;
+  }
+
+  thead {
+    td, th {
+      border-bottom: 1px solid get-color(border);
+      @extend .font--title;
+      font-weight: bold;
+    }
+  }
+
+  td {
+    @include default-padding();
+    white-space: nowrap;
+  }
+
+  @each $size, $padding in $paddings {
+    &.padding--#{$size} {
+      td {
+        padding: $padding;
+      }
+    }
+  }
+}

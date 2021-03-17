@@ -9,9 +9,9 @@
 
 @function generate-contrast-color($color) {
   $inverted-color: invert($color);
-  $contrast: hsl(hue($inverted-color), saturation($inverted-color), 95%);
+  $contrast: hsl(hue($inverted-color), saturation($inverted-color), 99%);
   @if lightness($color) > 60% {
-    $contrast: hsl(hue($inverted-color), saturation($inverted-color), 5%);
+    $contrast: hsl(hue($inverted-color), saturation($inverted-color), 1%);
   }
   @return $contrast;
 }

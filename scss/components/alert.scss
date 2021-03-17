@@ -5,7 +5,7 @@
   @include type-color-fill(info, plain, alert);
   @include default-corner();
   @include default-padding();
-  @include default-margin();
+  @include default-margin(vertical-m);
 
   .alert__content {
     flex-grow: 1;

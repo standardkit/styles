@@ -1,11 +1,5 @@
 .divider {
   border: 1px solid get-color(border);
 
-  margin: get-margin() 0;
-
-  @each $size, $margin in $margins {
-    &.margin--#{$size} {
-      margin: $margin 0;
-    }
-  }
+  @include default-margin(vertical-m);
 }

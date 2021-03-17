@@ -34,7 +34,7 @@
     display: flex;
     flex-direction: column;
     min-width: 16rem;
-    padding: get-padding(); // TODO : Use include
+    @include default-padding();
     min-height: 100%;
     background-color: get-color(primary, complement);
   }

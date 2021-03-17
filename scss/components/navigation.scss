@@ -17,4 +17,8 @@
       color: get-color(primary, contrast);
     }
   }
+
+  .navigation-title {
+    margin: get-margin();
+  }
 }

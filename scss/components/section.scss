@@ -1,0 +1,9 @@
+.section {
+  margin: (get-margin() * 2) 0;
+
+  @each $size, $margin in $margins {
+    &.margin--#{$size} {
+      margin: ($margin * 2) 0;
+    }
+  }
+}

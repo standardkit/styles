@@ -1,0 +1,22 @@
+/**
+ * Breakpoints
+ */
+$breakpoint--xs: 0 !default;
+$breakpoint--s: 576px !default;
+$breakpoint--m: 768px !default;
+$breakpoint--l: 992px !default;
+$breakpoint--xl: 1200px !default;
+$breakpoint--xxl: 1400px !default;
+
+$breakpoints: () !default;
+$theme-breakpoints: () !default;
+$default-breakpoints: (
+  xs: $breakpoint--xs,
+  s: $breakpoint--s,
+  m: $breakpoint--m,
+  l: $breakpoint--l,
+  xl: $breakpoint--xl,
+  xxl: $breakpoint--xxl
+);
+$theme-breakpoints: map-deep-merge($theme-breakpoints, $breakpoints);
+$default-breakpoints: map-deep-merge($default-breakpoints, $theme-breakpoints);

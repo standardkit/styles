@@ -1,0 +1,6 @@
+.code-block {
+  background-color: get-color(code); // TODO : Different fill styles?
+  color: get-color(code, contrast);
+  padding: .7%; // TODO : Configurable based on sizes or custom (e.g. 1px or 2rem)
+  @extend .font--monospace;
+}

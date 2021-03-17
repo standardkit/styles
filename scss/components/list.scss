@@ -1,0 +1,35 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  @include default-elevation(xs);
+  @include default-corner(s);
+
+  .list-item {
+    display: flex;
+    flex-direction: row;
+    @include type-color-fill(text, outline, list-item);
+
+    .list-item__content {
+      flex: 1 1 auto;
+      padding: get-padding(); // TODO : make configurable
+      flex-direction: column;
+    }
+
+    .list-item__icon {
+      padding: get-padding() 0 get-padding() get-padding(); // TODO : make configurable
+
+      &--top {
+        align-self: flex-start;
+      }
+
+      &--middle {
+        align-self: center;
+      }
+
+      &--bottom {
+        align-self: flex-end;
+      }
+    }
+  }
+}

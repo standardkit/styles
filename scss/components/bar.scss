@@ -1,0 +1,21 @@
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center; // TODO : Make configurable
+
+  &.position--bottom {
+    align-items: flex-end;
+  }
+  &.position--middle {
+    align-items: center;
+  }
+  &.position--top {
+    align-items: flex-start;
+  }
+
+  @each $type, $value in $alignment-types {
+    &.bar--#{$type} {
+      justify-content: $value;
+    }
+  }
+}

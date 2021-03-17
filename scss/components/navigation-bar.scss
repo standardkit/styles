@@ -18,40 +18,6 @@
     }
   }
 
-  &:not(.fill--plain):not(.fill--outline) {
-    @each $key, $color in $color-sets {
-      &.color--#{$key} {
-        color: map-get($color, contrast);
-        background-color: map-get($color, primary);
-        border-color: map-get($color, primary);
-      }
-    }
-  }
-
-  &.fill--plain {
-    @each $key, $color in $color-sets {
-      &.color--#{$key} {
-        color: map-get($color, primary);
-        background-color: map-get($color, secondary);
-        border-color: map-get($color, secondary);
-      }
-    }
-  }
-
-  &.fill--outline {
-    @each $key, $color in $color-sets {
-      &.color--#{$key} {
-        color: map-get($color, primary);
-        background-color: transparent;
-        border-color: map-get($color, primary);
-      }
-    }
-  }
-
-  @each $size, $value in $sizes {
-    &.size--#{$size} {
-      font-size: $value;
-    }
-  }
+  @include type-color-fill(primary, fill, navigation-bar);
 }
 

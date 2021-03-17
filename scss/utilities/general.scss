@@ -1,0 +1,45 @@
+/* Copied from https://medium.com/@pentzzsolt/a-non-destructive-map-merge-function-for-sass-f91637f87b2e */
+@function map-deep-merge($parent-map, $child-map) {
+  $result: $parent-map;
+  @each $key, $value in $child-map {
+    @if (not map-has-key($result, $key))
+    or (type-of(map-get($result, $key)) != type-of($value))
+    or (not (type-of(map-get($result, $key)) == map and type-of($value) == map)) {
+      $result: map-merge($result, ($key: $value));
+    } @else {
+      $result: map-merge($result, ($key: map-deep-merge(map-get($result, $key), $value)));
+    }
+  }
+  @return $result;
+}
+
+@function is-map($variable) {
+  @return type-of($variable) == 'map';
+}
+
+/* Easy Access */
+@function get-color($color: primary, $key: main) {
+  @return map-get(map-get($colors, $color), $key);
+}
+
+@function get-font($font: text) {
+  @return map-get($fonts, $font);
+}
+
+@function get-margin($margin: m) {
+  @return map-get($margins, $margin);
+}
+
+@function get-padding($padding: m) {
+  @return map-get($paddings, $padding);
+}
+
+@function get-padding-x($size: m) {
+  $padding: map-get($paddings, $size);
+  @return nth($padding, 2);
+}
+
+@function get-padding-y($size: m) {
+  $padding: map-get($paddings, $size);
+  @return nth($padding, 1);
+}

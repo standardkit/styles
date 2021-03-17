@@ -1,39 +1,45 @@
 .alert {
-  display: inline-flex;
+  display: flex;
   border: 1px solid; // TODO: implement border configuration
-  margin-bottom: map-get($margins, m);
+  align-items: center;
+  @include type-color-fill(info, plain, alert);
+  @include default-corner();
+  @include default-padding();
+  @include default-margin();
+
+  .alert__content {
+    flex-grow: 1;
+  }
 
   .alert__icon {
-    &.alert__icon--top {
+    align-self: flex-start;
+
+    &--top {
       align-self: flex-start;
     }
 
-    &.alert__icon--middle {
+    &--middle {
       align-self: center;
     }
 
-    &.alert__icon--bottom {
+    &--bottom {
       align-self: flex-end;
     }
   }
 
-  .alert__content {
-    flex: 1 1 auto;
-  }
-
   .alert__dismiss {
+    align-self: flex-start;
     cursor: pointer;
 
-    &:not(.alert__dismiss--middle):not(.alert__dismiss--bottom),
-    &.alert__dismiss--top {
+    &--top {
       align-self: flex-start;
     }
 
-    &.alert__dismiss--middle {
+    &--middle {
       align-self: center;
     }
 
-    &.alert__dismiss--bottom {
+    &--bottom {
       align-self: flex-end;
     }
   }
@@ -42,67 +48,21 @@
     display: flex;
   }
 
-  &:not(.fill--fill):not(.fill--outline) {
-    @each $key, $color in $color-sets {
-      &.alert--#{$key} {
-        color: map-get($color, primary);
-        background-color: map-get($color, secondary);
-        border-color: map-get($color, secondary);
-      }
-    }
-  }
-
-  &.fill--fill {
-    @each $key, $color in $color-sets {
-      &.alert--#{$key} {
-        color: map-get($color, contrast);
-        background-color: map-get($color, primary);
-        border-color: map-get($color, primary);
-      }
-    }
-  }
-
-  &.fill--outline {
-    @each $key, $color in $color-sets {
-      &.alert--#{$key} {
-        color: map-get($color, primary);
-        background-color: transparent;
-        border-color: map-get($color, primary);
-      }
-    }
-  }
-
-  @each $size, $value in $sizes {
-    &.size--#{$size} {
-      font-size: $value;
-    }
-  }
-
-  @each $size, $margin in $margins {
-    &.margin--#{$size} {
-      margin-bottom: $margin;
-    }
-  }
-
-  $padding: map-get($paddings, m);
-  .alert__icon {
-    padding: $padding 0 $padding $padding;
-  }
-
-  .alert__content,
-  .alert__dismiss {
-    padding: $padding;
-  }
-
   @each $size, $padding in $paddings {
     &.padding--#{$size} {
+      $padding-x: get-padding-x($size);
+      $padding-y: get-padding-y($size);
+
       .alert__icon {
-        padding: $padding 0 $padding $padding;
+        margin-left: -$padding-x * .2;
+        padding-right: $padding-x * .8;
       }
 
-      .alert__content,
       .alert__dismiss {
-        padding: $padding;
+        margin-right: -$padding-x;
+        margin-top: -$padding-y;
+        margin-bottom: -$padding-y;
+        padding: $padding-y $padding-x * .8;
       }
     }
   }

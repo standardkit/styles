@@ -1,0 +1,9 @@
+@function complete-paddings($paddings) {
+  @each $key, $padding in $paddings {
+    @if not nth($padding, 2) {
+      $padding: append([$padding], $padding * 1.6);
+      $paddings: map-merge($paddings, ($key:$padding));
+    }
+  }
+  @return $paddings;
+}

@@ -1,0 +1,58 @@
+@function get-elevation-umbra($elevation, $color, $opacity) {
+  $elevation-umbra-color: rgba($color, $opacity);
+
+  @if $elevation == 0 {
+    @return 0 0 0 0 $elevation-umbra-color;
+  }
+
+  $h-offset: 0;
+  $v-offset: round(0.419118 * $elevation + 1.34559px);
+  $blur: round(0.576692 * $elevation + 0.894737px);
+  $spread: round(0.272932 * $elevation + 0.484211px) * -1;
+
+  @return $h-offset $v-offset $blur $spread $elevation-umbra-color;
+}
+
+@function get-elevation-penumbra($elevation, $color, $opacity) {
+  $elevation-penumbra-color: rgba($color, $opacity);
+
+  @if $elevation == 0 {
+    @return 0 0 0 0 $elevation-penumbra-color;
+  }
+
+  $h-offset: 0;
+  $v-offset: $elevation + 0px;
+  $blur: round(1.56692 * $elevation - 1.05263px);
+  $spread: round(0.15188 * $elevation - 0.394737px);
+
+  @return $h-offset $v-offset $blur $spread $elevation-penumbra-color;
+}
+
+@function get-elevation-ambient($elevation, $color, $opacity) {
+  $elevation-penumbra-color: rgba($color, $opacity);
+
+  @if $elevation == 0 {
+    @return 0 0 0 0 $elevation-penumbra-color;
+  }
+
+  $h-offset: 0;
+  $v-offset: ceil(0.333083 * $elevation - 0.347368px);
+  $blur: round(1.70977 * $elevation + 2.64737px);
+  $spread: round(0.396241 * $elevation - 1.31053px);
+
+  @return $h-offset $v-offset $blur $spread $elevation-penumbra-color;
+}
+
+// TODO : make configurable (color and opacities)
+@function get-elevation(
+  $elevation,
+  $color: #000000,
+  $umbra-opacity: 0.2,
+  $penumbra-opacity: 0.14,
+  $ambient-opacity: 0.12
+) {
+  @return
+    get-elevation-umbra($elevation, $color, $umbra-opacity),
+    get-elevation-penumbra($elevation, $color, $penumbra-opacity),
+    get-elevation-ambient($elevation, $color, $ambient-opacity);
+}

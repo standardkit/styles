@@ -1,8 +1,11 @@
+/* Helper functions & variables */
 @import 'utilities/functions';
-@import 'utilities/colors';
 
-@import 'theme';
+/* Configured variables */
+@import 'configuration/style';
 
-@import 'utilities/reset';
-@import 'typography';
+/* Basic setup */
+@import 'partials/style';
+
+/* Component specific styles */
 @import 'components/style';

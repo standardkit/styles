@@ -39,14 +39,3 @@ img {
   max-width: 100%;
   display: block;
 }
-
-//svg fix for IE
-.ie9 img[src$=".svg"] {
-  width: 100%;
-}
-
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-  img[src$=".svg"] {
-    width: 100%;
-  }
-}

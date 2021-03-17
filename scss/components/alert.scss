@@ -1,12 +1,11 @@
 .alert {
-  display: inline-flex;
+  display: flex;
   border: 1px solid; // TODO: implement border configuration
-  vertical-align: top;
   align-items: center;
   @include type-color-fill(info, plain, alert);
   @include default-corner();
   @include default-padding();
-  @include default-margin(xs);
+  @include default-margin();
 
   .alert__content {
     flex-grow: 1;

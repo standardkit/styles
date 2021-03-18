@@ -1,19 +1,19 @@
 /* Color Generation */
 @function generate-complement-color($color) {
-  $secondary: hsl(hue($color), saturation($color), 92%);
-  @if lightness($color) > 60% {
-    $secondary: hsl(hue($color), saturation($color), 8%);
+  @if is-bright($color) {
+    @return hsl(hue($color), saturation($color), 7%); // Darker
+  } @else {
+    @return hsl(hue($color), saturation($color), 93%); // Lighter
   }
-  @return $secondary;
 }
 
 @function generate-contrast-color($color) {
   $inverted-color: invert($color);
-  $contrast: hsl(hue($inverted-color), saturation($inverted-color), 99%);
-  @if lightness($color) > 60% {
-    $contrast: hsl(hue($inverted-color), saturation($inverted-color), 1%);
+  @if is-bright($color) {
+    @return hsl(hue($inverted-color), saturation($inverted-color), 1%); // Very dark
+  } @else {
+    @return hsl(hue($inverted-color), saturation($inverted-color), 99%); // Very light
   }
-  @return $contrast;
 }
 
 @function generate-color-set($color) {
@@ -43,4 +43,14 @@
     }
   }
   @return $color-sets;
+}
+
+@function get-brightness($color) {
+  $weighted-sum: (.229 * red($color)) + (.587 * green($color)) + (.119 * blue($color));
+  $brightness: percentage($weighted-sum / 255);
+  @return $brightness;
+}
+
+@function is-bright($color) {
+  @return get-brightness($color) > 58%;
 }

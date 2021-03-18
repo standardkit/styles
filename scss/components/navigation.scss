@@ -7,19 +7,21 @@
     padding: get-padding();
     margin-left: - get-padding-x();
     margin-right: - get-padding-x();
+    color: generate-contrast-color(get-color(primary, complement)); // TODO : Configure
 
     .navigation-item__icon {
       margin-right: 1rem; // TODO: use configuration
     }
 
     &.navigation-item--active {
-      background-color: get-color();
+      background-color: get-color(primary); // TODO : Configure
       color: get-color(primary, contrast);
     }
   }
 
   .navigation-title {
     @extend .font--title;
+    color: get-color(primary); // TODO : Configure
     margin: get-margin(vertical-m);
   }
 }

@@ -15,6 +15,7 @@
     overflow: hidden;
     position: relative;
     height: 100%;
+    overflow-y: auto;
 
     .dashboard-layout__sidebar {
       position: sticky;

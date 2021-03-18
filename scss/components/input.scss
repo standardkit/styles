@@ -1,0 +1,9 @@
+.input {
+  @include default-padding();
+  @include default-corner();
+  @include default-text-size();
+  @include default-text-margin();
+  border: 2px solid get-color(border);
+  background-color: get-color(text, contrast);
+  width:100%;
+}

@@ -1,0 +1,5 @@
+.label {
+  @include default-text-size();
+  @include default-padding();
+  @include default-text-margin();
+}

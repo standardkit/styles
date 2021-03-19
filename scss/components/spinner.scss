@@ -1,0 +1,83 @@
+.spinner__container {
+  @include default-text-size();
+  @include default-margin();
+  @include type-color-fill(primary, plain, spinner);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  .spinner {
+    display: inline-flex;
+    width: 2em;
+    height: 2em;
+    border: 3px solid;
+    border-radius: 50%;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+  }
+
+  &:not([class*='fill--']):not([class*='spinner--']) {
+    .spinner {
+      border-color: get-color(primary, complement);
+      border-top-color: get-color(primary);
+    }
+  }
+
+  &[class*='fill--']:not([class*='spinner--']) {
+    @each $fill, $fill-map in $fill-types {
+      &.fill--#{$fill} {
+        .spinner {
+          $key: map-get($fill-map, background);
+          @if $key == none {
+            border-color: transparent;
+          } @else {
+            border-color: get-color(primary, $key);
+          }
+          border-top-color: get-color(primary, map-get($fill-map, text));
+        }
+      }
+    }
+  }
+
+  &[class*='spinner--']:not([class*='fill--']) {
+    background-color: transparent;
+    @each $type, $color-map in $colors {
+      &.spinner--#{$type} {
+        .spinner {
+          border-color: get-color($type, complement);
+          border-top-color: get-color($type);
+        }
+      }
+    }
+  }
+
+  @each $fill, $fill-map in $fill-types {
+    @each $color, $color-map in $colors {
+      &.fill--#{$color}--#{$fill} {
+        background-color: transparent;
+      }
+      &.spinner--#{$color}.fill--#{$fill} {
+        background-color: transparent;
+
+        .spinner {
+          border-color: map-get($color-map, map-get($fill-map, background));
+          border-top-color: map-get($color-map, map-get($fill-map, text));
+        }
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+

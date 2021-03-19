@@ -5,7 +5,7 @@
   }
   @each $fill in map-keys($fill-types) {
     &.fill--#{$fill}:not([class*='#{$prefix}--']) {
-      @extend .fill--info--#{$fill} !optional;
+      @extend .fill--#{$default-type}--#{$fill} !optional;
     }
   }
 

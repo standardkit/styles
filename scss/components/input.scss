@@ -5,5 +5,5 @@
   @include default-text-margin();
   border: 2px solid get-color(border);
   background-color: get-color(text, contrast);
-  width:100%;
+  width: 100%; // TODO : Make configurable width directive
 }

@@ -1,5 +1,9 @@
 // TODO : Make attr/class that people can set on the html to make it optional
 html, body {
-  background-color: get-color(background);
+  background-color: get-color(text, contrast);
   color: get-color(text);
+}
+
+.full-width {
+  width: 100%;
 }

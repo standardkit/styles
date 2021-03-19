@@ -1,11 +1,13 @@
 $theme-corners: (
-  xs: .15rem,
-  s: .3rem,
-  m: .55rem,
-  l: .85rem,
-  xl: 3rem,
+  xxs: .15em,
+  xs: .25em,
+  s: .35em,
+  m: .45em,
+  l: .8em,
+  xl: 1.6em,
+  xxl: 2.4em,
   round: 50%,
   sharp: 0,
-  leaf: 0.3rem 2rem,
-  inverted-leaf: 2rem 0.3rem
+  leaf: 0.3em 2em,
+  inverted-leaf: 2em 0.3em
 );

@@ -1,6 +1,6 @@
 .highlight {
   &--color {
-    color: get-color(highlight);
+    color: get-color(primary);
   }
 
   &--bold {
@@ -8,9 +8,9 @@
   }
 
   &--code {
-    background-color: get-color(highlight); // TODO : Different fill styles?
-    color: get-color(highlight, contrast);
-    padding: .7%; // TODO : Configurable based on sizes or custom (e.g. 1px or 2rem)
+    background-color: get-color(primary); // TODO : Different fill styles
+    color: get-color(primary, contrast);
+    @include default-padding(xs);
     @extend .font--monospace;
   }
 

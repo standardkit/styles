@@ -19,6 +19,9 @@
 
 /* Easy Access */
 @function get-color($color: primary, $key: main) {
+  @if $key == none {
+    @return transparent;
+  }
   @return map-get(map-get($colors, $color), $key);
 }
 

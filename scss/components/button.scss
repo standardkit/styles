@@ -4,7 +4,7 @@
   @include default-elevation();
   @include default-text-size();
   @include default-padding();
-  @include default-margin(xs);
+  @include default-margin();
   border: 2px solid;
 
   &:hover {

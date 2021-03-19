@@ -1,0 +1,6 @@
+@each $key, $value in $widths {
+  .width--#{$key} {
+    width: 100%;
+    max-width: $value;
+  }
+}

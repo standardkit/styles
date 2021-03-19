@@ -1,0 +1,35 @@
+.card-layout__container {
+  background-color: get-color(primary); // TODO : Configure
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .card-layout {
+    position: relative;
+    top: -10%;
+    align-items: center;
+    display: inline-flex;
+    flex-direction: column;
+    flex-grow: 1;
+    @include default-margin();
+    @include default-width(l);
+
+    &__brand, &__footer {
+      color: get-color(primary, contrast); // TODO : Configure
+    }
+
+    &__content {
+      width: 100%;
+      background-color: get-color(text, contrast);
+      @include default-corner();
+      @include default-elevation();
+      @include default-text-size();
+      @include default-padding();
+      @include default-margin();
+    }
+  }
+}
+

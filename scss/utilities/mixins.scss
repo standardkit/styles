@@ -38,7 +38,6 @@
   }
 }
 
-
 @mixin default-text-size($default-text-size: 'm') {
   @if map-has-key($text-sizes, $default-text-size) {
     &:not([class*='text-size--']) {
@@ -47,11 +46,18 @@
   }
 }
 
-
 @mixin default-padding($default-padding: 'm') {
   @if map-has-key($paddings, $default-padding) {
     &:not([class*='padding--']) {
       @extend .padding--#{$default-padding};
+    }
+  }
+}
+
+@mixin default-width($default-width: 'm') {
+  @if map-has-key($widths, $default-width) {
+    &:not([class*='width--']) {
+      @extend .width--#{$default-width};
     }
   }
 }

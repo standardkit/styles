@@ -14,7 +14,8 @@
     display: inline-flex;
     flex-direction: column;
     flex-grow: 1;
-    max-width: 32rem;
+    @include default-margin();
+    @include default-width(l);
 
     &__brand, &__footer {
       color: get-color(primary, contrast); // TODO : Configure

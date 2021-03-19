@@ -3,8 +3,10 @@
   @include default-corner();
   @include default-text-size();
   @include default-text-margin();
+  @include default-width(s);
   border: 2px solid rgba(get-color(text), 10%);
-  background-color: get-color(text, contrast);
+  background-color: rgba(get-color(text), 3%);
   color: get-color(text);
-  width: 100%; // TODO : Make configurable width directive
+  display: inline-flex;
+  flex-direction: row;
 }

@@ -10,9 +10,9 @@
 @function generate-contrast-color($color) {
   $inverted-color: invert($color);
   @if is-bright($color) {
-    @return hsl(hue($inverted-color), saturation($inverted-color), 1%); // Very dark
+    @return hsl(hue($inverted-color), saturation($inverted-color), 2%); // Very dark
   } @else {
-    @return hsl(hue($inverted-color), saturation($inverted-color), 99%); // Very light
+    @return hsl(hue($inverted-color), saturation($inverted-color), 98%); // Very light
   }
 }
 
@@ -51,6 +51,13 @@
   @return $brightness;
 }
 
+$theme-dark: false !default;
+$magic-number: 42%; // Threshold for dark or light contrast
+
 @function is-bright($color) {
-  @return get-brightness($color) > 58%;
+  $threshold: 100% - $magic-number;
+  @if $theme-dark == true {
+    $threshold: $magic-number;
+  }
+  @return get-brightness($color) > $threshold;
 }

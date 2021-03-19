@@ -3,7 +3,8 @@
   @include default-corner();
   @include default-text-size();
   @include default-text-margin();
-  border: 2px solid get-color(border);
+  border: 2px solid rgba(get-color(text), 10%);
   background-color: get-color(text, contrast);
+  color: get-color(text);
   width: 100%; // TODO : Make configurable width directive
 }

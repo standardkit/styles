@@ -22,7 +22,7 @@
 
     &__content {
       width: 100%;
-      background-color: get-color(background);
+      background-color: get-color(text, contrast);
       @include default-corner();
       @include default-elevation();
       @include default-text-size();

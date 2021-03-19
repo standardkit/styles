@@ -3,7 +3,7 @@
   position: fixed;
   width: 100%;
   height: 100%;
-  background-color: rgba(get-color(contrast), .3);
+  background-color: rgba(get-color(text), .3);
   left: 0;
   top: 0;
   z-index: 10; // TODO : Put in list and make configurable
@@ -15,15 +15,14 @@
 .modal {
   position: relative;
   top: -10%; // TODO : Make configurable
-  background: get-color(background);
+  background: get-color(text, contrast); // TODO : Make configurable
   min-width: 24rem;
   @include default-corner();
   @include default-elevation();
   @include default-text-size();
 
-
   .modal__content {
-    border-top: 1px solid get-color(border);
+    border-top: 1px solid rgba(get-color(text), 10%);
   }
 }
 
@@ -33,5 +32,6 @@
 
 .modal__close {
   font-size: 1.5em;
+  color: get-color(text);
   padding: get-padding-y();
 }

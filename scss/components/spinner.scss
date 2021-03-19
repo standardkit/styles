@@ -28,12 +28,7 @@
     @each $fill, $fill-map in $fill-types {
       &.fill--#{$fill} {
         .spinner {
-          $key: map-get($fill-map, background);
-          @if $key == none {
-            border-color: transparent;
-          } @else {
-            border-color: get-color(primary, $key);
-          }
+          border-color: get-color(primary, map-get($fill-map, background));
           border-top-color: get-color(primary, map-get($fill-map, text));
         }
       }
@@ -61,8 +56,8 @@
         background-color: transparent;
 
         .spinner {
-          border-color: map-get($color-map, map-get($fill-map, background));
-          border-top-color: map-get($color-map, map-get($fill-map, text));
+          border-color: get-color($color, map-get($fill-map, background));
+          border-top-color: get-color($color, map-get($fill-map, text));
         }
       }
     }

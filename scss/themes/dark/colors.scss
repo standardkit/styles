@@ -1,16 +1,7 @@
 @import '../default/colors';
 
-// TODO : Implement after default theme is more stable
-
-$theme-dark: #1f1f1f;
-
 $theme-colors: (
-  error: (primary: #ff5252, secondary: #3a2524, contrast: $theme-dark),
-  warning: (primary: #FF9800, secondary: #392c1f, contrast: $theme-dark),
-  success: (primary: #4CAF50, secondary: #252f25, contrast: $theme-dark),
-  info: (primary: #2196f3, secondary: #557da4, contrast: $theme-dark),
-  primary: (primary: #2196f3, secondary: #557da4, contrast: $theme-dark),
-  contrast: $theme-dark,
-  background: $theme-dark,
-  text: #ebebeb
+  text: whitesmoke
 );
+
+$theme-dark: true;

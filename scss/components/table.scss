@@ -7,7 +7,7 @@
 
   &--striped {
     td {
-      border-bottom: 1px solid get-color(border);
+      border-bottom: 1px solid rgba(get-color(text), 10%);
     }
   }
 
@@ -20,7 +20,7 @@
 
   thead {
     td, th {
-      border-bottom: 1px solid get-color(border);
+      border-bottom: 1px solid rgba(get-color(text), 10%);
       @extend .font--title;
       font-weight: bold;
     }

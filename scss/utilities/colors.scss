@@ -1,4 +1,5 @@
-/* Color Generation */
+// TODO : Advanced options, parameterize the thresholds and weights for color generation
+
 @function generate-complement-color($color) {
   @if is-bright($color) {
     @return hsl(hue($color), saturation($color), 7%); // Darker
@@ -17,10 +18,12 @@
 }
 
 @function generate-color-set($color) {
+  $complement: generate-complement-color($color);
   @return (
     main: $color,
-    complement: generate-complement-color($color),
-    contrast: generate-contrast-color($color)
+    contrast: generate-contrast-color($color),
+    complement: $complement,
+    complement-contrast: generate-contrast-color($complement)
   );
 }
 
@@ -32,26 +35,33 @@
       @if not map-has-key($color, main) {
         @error 'Key "main" not defined in map "#{$key}"';
       }
+      @if not map-has-key($color, contrast) {
+        $contrast: generate-contrast-color(map-get($color, main));
+        $color: map-merge($color, (complement: $contrast));
+      }
       @if not map-has-key($color, complement) {
         $complement: generate-complement-color(map-get($color, main));
         $color: map-merge($color, (complement: $complement));
       }
-      @if not map-has-key($color, contrast) {
-        $contrast: generate-contrast-color(map-get($color, main));
-        $color: map-merge($color, (complement: $contrast));
+      @if not map-has-key($color, complement-contrast) {
+        $complement-contrast: generate-contrast-color(map-get($color, complement));
+        $color: map-merge($color, (complement-contrast: $complement-contrast));
       }
     }
   }
   @return $color-sets;
 }
 
+// TODO : Parameterize weights for brightness calculation
 @function get-brightness($color) {
   $weighted-sum: (.229 * red($color)) + (.587 * green($color)) + (.119 * blue($color));
   $brightness: percentage($weighted-sum / 255);
   @return $brightness;
 }
 
+// TODO : Get from options
 $theme-dark: false !default;
+// TODO : Parameterize threshold for contrast recognition
 $magic-number: 42%; // Threshold for dark or light contrast
 
 @function is-bright($color) {

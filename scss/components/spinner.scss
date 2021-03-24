@@ -17,14 +17,14 @@
     -webkit-animation: spin 1s ease-in-out infinite;
   }
 
-  &:not([class*='fill--']):not([class*='spinner--']) {
+  &:not([class*=fill--]):not([class*=spinner--]) {
     .spinner {
       border-color: get-color(primary, complement);
       border-top-color: get-color(primary);
     }
   }
 
-  &[class*='fill--']:not([class*='spinner--']) {
+  &[class*=fill--]:not([class*=spinner--]) {
     @each $fill, $fill-map in $fill-types {
       &.fill--#{$fill} {
         .spinner {
@@ -35,7 +35,7 @@
     }
   }
 
-  &[class*='spinner--']:not([class*='fill--']) {
+  &[class*=spinner--]:not([class*=fill--]) {
     background-color: transparent;
     @each $type, $color-map in $colors {
       &.spinner--#{$type} {

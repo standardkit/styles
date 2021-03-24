@@ -1,4 +1,3 @@
-/* Copied from https://medium.com/@pentzzsolt/a-non-destructive-map-merge-function-for-sass-f91637f87b2e */
 @function map-deep-merge($parent-map, $child-map) {
   $result: $parent-map;
   @each $key, $value in $child-map {
@@ -17,7 +16,9 @@
   @return type-of($variable) == 'map';
 }
 
-/* Easy Access */
+// Easy Access
+// TODO : Find a better place for these functions
+
 @function get-color($color: primary, $key: main) {
   @if $key == none {
     @return transparent;
@@ -37,6 +38,7 @@
   @return map-get($paddings, $padding);
 }
 
+// TODO : Refactor this with new theme setup
 @function get-padding-x($size: m) {
   $padding: map-get($paddings, $size);
   @return nth($padding, 2);

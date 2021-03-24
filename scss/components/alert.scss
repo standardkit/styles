@@ -6,6 +6,7 @@
   @include default-corner();
   @include default-padding();
   @include default-margin(vertical-m);
+  @include default-elevation(s); // TODO : Configure & tweak elevations
 
   .alert__content {
     flex-grow: 1;

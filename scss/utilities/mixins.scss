@@ -1,10 +1,11 @@
+// TODO : Refactor this
 @mixin type-color-fill($default-type, $default-fill, $prefix) {
-  /* Fill styles */
-  &:not([class*='#{$prefix}--']) {
+  // Fill Styles
+  &:not([class*=#{$prefix}--]) {
     @extend .fill--#{$default-type}--#{$default-fill};
   }
   @each $fill in map-keys($fill-types) {
-    &.fill--#{$fill}:not([class*='#{$prefix}--']) {
+    &.fill--#{$fill}:not([class*=#{$prefix}--]) {
       @extend .fill--#{$default-type}--#{$fill} !optional;
     }
   }
@@ -12,7 +13,7 @@
   @each $color in map-keys($colors) {
     @each $fill in map-keys($fill-types) {
 
-      &--#{$color}:not([class*='fill--']) {
+      &--#{$color}:not([class*=fill--]) {
         @extend .fill--#{$color}--#{$default-fill} !optional;
       }
       &--#{$color}.fill--#{$fill} {
@@ -24,7 +25,7 @@
 
 @mixin default-corner($default-corner: 'm') {
   @if map-has-key($corners, $default-corner) {
-    &:not([class*='corner--']) {
+    &:not([class*=corner--]) {
       @extend .corner--#{$default-corner};
     }
   }
@@ -32,7 +33,7 @@
 
 @mixin default-elevation($default-elevation: 'm') {
   @if map-has-key($elevations, $default-elevation) {
-    &:not([class*='elevation--']) {
+    &:not([class*=elevation--]) {
       @extend .elevation--#{$default-elevation};
     }
   }
@@ -40,7 +41,7 @@
 
 @mixin default-text-size($default-text-size: 'm') {
   @if map-has-key($text-sizes, $default-text-size) {
-    &:not([class*='text-size--']) {
+    &:not([class*=text-size--]) {
       @extend .text-size--#{$default-text-size};
     }
   }
@@ -48,7 +49,7 @@
 
 @mixin default-padding($default-padding: 'm') {
   @if map-has-key($paddings, $default-padding) {
-    &:not([class*='padding--']) {
+    &:not([class*=padding--]) {
       @extend .padding--#{$default-padding};
     }
   }
@@ -56,7 +57,7 @@
 
 @mixin default-width($default-width: 'm') {
   @if map-has-key($widths, $default-width) {
-    &:not([class*='width--']) {
+    &:not([class*=width--]) {
       @extend .width--#{$default-width};
     }
   }
@@ -64,7 +65,7 @@
 
 @mixin default-margin($default-margin: 'm') {
   @if map-has-key($margins, $default-margin) {
-    &:not([class*='margin--']) {
+    &:not([class*=margin--]) {
       @extend .margin--#{$default-margin};
     }
   }
@@ -72,7 +73,7 @@
 
 @mixin default-text-margin($default-text-margin: 'm') {
   @if map-has-key($text-margins, $default-text-margin) {
-    &:not([class*='text-margin--']) {
+    &:not([class*=text-margin--]) {
       @extend .text-margin--#{$default-text-margin};
     }
   }

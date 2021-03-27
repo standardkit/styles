@@ -1,21 +1,2 @@
-$theme-colors: () !default; // Supplied by user imported theme
-$colors: () !default; // Custom overrides created by user
-
-// Map the user colors onto the user supplied theme
-$colors: map-deep-merge($theme-colors, $colors);
-
-// Import the default theme
-@use '../themes/default/colors' as theme;
-
-// Map user configuration onto default theme
-$colors: map-deep-merge(theme.$theme-colors, $colors);
-
-// Create the full sets where hex values are provided
-$colors: complete-color-sets($colors);
-
-$fill-types: (
-  plain: (text: main, background: complement, border: complement),
-  fill: (text: contrast, background: main, border: main),
-  outline: (text: main, background: none, border: main),
-  contrast: (text: main, background: contrast, border: main)
-);
+// TODO : complete all the color sets
+// maybe merge into 1 configuration and 1 processing step/file?

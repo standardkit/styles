@@ -1,10 +1,13 @@
-// TODO : Normalize configuration/theme input
-$themes: () !default; // TODO : Implement
+@import 'utilities/static';
+@import 'configuration';
 
+// Reset html basics
 @import 'reset';
 
-// TODO : Do this for each theme
-@import 'utilities';
-@import 'configuration';
-@import 'partials';
-@import 'components';
+//@each $theme, $configuration in $themes {
+//  // TODO : Fix with proper configuration objects, import first all functions then use huge mixins per theme :(
+//  //@import 'utilities';
+//  @import 'configuration';
+//  @import 'partials';
+//  @import 'components';
+//}

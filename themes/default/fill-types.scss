@@ -1,0 +1,6 @@
+$fill-types: (
+  plain: (text: main, background: complement, border: complement),
+  fill: (text: contrast, background: main, border: main),
+  outline: (text: main, background: none, border: main),
+  contrast: (text: main, background: contrast, border: main)
+);

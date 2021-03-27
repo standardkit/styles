@@ -11,13 +11,15 @@
   // TODO: Temporary solution
   .brand {
     display: flex;
+    align-items: center;
+    font-size: 1.2rem; // TODO : Configurable
 
     .image {
-      height: 1.375rem;
-      margin-right: .7rem;
+      height: 1.7em; // TODO : Based on line-height
+      margin-right: 1em; // TODO : Configurable
     }
   }
 
-  @include type-color-fill(primary, fill, navigation-bar);
+  @include type-color-fill(primary, fill, navigation-bar); // TODO : Configurable
 }
 

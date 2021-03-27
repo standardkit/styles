@@ -1,4 +1,4 @@
-$theme-breakpoints: (
+$breakpoints: (
   xs: 0,
   s: 576px,
   m: 768px,
@@ -6,3 +6,4 @@ $theme-breakpoints: (
   xl: 1200px,
   xxl: 1400px
 );
+// TODO : Investigate if we should use rem

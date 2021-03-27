@@ -1,9 +1,9 @@
 // TODO : Make attr/class that people can set on the html to make it optional
-html, body {
+html, body { // TODO : Put this on the .theme-- class.
   background-color: get-color(text, contrast);
   color: get-color(text);
 }
 
-.full-width {
+.full-width { // TODO : Put this in .width--full
   width: 100%;
 }

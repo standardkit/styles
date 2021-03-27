@@ -1,0 +1,54 @@
+// Flat Configuration
+$base: () !default;
+
+$colors: () !default;
+$color-options: () !default;
+
+$fill-types: () !default;
+$fill-type-options: () !default;
+
+$elevations: () !default;
+$elevation-options: () !default;
+
+$margins: () !default;
+$margin-options: () !default;
+
+$paddings: () !default;
+$padding-options: () !default;
+
+$sizes: () !default;
+$size-options: () !default;
+
+$widths: () !default;
+$width-options: () !default;
+
+$corners: () !default;
+$corner-options: () !default;
+
+$borders: () !default;
+$border-options: () !default;
+
+$focus-types: () !default;
+$focus-options: () !default;
+
+$disabled-types: () !default;
+$disabled-options: () !default;
+
+$options: () !default;
+$modifiers: () !default;
+$components: () !default;
+
+// Single Theme
+$configuration: () !default;
+
+// Multi Theme
+$themes: (default: (base: 'default')) !default;
+
+$configuration: map-deep-merge($configuration, (
+  base: $base,
+  options: $options,
+  modifiers: $modifiers,
+  components: $components
+));
+
+$themes: map-deep-merge($themes, (default: $configuration));

@@ -1,4 +1,4 @@
-$theme-margins: (
+$margins: (
   none: 0,
   xs: .5em .8em,
   s: .65em 1em,
@@ -13,3 +13,4 @@ $theme-margins: (
   vertical-xl: 1.6em 0,
   vertical-xxl: 2em 0
 );
+// TODO : Investigate if we should drop the vertical versions

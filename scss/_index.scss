@@ -2,7 +2,7 @@
 @import 'configuration';
 
 // Reset html basics
-@import 'reset';
+@import 'reset'; // TODO : Convert to mixin or @use
 
 //@each $theme, $configuration in $themes {
 //  // TODO : Fix with proper configuration objects, import first all functions then use huge mixins per theme :(

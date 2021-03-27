@@ -24,11 +24,13 @@ $options: (
 ```scss
 $options: (
   flavors : (),
-  default-flavor: '',
-  use-flavors : 'single' | 'basic' | 'all',
-  exclude-flavors: [],
-  include-flavors: [],
-  merge-flavor: 'merge' | 'replace'
+  flavor-options: (
+    default: '',
+    use: 'single' | 'basic' | 'all',
+    exclude: [],
+    include: [],
+    merge: 'merge' | 'replace'
+  )
 )
 ```
 
@@ -63,9 +65,9 @@ elevation |
 - padding
 - size
 - width
-
 - corner
 - border
+  
 - capitalization
 - focus
 - hover

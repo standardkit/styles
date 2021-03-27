@@ -1,0 +1,43 @@
+@each $theme-name, $theme in $themes {
+map-set($themes, $theme-name, flatten-theme($theme));
+}
+
+// TODO : Add basic, single options in value
+$configurable-flavors: [
+  color,
+  fill-type,
+  elevation,
+  margin,
+  padding,
+  size,
+  width,
+  corner,
+  border,
+  focus-type,
+  disabled-type
+];
+
+@function flatten-theme($theme: ()) {
+  $flatTheme: ();
+  @each $flavor in $configurable-flavors {
+    // first grab from the use
+    // Based on inclusivity / options, merge with base and with default
+    // TODO : Default after: check if it exists, otherwise grab the first one that does.
+  }
+
+}
+
+/** TODO : Remove when done with flatten function
+
+$options: (
+  flavors : (),
+  flavor-options: (
+    default: '',
+    use: 'single' | 'basic' | 'all',
+    exclude: [],
+    include: [],
+    merge: 'merge' | 'replace'
+  )
+)
+
+ */

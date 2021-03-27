@@ -1,3 +1,8 @@
-// Main configuration
-@import 'theme';
+// Normalize all different ways of input into unified $themes object
+@import 'normalize';
+
+// Merge user options onto theme base onto default theme base using provided options
+@import 'flatten';
+
+
 @import 'colors';

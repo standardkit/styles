@@ -1,3 +1,5 @@
+@use '../../themes/default' as defaultTheme;
+
 // Flat Configuration
 $base: () !default;
 
@@ -42,7 +44,7 @@ $components: () !default;
 $configuration: () !default;
 
 // Multi Theme
-$themes: (default: (base: 'default')) !default;
+$themes: (default: (base: defaultTheme)) !default;
 
 $configuration: map-deep-merge($configuration, (
   base: $base,

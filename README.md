@@ -71,6 +71,7 @@ elevation |
 - corner
 - border
   
+### Non-Flavorable Modifiers
 - capitalization
 - focus
 - hover

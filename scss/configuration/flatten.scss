@@ -1,10 +1,22 @@
-// TODO : What if no modifiers? omit the whole thing? make special option for it now not allow it.
+@use '../../themes/default' as default-theme;
 
+// Iterate through all themes, apply default base and flatten / process the configuration
 @each $theme-name, $theme in $themes {
-map-set($themes, $theme-name, flatten-theme($theme));
+
+  // Apply base on top of default theme
+  // TODO : Make base merging optional and also use the same merge rules, recursive until base == theme
+  $base: map-get-default($theme, base);
+  $base: map-deep-merge(default-theme, $base);
+  map-set($theme, #{$theme-name}, $base);
+
+map-set($themes, #{$theme-name}, flatten-theme($theme));
 }
 
-$configurable-modifier: (
+// includes the modifiers to which you can not add custom flavors
+$all-modifiers: [ color, fill-type, elevation, margin, padding, size, width, corner, border, breakpoints, focus-type,
+                 disabled-type, capitalization, focus, hover, disabled, active, alignment, position, highlight ];
+
+$configurable-modifiers: (
   color: (
     basic:error warning success info primary text,
     minimal: text primary
@@ -50,28 +62,28 @@ $configurable-modifier: (
 );
 
 @function flatten-theme($theme) {
-  $flatTheme: ();
+  $flat-theme: ();
   $base: map-get-default($theme, base);
-  $flatTheme: map-deep-merge($flatTheme, flatten-with-base($base, $theme, options));
-  $flatTheme: map-deep-merge($flatTheme, flatten-modifiers($base, $theme));
-  $flatTheme: map-deep-merge($flatTheme, flatten-with-base($base, $theme, components)); // TODO : Check all the values if they exist or get first one
+  $flat-theme: map-set($flat-theme, options, flatten-options($base, $theme));
+  $flat-theme: map-deep-merge($flat-theme, flatten-modifiers($base, $theme));
+  $flat-theme: map-set($flat-theme, components, flatten-components($base, $theme, $flat-theme));
 }
 
-@function flatten-with-base($base, $theme, $key) {
-  @return (#{$key}: map-deep-merge(map-get-default($base, $key), map-get-default($theme, $key)));
+// Merge options from the base theme
+@function flatten-options($base, $theme) {
+  @return map-deep-merge(map-get-default($base, options), map-get-default($theme, options));
 }
 
 @function flatten-modifiers($base, $theme) {
   $map: ();
-  @each $modifier, $modifier-sets in $configurable-modifier {
-
+  @each $modifier, $modifier-sets in $configurable-modifiers {
     $base-modifiers: get-modifiers($base, $modifier);
     $user-modifiers: get-modifiers($theme, $modifier);
     $theme-options: map-get-default($theme, options);
     $modifier-options: get-modifier-options($theme, $modifier);
+    $modifier-options: get-modifier-options($theme, $modifier);
     $flattened-modifiers: flatten-modifier($base-modifiers, $modifier-sets, $user-modifiers, $theme-options, $options);
     $default-modifier: get-default-modifier($flattened-modifiers, $modifier-options);
-
     $map: map-deep-merge($map, (
       #{$modifier}s: $flattened-modifiers,
       default-#{$modifier}: $default-modifier
@@ -111,6 +123,24 @@ $configurable-modifier: (
     @return nth($modifiers, 1);
   }
   @return '';
+}
+
+@function flatten-components($base, $theme, $flat-theme) {
+  // Merge theme with base components
+  $components: map-deep-merge(map-get-default($base, components), map-get-default($theme, components));
+  // Check every component/modifier combination
+  @each $component-key, $component in $components { // For each component setting
+    @each $modifier in $all-modifiers { // For each possible modifier
+      $flat-modifiers: map-get-default($flat-theme, #{$modifier}s); // The modifiers after processing
+      $default: map-get($components, default-#{$modifier}); // Get the default set in the component configuration
+      @if not in-list($default, map-keys($flat-modifiers)) { // If that default key does not exist
+        @if length($flat-modifiers) > 0 { // Check if the modifier has values at all
+          @return nth($flat-modifiers, 1); // Set default to the first modifier possible
+        }
+        @return ''; // Default to empty when modifier does not have any possible value
+      }
+    }
+  }
 }
 
 @function get-base-theme($theme) {

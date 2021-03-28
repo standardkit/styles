@@ -39,6 +39,14 @@
   @return $new-map;
 }
 
+@function in-list($key, $list) {
+  @return index($list, $key) == true;
+}
+
+@function map-set($map, $key, $value) {
+  @return map-merge($map, (#{$key}: $value));
+}
+
 @function is-map($variable) {
   @return type-of($variable) == 'map';
 }

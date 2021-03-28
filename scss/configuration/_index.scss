@@ -1,8 +1,3 @@
-// Normalize all different ways of input into unified $themes object
-@import 'normalize';
-
-// Merge user options onto theme base onto default theme base using provided options
-@import 'flatten';
-
-
-@import 'colors';
+// Check format
+@import 'normalize'; // Normalize all different ways of input into unified $themes object
+@import 'flatten'; // Merge user options onto theme base onto default theme base using configured options

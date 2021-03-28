@@ -1,2 +1,10 @@
 // TODO : complete all the color sets
-// maybe merge into 1 configuration and 1 processing step/file?
+
+
+@each $theme-name, $theme in $themes {
+
+  $colors: map-get-default($theme, colors);
+
+  make-complete-color-sets();
+  //complete-color-sets();
+}

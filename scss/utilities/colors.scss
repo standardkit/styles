@@ -1,3 +1,5 @@
+// TODO : move settings to functions
+
 // Color Value Percentages (shade, tint)
 $default-value-percentage: 50% !default;
 $complement-value-percentage: 7% !default;
@@ -44,10 +46,10 @@ $prefer-dark-colors: false !default;
   );
 }
 
-@function complete-color-sets($color-sets) {
-  @each $key, $color in $color-sets {
+@function complete-color-sets($colors) {
+  @each $key, $color in $colors {
     @if not is-map($color) {
-      $color-sets: map-deep-merge($color-sets, ($key: generate-color-set($color)));
+      $colors: map-deep-merge($colors, ($key: generate-color-set($color)));
     } @else {
       @if not map-has-key($color, main) {
         // TODO : Calculate main based on complement if possible
@@ -67,7 +69,7 @@ $prefer-dark-colors: false !default;
       }
     }
   }
-  @return $color-sets;
+  @return $colors;
 }
 
 @function get-brightness($color) {

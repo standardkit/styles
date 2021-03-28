@@ -70,6 +70,7 @@ $configurable-modifiers: (
 }
 
 // Merge options from the base theme
+// TODO : Remove/unset merge settings
 @function flatten-options($base, $theme) {
   @return map-deep-merge(map-get-default($base, options), map-get-default($theme, options));
 }

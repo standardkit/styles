@@ -19,6 +19,26 @@
   @return $value;
 }
 
+@function map-exclude-keys($map, $keys: []) {
+  $new-map: ();
+  @each $key, $value in $map {
+    @if not index($keys, $key) {
+      $new-map: map-merge($new-map, (#{$key}: $value));
+    }
+  }
+  @return $new-map;
+}
+
+@function map-filter-keys($map, $keys: []) {
+  $new-map: ();
+  @each $key in $keys {
+    @if map-has-key($map, $key) {
+      $new-map: map-merge($new-map, (#{$key}: map-get($map, $key)));
+    }
+  }
+  @return $new-map;
+}
+
 @function is-map($variable) {
   @return type-of($variable) == 'map';
 }

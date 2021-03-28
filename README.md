@@ -11,8 +11,11 @@ SCSS Framework for the StandardKit Design & Component System
 
 ```scss
 $options: (
-  dark-color-generation: false, // TODO : more from color utility config
-  include-fonts : false
+  // TODO : more from color utility config
+  dark-color-generation: true or false, // default: false 
+  include-fonts : true or false, // default: true
+  merge-modifiers: 'replace' or 'merge', // default: merge
+  modifier-sets: 'minimal' or 'basic' or 'all' // default: all
 )
 ```
 
@@ -26,7 +29,7 @@ $options: (
   flavors : (),
   flavor-options: (
     default: '',
-    use: 'single' | 'basic' | 'all',
+    set: 'minimal' | 'basic' | 'all',
     exclude: [],
     include: [],
     merge: 'merge' | 'replace'

@@ -25,11 +25,11 @@ $configurable-modifier: (
     basic: none s m l,
     minimal: m
   ),
-  size: (
+  size: (// TODO : Split up size?
     basic: s m l,
     minimal: m
   ),
-  width: (
+  width: (// TODO : Split up width?
     basic: s m l full,
     minimal: m
   ),
@@ -41,16 +41,20 @@ $configurable-modifier: (
     basic: none s m l,
     minimal: m
   ),
-  focus-type: (),
-  disabled-type: ()
+  breakpoints: (
+    basic: start s m l,
+    minimal: start m
+  ),
+  focus-type: (), // TODO : Implement
+  disabled-type: () // TODO : Implement
 );
 
 @function flatten-theme($theme) {
   $flatTheme: ();
   $base: map-get-default($theme, base);
   $flatTheme: map-deep-merge($flatTheme, flatten-with-base($base, $theme, options));
-  $flatTheme: map-deep-merge($flatTheme, flatten-with-base($base, $theme, components)); // TODO : Check all the values if they exist
   $flatTheme: map-deep-merge($flatTheme, flatten-modifiers($base, $theme));
+  $flatTheme: map-deep-merge($flatTheme, flatten-with-base($base, $theme, components)); // TODO : Check all the values if they exist or get first one
 }
 
 @function flatten-with-base($base, $theme, $key) {
@@ -73,23 +77,26 @@ $configurable-modifier: (
       default-#{$modifier}: $default-modifier
     ));
   }
+  @return $map;
 }
 
 @function flatten-modifier($base-modifiers, $modifier-sets, $user-modifiers, $theme-options, $options) {
-  @if map-get($options, merge) == replace {
+  @if map-get($options, merge) == replace or map-get($theme-options, merge-modifiers) == replace {
     @return $user-modifiers;
   }
+  $set: map-get($options, set);
+  $set: map-get($theme-options, modifier-sets) !default;
+  $set: all !default;
 
-  // TODO : first grab from the use
-  // TODO : if includes is set, grab those on top of the use
-  // TODO : exclude all excludes
-  // TODO : merge with base
+  @if $set != all {
+    $keys: map-get-default($modifier-sets, $set);
+    $keys: join($keys, map-get-default($options, include));
+    $base-modifiers: map-filter-keys($base-modifiers, $keys);
+  }
+  $exclude: map-get-default($options, exclude);
+  $base-modifiers: map-exclude-keys($base-modifiers, $exclude);
 
-  // TODO : Remove when done with flatten function
-  //modifier-options: (
-  //  use: 'minimal' | 'basic' | 'all',
-  //  exclude: [],
-  //  include: []
+  @return map-merge($base-modifiers, $user-modifiers);
 }
 
 @function get-default-modifier($modifiers, $modifier-options, $base-modifier-options) {

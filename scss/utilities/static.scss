@@ -12,6 +12,13 @@
   @return $result;
 }
 
+@function map-get-default($map, $key, $default: ()) {
+  $value: map-get($map, $key);
+  $value: $default !default;
+
+  @return $value;
+}
+
 @function is-map($variable) {
   @return type-of($variable) == 'map';
 }

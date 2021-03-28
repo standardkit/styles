@@ -54,3 +54,5 @@ $configuration: map-deep-merge($configuration, (
 ));
 
 $themes: map-deep-merge($themes, (default: $configuration));
+
+// TODO : Base each theme on default theme

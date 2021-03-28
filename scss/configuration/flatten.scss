@@ -59,13 +59,13 @@ $configurable-modifier: (
 
 @function flatten-modifiers($base, $theme) {
   $map: ();
-  @each $modifier in $configurable-modifier {
+  @each $modifier, $modifier-sets in $configurable-modifier {
 
     $base-modifiers: get-modifiers($base, $modifier);
     $user-modifiers: get-modifiers($theme, $modifier);
     $theme-options: map-get-default($theme, options);
     $modifier-options: get-modifier-options($theme, $modifier);
-    $flattened-modifiers: flatten-modifier($base-modifiers, $user-modifiers, $theme-options, $options);
+    $flattened-modifiers: flatten-modifier($base-modifiers, $modifier-sets, $user-modifiers, $theme-options, $options);
     $default-modifier: get-default-modifier($flattened-modifiers, $modifier-options);
 
     $map: map-deep-merge($map, (
@@ -75,32 +75,21 @@ $configurable-modifier: (
   }
 }
 
-@function flatten-modifier($base-modifiers, $user-modifiers, $theme-options, $options) {
+@function flatten-modifier($base-modifiers, $modifier-sets, $user-modifiers, $theme-options, $options) {
   @if map-get($options, merge) == replace {
     @return $user-modifiers;
   }
 
-  // TODO : Implement
-  // first grab from the use
-  // if includes is set, grab only those
-  // exclude all excludes
-  // Based on inclusivity / options, merge with base and with default
-  // TODO : Default after: check if it exists, otherwise grab the first one that does.
+  // TODO : first grab from the use
+  // TODO : if includes is set, grab those on top of the use
+  // TODO : exclude all excludes
+  // TODO : merge with base
 
-  /** TODO : Remove when done with flatten function
-
-  $options: (
-    modifier : (),
-    modifier-options: (
-      default: '',
-      use: 'single' | 'basic' | 'all',
-      exclude: [],
-      include: [],
-      merge: 'merge' | 'replace'
-    )
-  )
-
-   */
+  // TODO : Remove when done with flatten function
+  //modifier-options: (
+  //  use: 'minimal' | 'basic' | 'all',
+  //  exclude: [],
+  //  include: []
 }
 
 @function get-default-modifier($modifiers, $modifier-options, $base-modifier-options) {

@@ -1,5 +1,5 @@
 // Create extendable classes for each color & fill combination
-@mixin mix-colors($colors: ()) {
+@mixin mix-colors($colors, $fill-types) {
   @each $color, $color-set in $colors {
     @each $fill, $fill-color-keys in $fill-types {
       .fill--#{$color}--#{$fill} {

@@ -1,8 +1,8 @@
-@mixin theme($configuration: ()) {
+@mixin theme($theme: ()) {
   // TODO : Implement
   // Add all sub-mixins
-  @include mix-colors(map-get-default($configuration, colors));
-  @include mix-paddings(map-get-default($configuration, paddings)); // TODO : etc..
+  @include mix-colors(map-get-default($theme, colors), map-get-default($theme, fill-types));
+  @include mix-paddings(map-get-default($theme, paddings)); // TODO : etc..
 
   //  @import 'partials';
   //  @import 'components';

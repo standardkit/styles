@@ -1,8 +1,6 @@
 // Import the default theme to use as a fallback base
 @use '../../themes/default' as default-theme;
 
-$themes: () !default;
-
 // Iterate through all themes, apply default base and flatten / process the configuration
 @each $theme-name, $theme in $themes {
 
@@ -10,7 +8,9 @@ $themes: () !default;
   // TODO : Make base merging optional and also use the same merge rules, recursive until base == theme
   $base: map-get-default($theme, base);
   $base: map-deep-merge(default-theme.$theme-configuration, $base);
-  $theme: map-set($theme, $theme-name, $base); // Set the base
+
+  $theme: map-set($theme, base, $base); // Set the base
   $flat-theme: flatten-theme($theme);
-  $themes: map-set($themes, $theme-name, $flat-theme); // Flatten and save to the $themes object
+
+  $themes: map-set($themes, $theme-name, $theme); // Flatten and save to the $themes object
 }

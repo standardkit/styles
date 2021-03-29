@@ -13,6 +13,7 @@
 
 // For every theme, load all the styles
 @each $theme, $configuration in $themes {
+
   .theme--#{$theme} {
     @include theme($configuration);
   }

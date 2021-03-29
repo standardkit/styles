@@ -6,7 +6,7 @@ $all-modifiers: [ color, fill-type, elevation, margin, padding, size, width, cor
 // All the modifiers that can be configured and their configuration sets (basic, minimal)
 $configurable-modifiers: (
   color: (
-    basic:error warning success info primary text,
+    basic: error warning success info primary text,
     minimal: text primary
   ),
   fill-type: (
@@ -41,7 +41,7 @@ $configurable-modifiers: (
     basic: none s m l,
     minimal: m
   ),
-  breakpoints: (
+  breakpoint: (
     basic: start s m l,
     minimal: start m
   ),

@@ -22,6 +22,6 @@
   .navigation-title {
     @extend .font--title;
     color: get-color(primary); // TODO : Configure
-    margin: get-margin(vertical-m);
+    margin: get-margin(vertical-m); // TODO : Configure
   }
 }

@@ -1,34 +1,29 @@
-
-
-// Easy Access
-// TODO : Find a better place for these functions
-
-@function get-color($color: primary, $key: main) {
+@function get-color($colors:(), $color: primary, $key: main) {
   @if $key == none {
     @return transparent;
   }
   @return map-get(map-get($colors, $color), $key);
 }
 
-@function get-font($font: text) {
+@function get-font($fonts :(),$font: text) {
   @return map-get($fonts, $font);
 }
 
-@function get-margin($margin: m) {
+@function get-margin($margins:(), $margin: m) {
   @return map-get($margins, $margin);
 }
 
-@function get-padding($padding: m) {
+@function get-padding($paddings:(),$padding: m) {
   @return map-get($paddings, $padding);
 }
 
 // TODO : Refactor this with new theme setup
-@function get-padding-x($size: m) {
+@function get-padding-x($paddings:(),$size: m) {
   $padding: map-get($paddings, $size);
   @return nth($padding, 2);
 }
 
-@function get-padding-y($size: m) {
+@function get-padding-y($paddings:(), $size: m) {
   $padding: map-get($paddings, $size);
   @return nth($padding, 1);
 }

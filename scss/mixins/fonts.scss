@@ -1,0 +1,7 @@
+@mixin mix-fonts($fonts: ()) {
+  @each $key, $font in $fonts {
+    .font--#{$key} {
+      font-family: $font;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+// Create extendable classes for each color & fill combination
+@mixin mix-colors($colors: ()) {
+  @each $color, $color-set in $colors {
+    @each $fill, $fill-color-keys in $fill-types {
+      .fill--#{$color}--#{$fill} {
+        color: get-color($colors, $color, map-get($fill-color-keys, text));
+        border-color: get-color($color, map-get($fill-color-keys, border));
+        background-color: get-color($color, map-get($fill-color-keys, background));
+      }
+    }
+  }
+}
+
+// Extend the appropriate extendable class with color & fill combination
+@mixin color-fill($color, $fill) {
+  @extend .fill--#{$color}--#{$fill} !optional;
+}

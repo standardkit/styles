@@ -1,13 +1,23 @@
-@import 'utilities/static';
+// Import all the necessary tools
+@import 'utilities';
+@import 'mixins';
+
+// Get user input and process it to usable & predictable configuration
 @import 'configuration';
 
-// Reset html basics
-@import 'reset'; // TODO : Convert to mixin or @use
+// Reset formatting of html, needs to be done only once
+@include reset();
 
-//@each $theme, $configuration in $themes {
-//  // TODO : Fix with proper configuration objects, import first all functions then use huge mixins per theme :(
-//  //@import 'utilities';
-//  @import 'configuration';
-//  @import 'partials';
-//  @import 'components';
-//}
+// TODO : Add base mixin, that are needed for all the themes (based on config)
+
+// For every theme, load all the styles
+@each $theme, $configuration in $themes {
+  .theme--#{$theme} {
+    @include theme($configuration);
+  }
+}
+
+// If no theme is set, use the default theme
+&:not([class*=theme--]) {
+  @extend .theme--default;
+}

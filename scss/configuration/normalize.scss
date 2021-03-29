@@ -1,4 +1,4 @@
-// Flat Configuration
+// Flat Configuration: simplest level of input for the user
 $base: () !default;
 
 $colors: () !default;
@@ -37,16 +37,19 @@ $disabled-options: () !default;
 $breakpoints: () !default;
 $breakpoint-options: () !default;
 
-$options: () !default;
-$modifiers: () !default;
-$components: () !default;
+// TODO : Include modifiers that have only options to exclude flavors
 
-// Single Theme
+$options: () !default; // Global modifier settings and utility configuration
+$modifiers: () !default; // Extra modifier and how to merge with base modifiers
+$components: () !default; // Default modifier flavors for each component
+
+// Single Theme: Merged all the 'simple' options into one object
 $configuration: () !default;
 
-// Multi Theme
+// Multi Theme: Define a lot of themes at once
 $themes: (default: ()) !default;
 
+// Merge the simple options on top of the single configuration
 $configuration: map-deep-merge($configuration, (
   base: $base,
   options: $options,
@@ -54,4 +57,5 @@ $configuration: map-deep-merge($configuration, (
   components: $components
 ));
 
+// Merge the configuration on top of the default theme
 $themes: map-deep-merge($themes, (default: $configuration));

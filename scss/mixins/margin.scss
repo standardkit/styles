@@ -1,0 +1,15 @@
+@mixin mix-margins($margins: ()) {
+  @each $size, $margin in $margins {
+    .margin--#{$size} {
+      margin: $margin;
+    }
+  }
+}
+
+@mixin mix-text-margins($margins: ()) {
+  @each $size, $margin in $margins {
+    .text-margin--#{$size} {
+      margin: $margin;
+    }
+  }
+}

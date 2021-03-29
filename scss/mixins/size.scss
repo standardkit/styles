@@ -1,0 +1,7 @@
+@mixin mix-size ($sizes: ()){
+  @each $key, $size in $size {
+    .text-size--#{$key} {
+      font-size: $size;
+    }
+  }
+}

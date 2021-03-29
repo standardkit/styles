@@ -1,0 +1,6 @@
+.title,
+.subtitle {
+  @extend .font--title;
+  @include default-text-margin();
+  // TODO : Configurable padding & border
+}

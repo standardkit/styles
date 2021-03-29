@@ -23,7 +23,7 @@
   $new-map: ();
   @each $key, $value in $map {
     @if not index($keys, $key) {
-      $new-map: map-merge($new-map, (#{$key}: $value));
+      $new-map: map-set($new-map, $key, $value);
     }
   }
   @return $new-map;

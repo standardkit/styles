@@ -1,3 +1,4 @@
+// Import the default theme to use as a fallback base
 @use '../../themes/default' as default-theme;
 
 // Iterate through all themes, apply default base and flatten / process the configuration
@@ -7,15 +8,16 @@
   // TODO : Make base merging optional and also use the same merge rules, recursive until base == theme
   $base: map-get-default($theme, base);
   $base: map-deep-merge(default-theme, $base);
-  map-set($theme, #{$theme-name}, $base);
-
-map-set($themes, #{$theme-name}, flatten-theme($theme));
+  map-set($theme, $theme-name, $base); // Set the base
+  map-set($themes, $theme-name, flatten-theme($theme)); // Flatten and save to the $themes object
 }
 
 // includes the modifiers to which you can not add custom flavors
 $all-modifiers: [ color, fill-type, elevation, margin, padding, size, width, corner, border, breakpoints, focus-type,
                  disabled-type, capitalization, focus, hover, disabled, active, alignment, position, highlight ];
 
+// TODO : Add 'empty'/'none' feature to start with a clean slate (now only possible with exclude, very verbose)
+// All the modifiers that can be configured and their configuration sets (basic, minimal)
 $configurable-modifiers: (
   color: (
     basic:error warning success info primary text,
@@ -29,7 +31,7 @@ $configurable-modifiers: (
     basic: none s m l,
     minimal: m
   ),
-  margin: (
+  margin: ( // TODO : How about text-margins?
     basic: none s m l,
     minimal: m
   ),
@@ -75,6 +77,7 @@ $configurable-modifiers: (
   @return map-deep-merge(map-get-default($base, options), map-get-default($theme, options));
 }
 
+// For each modifier, create 'modifiers' and 'default-modifier' entries to be used in the theme map
 @function flatten-modifiers($base, $theme) {
   $map: ();
   @each $modifier, $modifier-sets in $configurable-modifiers {
@@ -93,6 +96,7 @@ $configurable-modifiers: (
   @return $map;
 }
 
+// Based on the 'modifier-options', select and merge flavors from base and merge with provided values
 @function flatten-modifier($base-modifiers, $modifier-sets, $user-modifiers, $theme-options, $options) {
   @if map-get($options, merge) == replace or map-get($theme-options, merge-modifiers) == replace {
     @return $user-modifiers;
@@ -112,6 +116,7 @@ $configurable-modifiers: (
   @return map-merge($base-modifiers, $user-modifiers);
 }
 
+// Checks if the preferred flavor is possible, otherwise default to the first possible flavor or '' if empty
 @function get-default-modifier($modifiers, $modifier-options, $base-modifier-options) {
   $key: map-get($modifier-options, default);
   $key: map-get($base-modifier-options, default) !default;

@@ -1,0 +1,7 @@
+@mixin mix-corners($corners: ()) {
+  @each $key, $border-radius in $corners {
+    .corner--#{$key} {
+      border-radius: $border-radius;
+    }
+  }
+}

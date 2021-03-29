@@ -99,15 +99,15 @@ $color-options: (
 }
 
 @function get-color-option($options, $key) {
-  $value: map-get($options, #{$key});
-  $value: map-get($color-options, #{$key}) !default;
+  $value: map-get($options, $key);
+  $value: map-get($color-options, $key) !default;
 
   @return $value;
 }
 
 @function get-weight($weights, $key) {
-  $weight: map-get($weights, #{$key});
-  $weight: map-get($brightness-weights, #{$key}) !default;
+  $weight: map-get($weights, $key);
+  $weight: map-get($brightness-weights, $key) !default;
 
   @return $weight;
 }

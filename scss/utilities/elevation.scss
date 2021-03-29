@@ -1,3 +1,5 @@
+// TODO : Extract variables for configuration
+
 @function get-elevation-umbra($elevation, $color, $opacity) {
   $elevation-umbra-color: rgba($color, $opacity);
 
@@ -51,8 +53,7 @@
   $penumbra-opacity: 0.14,
   $ambient-opacity: 0.12
 ) {
-  @return
-    get-elevation-umbra($elevation, $color, $umbra-opacity),
-    get-elevation-penumbra($elevation, $color, $penumbra-opacity),
-    get-elevation-ambient($elevation, $color, $ambient-opacity);
+  @return get-elevation-umbra($elevation, $color, $umbra-opacity),
+  get-elevation-penumbra($elevation, $color, $penumbra-opacity),
+  get-elevation-ambient($elevation, $color, $ambient-opacity);
 }

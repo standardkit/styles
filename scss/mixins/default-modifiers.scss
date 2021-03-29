@@ -1,23 +1,29 @@
-// TODO : Refactor this
-@mixin type-color-fill($default-type, $default-fill, $prefix) {
-  // Fill Styles
+@mixin type-color-fill($colors, $fill-types, $default-type, $default-fill, $prefix) {
+
+  // If type/color & fill are not set, use default color & fill
   &:not([class*=#{$prefix}--]) {
-    @extend .fill--#{$default-type}--#{$default-fill};
+    @include color-fill($default-type, $default-fill);
   }
+
+  // For each fill type, if type/color is not set, use default color
   @each $fill in map-keys($fill-types) {
     &.fill--#{$fill}:not([class*=#{$prefix}--]) {
-      @extend .fill--#{$default-type}--#{$fill} !optional;
+      @include color-fill($default-type, $fill);
     }
   }
 
+  // Fore each color, if fill is not set, use default fill
+  @each $color in map-keys($colors) {
+    &--#{$color}:not([class*=fill--]) {
+      @include color-fill($color, $default-fill);
+    }
+  }
+
+  // For each fill & color combination, use configured values
   @each $color in map-keys($colors) {
     @each $fill in map-keys($fill-types) {
-
-      &--#{$color}:not([class*=fill--]) {
-        @extend .fill--#{$color}--#{$default-fill} !optional;
-      }
       &--#{$color}.fill--#{$fill} {
-        @extend .fill--#{$color}--#{$fill} !optional;
+        @include color-fill($color, $fill);
       }
     }
   }

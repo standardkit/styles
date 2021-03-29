@@ -1,34 +1,41 @@
-// TODO : move settings to functions
-
 // Color Value Percentages (shade, tint)
 $default-value-percentage: 50% !default;
 $complement-value-percentage: 7% !default;
 $contrast-value-percentage: 2% !default;
 
-// Brightness Weights (brightness: Wr * red + Wg * green + Wb * blue)
-// Wr + Wg + Wb = 1
-$red-weight: .229 !default;
-$green-weight: .587 !default;
-$blue-weight: .119 !default;
+// Brightness Weights
+// Weight * Color
+// brightness = Wr*Cr + Wg*Cg + Wb*Cb
+// 0 < weight < 1 && 0 < color < 255
+$brightness-weights: (red: .229, green: .587, blue: .119) !default; // (red + green + blue = 1)
 
 // Color Generation (dark vs light)
 $contrast-threshold: 42% !default;
 $prefer-dark-colors: false !default;
 
-@function generate-complement-color($color, $percentage: $complement-value-percentage) {
-  @if is-bright($color) {
-    @return generate-value-variant($color, $percentage);
+// The default options
+$color-options: (
+  prefer-dark-colors: $prefer-dark-colors,
+  contrast-threshold: $contrast-threshold,
+  contrast-value-percentage: $contrast-value-percentage,
+  complement-value-percentage: $complement-value-percentage,
+  brightness-weights: $brightness-weights
+);
+
+@function generate-complement-color($color, $options: $color-options) {
+  @if is-bright($color, $options) {
+    @return generate-value-variant($color, get-color-option($options, complement-value-percentage));
   } @else {
-    @return generate-value-variant($color, 100% - $percentage);
+    @return generate-value-variant($color, 100% - get-color-option($options, complement-value-percentage));
   }
 }
 
-@function generate-contrast-color($color, $percentage: $contrast-value-percentage) {
+@function generate-contrast-color($color, $options: $color-options) {
   $color: invert($color);
-  @if is-bright($color) {
-    @return generate-value-variant($color, $percentage);
+  @if is-bright($color, $options) {
+    @return generate-value-variant($color, get-color-option($options, contrast-value-percentage));
   } @else {
-    @return generate-value-variant($color, 100% - $percentage);
+    @return generate-value-variant($color, 100% - get-color-option($options, contrast-value-percentage));
   }
 }
 
@@ -36,35 +43,38 @@ $prefer-dark-colors: false !default;
   @return hsl(hue($color), saturation($color), $percentage); // Dark < 50% < Light
 }
 
-@function generate-color-set($color) {
-  $complement: generate-complement-color($color);
+@function generate-color-set($color, $options: $color-options) {
+  $complement: generate-complement-color($color, $options);
   @return (
     main: $color,
-    contrast: generate-contrast-color($color),
+    contrast: generate-contrast-color($color, $options),
     complement: $complement,
-    complement-contrast: generate-contrast-color($complement)
+    complement-contrast: generate-contrast-color($complement, $options)
   );
 }
 
-@function complete-color-sets($colors) {
+@function complete-color-sets($colors: (), $options: $color-options) {
   @each $key, $color in $colors {
     @if not is-map($color) {
-      $colors: map-deep-merge($colors, ($key: generate-color-set($color)));
+      $colors: map-deep-merge($colors, ($key: generate-color-set($color, $options)));
     } @else {
+      @if not map-has-key($color, main) and not map-has-key($color, complement) {
+        @error 'Key "main" or "complement" not defined in map "#{$key}"';
+      }
       @if not map-has-key($color, main) {
-        // TODO : Calculate main based on complement if possible
-        @error 'Key "main" not defined in map "#{$key}"';
+        $main: generate-complement-color(map-get($color, complement), $options);
+        $color: map-merge($color, (complement: $main));
       }
       @if not map-has-key($color, contrast) {
-        $contrast: generate-contrast-color(map-get($color, main));
+        $contrast: generate-contrast-color(map-get($color, main), $options);
         $color: map-merge($color, (complement: $contrast));
       }
       @if not map-has-key($color, complement) {
-        $complement: generate-complement-color(map-get($color, main));
+        $complement: generate-complement-color(map-get($color, main), $options);
         $color: map-merge($color, (complement: $complement));
       }
       @if not map-has-key($color, complement-contrast) {
-        $complement-contrast: generate-contrast-color(map-get($color, complement));
+        $complement-contrast: generate-contrast-color(map-get($color, complement), $options);
         $color: map-merge($color, (complement-contrast: $complement-contrast));
       }
     }
@@ -72,15 +82,32 @@ $prefer-dark-colors: false !default;
   @return $colors;
 }
 
-@function get-brightness($color) {
-  $weighted-sum: ($red-weight * red($color)) + ($green-weight * green($color)) + ($blue-weight * blue($color));
+@function get-brightness($color, $options) {
+  $weights: map-get-default($options, brightness-weights);
+  $weighted-sum: get-weight($weights, red) * red($color) +
+                 get-weight($weights, green) * green($color) +
+                 get-weight($weights, blue) * blue($color);
   @return percentage($weighted-sum / 255);
 }
 
-@function is-bright($color) {
-  @if $prefer-dark-colors {
-    @return get-brightness($color) > $contrast-threshold;
+@function is-bright($color, $options: $color-options) {
+  @if get-color-option($options, prefer-dark-colors) {
+    @return get-brightness($color, $options) > get-color-option($options, contrast-threshold);
   } @else {
-    @return get-brightness($color) > 100% - $contrast-threshold;
+    @return get-brightness($color, $options) > 100% - get-color-option($options, contrast-threshold);
   }
+}
+
+@function get-color-option($options, $key) {
+  $value: map-get($options, #{$key});
+  $value: map-get($color-options, #{$key}) !default;
+
+  @return $value;
+}
+
+@function get-weight($weights, $key) {
+  $weight: map-get($weights, #{$key});
+  $weight: map-get($brightness-weights, #{$key}) !default;
+
+  @return $weight;
 }

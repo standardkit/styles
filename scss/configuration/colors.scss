@@ -1,10 +1,5 @@
-// TODO : complete all the color sets
-
-
 @each $theme-name, $theme in $themes {
-
   $colors: map-get-default($theme, colors);
-
-  make-complete-color-sets();
-  //complete-color-sets();
+  $colors: complete-color-sets($colors, map-get-default($theme, options));
+  $themes: map-set($themes, colors, $colors);
 }

@@ -8,11 +8,18 @@ SCSS Framework for the StandardKit Design & Component System
 ## Configuration
 
 ### Theme Options
-
+A list of the default theme options.
 ```scss
 $options: (
-  // TODO : more from color utility config
-  dark-color-generation: true or false, // default: false 
+  prefer-dark-colors: false,
+  contrast-threshold: 42%,
+  contrast-value-percentage: 2%,
+  complement-value-percentage: 7%,
+  brightness-weights: (
+    red: .229,
+    green: .576,
+    blue: .119 
+  ),
   include-fonts : true or false, // default: true
   merge-modifiers: 'replace' or 'merge', // default: merge
   modifier-sets: 'minimal' or 'basic' or 'all' // default: all

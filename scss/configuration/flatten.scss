@@ -10,7 +10,7 @@
   $base: map-deep-merge(default-theme.$theme-configuration, $base);
 
   $theme: map-set($theme, base, $base); // Set the base
-  $flat-theme: flatten-theme($theme);
+  $theme: flatten-theme($theme);
 
   $themes: map-set($themes, $theme-name, $theme); // Flatten and save to the $themes object
 }

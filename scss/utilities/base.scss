@@ -44,7 +44,8 @@
 }
 
 @function map-set($map, $key, $value) {
-  @return map-merge($map, ($key: $value));
+  $new-map: $map;
+  @return map-merge($new-map, ($key: $value));
 }
 
 @function is-map($variable) {

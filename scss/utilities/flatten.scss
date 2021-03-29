@@ -24,7 +24,7 @@
     $modifier-options: get-modifier-options($theme, $modifier);
     $modifier-options: get-modifier-options($theme, $modifier);
     $flattened-modifiers: flatten-modifier($base-modifiers, $modifier-sets, $user-modifiers, $theme-options, $modifier-options);
-    $default-modifier: get-default-modifier($flattened-modifiers, $modifier-options, $theme-options);
+    $default-modifier: get-default-modifier($modifier, $flattened-modifiers, $modifier-options, $theme-options);
     $map: map-deep-merge($map, (
       #{$modifier}s: $flattened-modifiers,
       default-#{$modifier}: $default-modifier
@@ -54,9 +54,9 @@
 }
 
 // Checks if the preferred flavor is possible, otherwise default to the first possible flavor or '' if empty
-@function get-default-modifier($modifiers, $modifier-options, $base-modifier-options) {
+@function get-default-modifier($modifier-name, $modifiers, $modifier-options, $base-options) {
   $key: map-get($modifier-options, default);
-  $key: map-get($base-modifier-options, default) !default;
+  $key: map-get($base-options, default-#{$modifier-name}) !default;
 
   $default: map-get($modifiers, $key);
   @if type-of($default) != null {
@@ -69,20 +69,33 @@
 }
 
 @function flatten-components($base, $theme, $flat-theme) {
-  // Merge theme with base components
+
+  // Merge theme component settings on top of base component settings
   $components: map-deep-merge(map-get-default($base, components), map-get-default($theme, components));
+
   // Check every component/modifier combination
-  @each $component-key, $component in $components { // For each component setting
-    @each $modifier in $all-modifiers { // For each possible modifier
-      $flat-modifiers: map-get-default($flat-theme, #{$modifier}s); // The modifiers after processing
-      $default: map-get($components, default-#{$modifier}); // Get the default set in the component configuration
-      @if not in-list($default, map-keys($flat-modifiers)) { // If that default key does not exist
-        @if length($flat-modifiers) > 0 { // Check if the modifier has values at all
-          @return nth($flat-modifiers, 1); // Set default to the first modifier possible
+  @each $component-key, $component in $components { // For each component (e.g. 'alert')
+    @each $modifier in $all-modifiers { // For each possible modifier (e.g. 'color')
+
+      @if map-has-key($component, default-#{$modifier}) { // For every declared setting (e.g. alert: ( default-color: ... )
+
+        $flat-modifiers: map-get-default($flat-theme, #{$modifier}s); // The actual (usable) modifiers
+        $default: map-get($components, default-#{$modifier}); // Get the value (e.g. 'primary')
+
+        @if not in-list($default, map-keys($flat-modifiers)) { // If that default key does not exist
+
+          @if length($flat-modifiers) > 0 { // Check if the modifier has values at all
+            // Set default to the first modifier possible
+            $component: map-set($component, default-#{$modifier}, nth($flat-modifiers, 1));
+          } @else {
+            // Default to empty when modifier does not have any possible value
+            $component: map-set($component, default-#{$modifier}, '');
+          }
         }
-        @return ''; // Default to empty when modifier does not have any possible value
+
       }
     }
+    $components: map-set($components, $component-key, $component);
   }
   @return $components;
 }

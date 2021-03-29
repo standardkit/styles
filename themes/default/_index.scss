@@ -32,6 +32,7 @@ $theme-configuration: (
   corners: $corners,
   borders: $borders,
   focus-types: (), // TODO : Implement
+  default-focus-type: outline,
   disabled-types: (), // TODO : Implement
   breakpoints: $breakpoints
 );

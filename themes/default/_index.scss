@@ -1,10 +1,37 @@
-@forward 'alignment';
-@forward 'breakpoints';
-@forward 'colors';
-@forward 'corners';
-@forward 'elevations';
-@forward 'margins';
-@forward 'paddings';
-@forward 'typography';
-@forward 'widths';
-@forward 'fonts';
+@import 'alignment';
+@import 'borders';
+@import 'breakpoints';
+@import 'colors';
+@import 'corners';
+@import 'elevations';
+@import 'fill-types';
+@import 'fonts';
+@import 'margins';
+@import 'paddings';
+@import 'size';
+@import 'widths';
+
+// TODO : Normalize this so we don't need to use this in between object
+$theme-configuration: (
+  // Theme-wide
+  options: (),
+  components: (
+    alert: (default-color: info, default-fill: plain)
+  ),
+  modifiers: (),
+  // Specific modifiers
+  colors: $colors,
+  default-color: primary,
+  fill-types: $fill-types,
+  default-fill: fill,
+  elevations: $elevations,
+  margins: $margins,
+  paddings: $paddings,
+  sizes: $text-sizes, // TODO : split up?
+  widths: $widths,
+  corners: $corners,
+  borders: $borders,
+  focus-types: (), // TODO : Implement
+  disabled-types: (), // TODO : Implement
+  breakpoints: $breakpoints
+)

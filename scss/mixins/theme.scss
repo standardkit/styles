@@ -1,21 +1,23 @@
-@mixin theme($configuration:()) {
+@mixin theme($configuration: ()) {
   // TODO : Implement
   // Add all sub-mixins
-  mix-paddings(map-get-default($theme, paddings)); // TODO : etc..
+  @include mix-colors(map-get-default($configuration, colors));
+  @include mix-paddings(map-get-default($configuration, paddings)); // TODO : etc..
 
   //  @import 'partials';
   //  @import 'components';
 }
 
-
+/*
 // TODO : Make mixin and change to *
 html, body { // TODO : Put this on the .theme-- class SOMEhow
   // TODO : Use :has() when it is available (2022?)
   background-color: get-color(text, contrast);
-  color: get-color(text);
+  color: get-color(text); // TODO : Default text color, same as below
 }
 
 // TODO : Make default font and get from configuration make sure it is there (text)
 * {
   @extend .font--text;
 }
+*/

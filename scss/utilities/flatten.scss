@@ -1,0 +1,103 @@
+@function flatten-theme($theme: ()) {
+  $flat-theme: ();
+  $base: map-get-default($theme, base);
+  $flat-theme: map-set($flat-theme, options, flatten-options($base, $theme));
+  $flat-theme: map-deep-merge($flat-theme, flatten-modifiers($base, $theme));
+  $flat-theme: map-set($flat-theme, components, flatten-components($base, $theme, $flat-theme));
+
+  @return $flat-theme;
+}
+
+// Merge options from the base theme
+// TODO : Remove/unset merge settings
+@function flatten-options($base, $theme) {
+  @return map-deep-merge(map-get-default($base, options), map-get-default($theme, options));
+}
+
+// For each modifier, create 'modifiers' and 'default-modifier' entries to be used in the theme map
+@function flatten-modifiers($base, $theme) {
+  $map: ();
+  @each $modifier, $modifier-sets in $configurable-modifiers {
+    $base-modifiers: get-modifiers($base, $modifier);
+    $user-modifiers: get-modifiers($theme, $modifier);
+    $theme-options: map-get-default($theme, options);
+    $modifier-options: get-modifier-options($theme, $modifier);
+    $modifier-options: get-modifier-options($theme, $modifier);
+    $flattened-modifiers: flatten-modifier($base-modifiers, $modifier-sets, $user-modifiers, $theme-options, $modifier-options);
+    $default-modifier: get-default-modifier($flattened-modifiers, $modifier-options, $theme-options);
+    $map: map-deep-merge($map, (
+      #{$modifier}s: $flattened-modifiers,
+      default-#{$modifier}: $default-modifier
+    ));
+  }
+  @return $map;
+}
+
+// Based on the 'modifier-options', select and merge flavors from base and merge with provided values
+@function flatten-modifier($base-modifiers, $modifier-sets, $user-modifiers, $theme-options, $options) {
+  @if map-get($options, merge) == replace or map-get($theme-options, merge-modifiers) == replace {
+    @return $user-modifiers;
+  }
+  $set: map-get($options, set);
+  $set: map-get($theme-options, modifier-sets) !default;
+  $set: all !default;
+
+  @if $set != all {
+    $keys: map-get-default($modifier-sets, $set);
+    $keys: join($keys, map-get-default($options, include));
+    $base-modifiers: map-filter-keys($base-modifiers, $keys);
+  }
+  $exclude: map-get-default($options, exclude);
+  $base-modifiers: map-exclude-keys($base-modifiers, $exclude);
+
+  @return map-merge($base-modifiers, $user-modifiers);
+}
+
+// Checks if the preferred flavor is possible, otherwise default to the first possible flavor or '' if empty
+@function get-default-modifier($modifiers, $modifier-options, $base-modifier-options) {
+  $key: map-get($modifier-options, default);
+  $key: map-get($base-modifier-options, default) !default;
+
+  $default: map-get($modifiers, $key);
+  @if type-of($default) != null {
+    @return $key;
+  }
+  @if length($modifiers) > 0 {
+    @return nth($modifiers, 1);
+  }
+  @return '';
+}
+
+@function flatten-components($base, $theme, $flat-theme) {
+  // Merge theme with base components
+  $components: map-deep-merge(map-get-default($base, components), map-get-default($theme, components));
+  // Check every component/modifier combination
+  @each $component-key, $component in $components { // For each component setting
+    @each $modifier in $all-modifiers { // For each possible modifier
+      $flat-modifiers: map-get-default($flat-theme, #{$modifier}s); // The modifiers after processing
+      $default: map-get($components, default-#{$modifier}); // Get the default set in the component configuration
+      @if not in-list($default, map-keys($flat-modifiers)) { // If that default key does not exist
+        @if length($flat-modifiers) > 0 { // Check if the modifier has values at all
+          @return nth($flat-modifiers, 1); // Set default to the first modifier possible
+        }
+        @return ''; // Default to empty when modifier does not have any possible value
+      }
+    }
+  }
+  @return $components;
+}
+
+@function get-base-theme($theme) {
+  $base: map-get($theme, base);
+  $base: () !default;
+
+  @return $base;
+}
+
+@function get-modifiers($theme, $modifier) {
+  @return map-get-default($theme, #{$modifier}s);
+}
+
+@function get-modifier-options($theme, $modifier) {
+  @return map-get-default($theme, #{$modifier}-options);
+}

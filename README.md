@@ -33,7 +33,7 @@ $options: (
 
 ```scss
 $options: (
-  flavors : (),
+  flavors: (),
   flavor-options: (
     default: '',
     set: 'minimal' | 'basic' | 'all',

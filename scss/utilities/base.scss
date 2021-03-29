@@ -33,7 +33,7 @@
   $new-map: ();
   @each $key in $keys {
     @if map-has-key($map, $key) {
-      $new-map: map-merge($new-map, (#{$key}: map-get($map, $key)));
+      $new-map: map-merge($new-map, ($key: map-get($map, $key)));
     }
   }
   @return $new-map;
@@ -44,7 +44,7 @@
 }
 
 @function map-set($map, $key, $value) {
-  @return map-merge($map, (#{$key}: $value));
+  @return map-merge($map, ($key: $value));
 }
 
 @function is-map($variable) {

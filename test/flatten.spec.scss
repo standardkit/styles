@@ -103,3 +103,74 @@
     @include assert-equal($components, $result);
   }
 }
+
+@include describe('flatten-options()') {
+  // TODO : Implement
+}
+
+@include describe('flatten-modifier()') {
+  $base-flavors: (primary: blue, secondary: red, tertiary: purple);
+  $custom-flavors: (custom: hotpink);
+  $sets: (minimal: primary, basic: tertiary secondary);
+  @include it('should just return all the custom flavors if merge == "replace" in modifier options') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (), (merge: replace));
+    @include assert-equal($flavors, (custom: hotpink));
+  }
+  @include it('should just return all the custom flavors if merge-modifiers == "replace" in theme options') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (merge-modifiers: replace), ());
+    @include assert-equal($flavors, (custom: hotpink));
+  }
+  @include it('should return all flavors if I just specify some custom flavors') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (), ());
+    @include assert-equal($flavors, (primary: blue, secondary: red, tertiary: purple, custom: hotpink));
+  }
+  @include it('should return no base flavors if modifier-sets == "none"') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (modifier-sets: none), ());
+    @include assert-equal($flavors, (custom: hotpink));
+  }
+  @include it('should return no base flavors if modifier set == "none"') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (), (set: none));
+    @include assert-equal($flavors, (custom: hotpink));
+  }
+  @include it('should minimal basic set + custom flavors if modifier set == "minimal"') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (), (set: minimal));
+    @include assert-equal($flavors, (primary: blue, custom: hotpink));
+  }
+  @include it('should override theme set') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (modifier-sets: all), (set: minimal));
+    @include assert-equal($flavors, (primary: blue, custom: hotpink));
+  }
+  @include it('should fallback on theme modifier-sets') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (modifier-sets: basic), ());
+    @include assert-equal($flavors, (secondary: red, custom: hotpink, tertiary: purple));
+  }
+  @include it('should add includes to the set') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets,
+      (modifier-sets: minimal), (include: tertiary)
+    );
+    @include assert-equal($flavors, (primary: blue, custom: hotpink, tertiary: purple));
+  }
+  @include it('should remove excludes') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (), (exclude: tertiary primary));
+    @include assert-equal($flavors, (secondary: red, custom: hotpink));
+  }
+  @include it('should remove excluded include') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (),
+      (set: minimal, include: tertiary, exclude: tertiary)
+    );
+    @include assert-equal($flavors, (primary: blue, custom: hotpink));
+  }
+}
+
+@include describe('flatten-modifiers()') {
+  // TODO : Implement
+}
+
+@include describe('flatten-theme()') {
+  // TODO : Implement
+}
+
+@include describe('flatten-themes()') {
+  // TODO : Implement function / move it from configuration to a function
+  // TODO : Implement
+}

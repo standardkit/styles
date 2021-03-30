@@ -20,13 +20,12 @@
 // For each modifier, create 'modifiers' and 'default-modifier' entries to be used in the theme map
 @function flatten-modifiers($base, $theme) {
   $map: ();
-  @each $modifier, $modifier-sets in $configurable-modifiers {
-    $base-modifiers: get-flavors($base, $modifier);
-    $user-modifiers: get-flavors($theme, $modifier);
+  @each $modifier, $sets in $configurable-modifiers {
+    $base-flavors: get-flavors($base, $modifier);
+    $flavors: get-flavors($theme, $modifier);
     $theme-options: map-get-default($theme, options);
-    $modifier-options: get-modifier-options($theme, $modifier);
-    $modifier-options: get-modifier-options($theme, $modifier);
-    $flavors: flatten-modifier($base-modifiers, $modifier-sets, $user-modifiers, $theme-options, $modifier-options);
+    $options: get-modifier-options($theme, $modifier);
+    $flavors: flatten-modifier($base-flavors, $flavors, $sets, $theme-options, $options);
 
     $default-modifier: flatten-default-flavor($modifier, $flavors, $theme-options, $theme);
 
@@ -39,23 +38,26 @@
 }
 
 // Based on the 'modifier-options', select and merge flavors from base and merge with provided values
-@function flatten-modifier($base-modifiers, $modifier-sets, $user-modifiers, $theme-options, $options) {
-  @if map-get($options, merge) == replace or map-get($theme-options, merge-modifiers) == replace {
-    @return $user-modifiers;
+@function flatten-modifier($base-flavors, $flavors, $flavor-sets, $theme-options, $flavor-options) {
+  @if map-get($flavor-options, merge) == replace or map-get($theme-options, merge-modifiers) == replace {
+    @return $flavors;
   }
-  $set: map-get($options, set);
+  @if map-get($flavor-options, set) == none or map-get($theme-options, modifier-sets) == none {
+    @return $flavors;
+  }
+  $set: map-get($flavor-options, set);
   $set: map-get($theme-options, modifier-sets) !default;
   $set: all !default;
 
   @if $set != all {
-    $keys: map-get-default($modifier-sets, $set);
-    $keys: join($keys, map-get-default($options, include));
-    $base-modifiers: map-filter-keys($base-modifiers, $keys);
+    $keys: map-get-default($flavor-sets, $set);
+    $keys: join($keys, map-get-default($flavor-options, include));
+    $base-flavors: map-filter-keys($base-flavors, $keys);
   }
-  $exclude: map-get-default($options, exclude);
-  $base-modifiers: map-exclude-keys($base-modifiers, $exclude);
+  $exclude: map-get-default($flavor-options, exclude);
+  $base-flavors: map-exclude-keys($base-flavors, $exclude);
 
-  @return map-merge($base-modifiers, $user-modifiers);
+  @return map-merge($base-flavors, $flavors);
 }
 
 // Checks if the preferred or base flavor is possible, otherwise default to the first possible flavor or '' if empty

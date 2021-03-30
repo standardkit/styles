@@ -1,4 +1,5 @@
 @use 'base' as *;
+@use '../variables' as *;
 
 @function flatten-theme($theme: ()) {
   $flat-theme: ();
@@ -6,12 +7,12 @@
   $flat-theme: map-set($flat-theme, options, flatten-options($base, $theme));
   $flat-theme: map-deep-merge($flat-theme, flatten-modifiers($base, $theme));
   $flat-theme: map-set($flat-theme, components, flatten-components($base, $theme, $flat-theme));
+  // TODO : Remove/unset all merge settings
 
   @return $flat-theme;
 }
 
 // Merge options from the base theme
-// TODO : Remove/unset merge settings
 @function flatten-options($base, $theme) {
   @return map-deep-merge(map-get-default($base, options), map-get-default($theme, options));
 }
@@ -57,53 +58,47 @@
   @return map-merge($base-modifiers, $user-modifiers);
 }
 
-// Checks if the preferred flavor is possible, otherwise default to the first possible flavor or '' if empty
-@function flatten-default-flavor($modifier, $modifiers, $base-options, $options) {
+// Checks if the preferred or base flavor is possible, otherwise default to the first possible flavor or '' if empty
+@function flatten-default-flavor($modifier, $flavors, $base-options, $options) {
   $key: get-default-flavor($options, $modifier);
-  $default: map-get($modifiers, $key);
+  $default: map-get($flavors, $key);
   @if not is-null($default) {
     @return $key;
   }
   $key: get-default-flavor($base-options, $modifier);
-  $default: map-get($modifiers, $key);
+  $default: map-get($flavors, $key);
   @if not is-null($default) {
     @return $key;
   }
-  @if length($modifiers) > 0 {
-    @return nth(map-keys($modifiers), 1);
+  @if length($flavors) > 0 {
+    @return nth(map-keys($flavors), 1);
   }
   @return '';
 }
 
-@function flatten-components($base, $theme, $flat-theme) {
+@function flatten-components($base, $theme, $modifiers) {
 
-  // Merge theme component settings on top of base component settings
-  $components: map-deep-merge(map-get-default($base, components), map-get-default($theme, components));
+  $base-components: map-get-default($base, components);
+  $theme-components: map-get-default($theme, components);
+  $configured-components: map-deep-merge($base-components, $theme-components);
 
-  // Check every component/modifier combination
-  @each $component-key, $component in $components { // For each component (e.g. 'alert')
-    @each $modifier in $all-modifiers { // For each possible modifier (e.g. 'color')
+  @each $component, $component-modifiers in $configured-components {
+    @each $modifier in $all-modifiers {
 
-      @if map-has-key($component, default-#{$modifier}) { // For every declared setting (e.g. alert: ( default-color: ... )
-
-        $flat-modifiers: map-get-default($flat-theme, #{$modifier}s); // The actual (usable) modifiers
-        $default: map-get($components, default-#{$modifier}); // Get the value (e.g. 'primary')
-
-        @if not in-list($default, map-keys($flat-modifiers)) { // If that default key does not exist
-
-          @if length($flat-modifiers) > 0 { // Check if the modifier has values at all
-            // Set default to the first modifier possible
-            $component: map-set($component, default-#{$modifier}, nth($flat-modifiers, 1));
-          } @else {
-            // Default to empty when modifier does not have any possible value
-            $component: map-set($component, default-#{$modifier}, '');
-          }
-        }
+      @if map-has-key($component-modifiers, default-#{$modifier}) {
+        $flavors: get-flavors($modifiers, $modifier);
+        $default: flatten-default-flavor(
+            $modifier,
+            $flavors,
+            map-get-default($base-components, $component),
+            map-get-default($theme-components, $component)
+        );
+        $component-modifiers: map-set($component-modifiers, default-#{$modifier}, $default);
       }
     }
-    $components: map-set($components, $component-key, $component);
+    $configured-components: map-set($configured-components, $component, $component-modifiers);
   }
-  @return $components;
+  @return $configured-components;
 }
 
 @function get-flavors($theme, $modifier) {

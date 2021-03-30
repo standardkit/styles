@@ -1,0 +1,54 @@
+@use '../node_modules/sass-true' as *;
+@use '../scss/utilities/base';
+
+@include describe('map-deep-merge()') {
+  // TODO : Implement
+}
+
+@include describe('map-get-default()') {
+  // TODO : Implement
+}
+
+@include describe('map-exclude-keys()') {
+  // TODO : Implement
+}
+
+@include describe('map-filter-keys()') {
+  // TODO : Implement
+}
+
+@include describe('in-list()') {
+  $list: primary secondary tertiary;
+  @include it('should return true when item is in the list') {
+    @include assert-true(base.in-list($list, primary));
+  }
+  @include it('should return true when item is second in the list') {
+    @include assert-true(base.in-list($list, secondary));
+  }
+  @include it('should return true when item is last in the list') {
+    @include assert-true(base.in-list($list, tertiary));
+  }
+  @include it('should return false when item is not in the list') {
+    @include assert-false(base.in-list($list, custom));
+  }
+}
+
+@include describe('map-set()') {
+  // TODO : Implement
+}
+
+@include describe('is-map()') {
+  // TODO : Implement
+}
+
+@include describe('is-list()') {
+  // TODO : Implement
+}
+
+@include describe('is-string()') {
+  // TODO : Implement
+}
+
+@include describe('is-null()') {
+  // TODO : Implement
+}

@@ -39,13 +39,12 @@
   @return $new-map;
 }
 
-@function in-list($key, $list) {
-  @return index($list, $key) == true;
+@function in-list($list, $key) {
+  @return not is-null(index($list, $key));
 }
 
 @function map-set($map, $key, $value) {
-  $new-map: $map;
-  @return map-merge($new-map, ($key: $value));
+  @return map-merge($map, ($key: $value));
 }
 
 @function is-map($variable) {

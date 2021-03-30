@@ -79,4 +79,27 @@
     $flavor: flatten.flatten-default-flavor(color, $flavors, (default-color: secondary), (default-color: custom));
     @include assert-equal($flavor, secondary);
   }
+  @include it('should fallback to first possible flavor if base & configured don\'t exist') {
+    $flavor: flatten.flatten-default-flavor(color, $flavors, (default-color: fake), (default-color: custom));
+    @include assert-equal($flavor, primary);
+  }
+}
+
+@include describe('flatten-components()') {
+  @include it('should merge base & theme components or fallback to first possible flavor for modifier') {
+    $base: (components: (alert: (default-color: secondary, default-margin: xl), button: (default-padding: xl)));
+    $theme: (components: (alert: (default-margin: xs, default-padding: fake), button: (default-color: tertiary)));
+    $modifiers: (
+      colors: (primary: red, secondary: blue, tertiary: purple),
+      margins: (none: 0, xs: 1rem, xl: 2rem),
+      paddings: (m: 2rem, xl: 4rem)
+    );
+    $result: (
+      alert: (default-color: secondary, default-margin: xs, default-padding: m),
+      button: (default-padding: xl, default-color: tertiary)
+    );
+    $components: flatten.flatten-components($base, $theme, $modifiers);
+
+    @include assert-equal($components, $result);
+  }
 }

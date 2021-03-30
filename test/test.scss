@@ -1,5 +1,6 @@
-@use '../node_modules/sass-true' as *;
+@use '../node_modules/sass-true';
 
+@use 'base.spec';
 @use 'flatten.spec';
 
-@include report;
+@include sass-true.report();

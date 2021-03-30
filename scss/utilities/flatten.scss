@@ -26,13 +26,14 @@
     $theme-options: map-get-default($theme, options);
     $options: get-modifier-options($theme, $modifier);
     $flavors: flatten-modifier($base-flavors, $flavors, $sets, $theme-options, $options);
-
     $default-modifier: flatten-default-flavor($modifier, $flavors, $theme-options, $theme);
 
-    $map: map-deep-merge($map, (
-      #{$modifier}s: $flavors,
-      default-#{$modifier}: $default-modifier
-    ));
+    @if $flavors != () {
+      $map: map-deep-merge($map, (
+        #{$modifier}s: $flavors,
+        default-#{$modifier}: $default-modifier
+      ));
+    }
   }
   @return $map;
 }

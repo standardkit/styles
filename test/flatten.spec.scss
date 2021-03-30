@@ -180,7 +180,33 @@
 }
 
 @include describe('flatten-modifiers()') {
-  // TODO : Implement
+  @include it('should merge & process the base & theme properly') {
+    $base: (
+      colors: (primary: blue, secondary: red, tertiary: purple),
+      default-color: secondary,
+      paddings: (none: 0, xl: 1rem),
+      default-padding: none
+    );
+    $theme: (
+      colors: (custom: purple, tertiary: hotpink),
+      color-options: (set: basic, exclude: secondary),
+      paddings: (huge: 2rem),
+      padding-options:(include: none xl),
+      default-padding: xl
+    );
+    $modifiers: flatten.flatten-modifiers($base, $theme);
+    $result: (
+      colors: (primary: blue, custom: purple, tertiary: hotpink),
+      default-color: primary,
+      paddings:(none: 0, xl: 1rem, huge: 2rem),
+      default-padding: xl
+    );
+    @include assert-equal($modifiers, $result);
+  }
+  @include it('should result in empty map if nothing is specified') {
+    $modifiers: flatten.flatten-modifiers((), ());
+    @include assert-equal($modifiers, ());
+  }
 }
 
 @include describe('flatten-theme()') {

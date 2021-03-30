@@ -105,7 +105,24 @@
 }
 
 @include describe('flatten-options()') {
-  // TODO : Implement
+  $base: (options: (setting: false, custom: red));
+  $theme: (options: (setting: true, primary: blue));
+  @include it('should merge all options and theme should override base options') {
+    $options: flatten.flatten-options($base, $theme);
+    @include assert-equal($options, (setting: true, custom: red, primary: blue));
+  }
+  @include it('should work if theme options are empty') {
+    $options: flatten.flatten-options($base, ());
+    @include assert-equal($options, (setting: false, custom: red));
+  }
+  @include it('should work if base options are empty') {
+    $options: flatten.flatten-options((), $theme);
+    @include assert-equal($options, (setting: true, primary: blue));
+  }
+  @include it('should work if both are empty') {
+    $options: flatten.flatten-options((), ());
+    @include assert-equal($options, ());
+  }
 }
 
 @include describe('flatten-modifier()') {

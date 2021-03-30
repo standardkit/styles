@@ -4,7 +4,8 @@
   "description": "SCSS framework for the StandardKit Design & Build System",
   "scripts": {
     "watch": "sass --watch scss/_index.scss css/style.css -s compressed",
-    "build": "sass scss/_index.scss css/style.min.css -s compressed && sass scss/_index.scss css/style.css"
+    "build": "sass scss/_index.scss css/style.min.css -s compressed && sass scss/_index.scss css/style.css",
+    "test": "sass test/test.scss test/test.css"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   },
   "homepage": "https://standardkit.io",
   "devDependencies": {
-    "sass": "^1.32.8"
+    "sass": "^1.32.8",
+    "sass-true": "^6.0.1"
   }
 }

@@ -1,3 +1,5 @@
+@use 'base' as *;
+
 @function flatten-theme($theme: ()) {
   $flat-theme: ();
   $base: map-get-default($theme, base);
@@ -18,15 +20,17 @@
 @function flatten-modifiers($base, $theme) {
   $map: ();
   @each $modifier, $modifier-sets in $configurable-modifiers {
-    $base-modifiers: get-modifiers($base, $modifier);
-    $user-modifiers: get-modifiers($theme, $modifier);
+    $base-modifiers: get-flavors($base, $modifier);
+    $user-modifiers: get-flavors($theme, $modifier);
     $theme-options: map-get-default($theme, options);
     $modifier-options: get-modifier-options($theme, $modifier);
     $modifier-options: get-modifier-options($theme, $modifier);
-    $flattened-modifiers: flatten-modifier($base-modifiers, $modifier-sets, $user-modifiers, $theme-options, $modifier-options);
-    $default-modifier: get-default-modifier($modifier, $flattened-modifiers, $modifier-options, $theme-options);
+    $flavors: flatten-modifier($base-modifiers, $modifier-sets, $user-modifiers, $theme-options, $modifier-options);
+
+    $default-modifier: flatten-default-flavor($modifier, $flavors, $theme-options, $theme);
+
     $map: map-deep-merge($map, (
-      #{$modifier}s: $flattened-modifiers,
+      #{$modifier}s: $flavors,
       default-#{$modifier}: $default-modifier
     ));
   }
@@ -54,16 +58,19 @@
 }
 
 // Checks if the preferred flavor is possible, otherwise default to the first possible flavor or '' if empty
-@function get-default-modifier($modifier-name, $modifiers, $modifier-options, $base-options) {
-  $key: map-get($modifier-options, default);
-  $key: map-get($base-options, default-#{$modifier-name}) !default;
-
+@function flatten-default-flavor($modifier, $modifiers, $base-options, $options) {
+  $key: get-default-flavor($options, $modifier);
   $default: map-get($modifiers, $key);
-  @if type-of($default) != null {
+  @if not is-null($default) {
+    @return $key;
+  }
+  $key: get-default-flavor($base-options, $modifier);
+  $default: map-get($modifiers, $key);
+  @if not is-null($default) {
     @return $key;
   }
   @if length($modifiers) > 0 {
-    @return nth($modifiers, 1);
+    @return nth(map-keys($modifiers), 1);
   }
   @return '';
 }
@@ -92,7 +99,6 @@
             $component: map-set($component, default-#{$modifier}, '');
           }
         }
-
       }
     }
     $components: map-set($components, $component-key, $component);
@@ -100,15 +106,12 @@
   @return $components;
 }
 
-@function get-base-theme($theme) {
-  $base: map-get($theme, base);
-  $base: () !default;
-
-  @return $base;
+@function get-flavors($theme, $modifier) {
+  @return map-get-default($theme, #{$modifier}s);
 }
 
-@function get-modifiers($theme, $modifier) {
-  @return map-get-default($theme, #{$modifier}s);
+@function get-default-flavor($theme, $modifier) {
+  @return map-get($theme, default-#{$modifier});
 }
 
 @function get-modifier-options($theme, $modifier) {

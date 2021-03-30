@@ -7,7 +7,6 @@
   $flat-theme: map-set($flat-theme, options, flatten-options($base, $theme));
   $flat-theme: map-deep-merge($flat-theme, flatten-modifiers($base, $theme));
   $flat-theme: map-set($flat-theme, components, flatten-components($base, $theme, $flat-theme));
-  // TODO : Remove/unset all merge settings
 
   @return $flat-theme;
 }

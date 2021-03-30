@@ -1,4 +1,4 @@
-build : ; npm run build
+build : ; make tests && npm run build
 
 tests : ; npm run test
 

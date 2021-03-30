@@ -2,5 +2,6 @@
 
 @use 'base.spec';
 @use 'flatten.spec';
+@use 'colors.spec';
 
 @include sass-true.report();

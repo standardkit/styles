@@ -34,7 +34,23 @@
 }
 
 @include describe('map-set()') {
-  // TODO : Implement
+  @include it('should set a variable that wasn\'t there before') {
+    $result: base.map-set((), margin, 1rem);
+    @include assert-equal($result, (margin: 1rem));
+  }
+  @include it('should override a variable that was already set') {
+    $result: base.map-set((color: blue), color, red);
+    @include assert-equal($result, (color: red));
+  }
+  $map: (colors: (primary: (one: red, two: blue)));
+  @include it('should work on maps') {
+    $result: base.map-set($map, colors, (primary: blue, secondary: red));
+    @include assert-equal($result, (colors: (primary: blue, secondary: red)));
+  }
+  @include it('should work on nested maps') {
+    $result: base.map-set($map, colors, (primary: (one: black, two: white), secondary: red));
+    @include assert-equal($result, (colors: (primary: (one: black, two: white), secondary: red)));
+  }
 }
 
 @include describe('is-map()') {

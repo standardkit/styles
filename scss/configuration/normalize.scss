@@ -40,7 +40,6 @@ $breakpoint-options: () !default;
 // TODO : Include modifiers that have only options to exclude flavors
 
 $options: () !default; // Global modifier settings and utility configuration
-$modifiers: () !default; // Extra modifier and how to merge with base modifiers
 $components: () !default; // Default modifier flavors for each component
 
 // Single Theme: Merged all the 'simple' options into one object
@@ -50,10 +49,10 @@ $configuration: () !default;
 $themes: (default: ()) !default;
 
 // Merge the simple options on top of the single configuration
+// TODO : Add modifiers to configuration
 $configuration: map-deep-merge($configuration, (
   base: $base,
   options: $options,
-  modifiers: $modifiers,
   components: $components
 ));
 

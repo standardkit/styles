@@ -1,0 +1,38 @@
+@use '../scss/utilities/colors';
+@use '../node_modules/sass-true' as *;
+
+@include describe('generate-complement-color()') {
+  // TODO : Implement
+}
+
+@include describe('generate-contrast-color()') {
+  // TODO : Implement
+}
+
+@include describe('generate-value-variant()') {
+  // TODO : Implement
+}
+
+@include describe('generate-color-set()') {
+  // TODO : Implement
+}
+
+@include describe('complete-color-sets()') {
+  // TODO : Implement
+}
+
+@include describe('get-brightness()') {
+  // TODO : Implement
+}
+
+@include describe('is-bright()') {
+  // TODO : Implement
+}
+
+@include describe('get-color-option()') {
+  // TODO : Implement
+}
+
+@include describe('get-weight()') {
+  // TODO : Implement
+}

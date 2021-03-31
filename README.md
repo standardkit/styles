@@ -122,8 +122,8 @@ $components: (
   button: (
     default-color: primary,
     cta: ( default-color: custom, default-margin: xl),
-    save: ( padding: xs),
-    cancel: ( color: error )
+    save: ( default-padding: xs),
+    cancel: ( default-color: error )
   )
 );
 ```

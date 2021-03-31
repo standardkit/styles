@@ -1,7 +1,5 @@
-// Import the default theme to use as a fallback base
 @use '../../themes/default' as default-theme;
 
-// Iterate through all themes, apply default base and flatten / process the configuration
 @each $theme-name, $theme in $themes {
 
   // Apply base on top of default theme

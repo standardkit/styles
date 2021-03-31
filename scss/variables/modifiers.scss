@@ -2,7 +2,6 @@
 $all-modifiers: [ color, fill-type, elevation, margin, padding, size, width, corner, border, breakpoint, focus-type,
                   disabled-type, capitalization, focus, hover, disabled, active, alignment, position, highlight ] !default;
 
-// TODO : Add 'empty'/'none' feature to start with a clean slate (now only possible with exclude, very verbose)
 // All the modifiers that can be configured and their configuration sets (basic, minimal)
 $configurable-modifiers: (
   color: (

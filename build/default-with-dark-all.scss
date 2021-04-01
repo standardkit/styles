@@ -1,0 +1,9 @@
+@use '../themes/dark';
+
+$themes: (
+  dark: (
+    base: dark
+  )
+);
+
+@use '../scss' with ($themes: $themes);

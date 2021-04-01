@@ -1,46 +1,73 @@
 // Flat Configuration: simplest level of input for the user
 $base: () !default;
 
+$modifiers: () !default; // All modifiers
+
+// Configurable Modifiers
 $colors: () !default;
 $color-options: () !default;
+$modifiers: map-deep-merge($modifiers, (colors: $colors, color-options: $color-options));
 
 $fill-types: () !default;
-$fill-type-options: () !default;
+$fill-options: () !default;
+$modifiers: map-deep-merge($modifiers, (fill-types: $fill-types, fill-options: $fill-options));
 
 $elevations: () !default;
 $elevation-options: () !default;
+$modifiers: map-deep-merge($modifiers, (elevations: $elevations, elevation-options: $elevation-options));
 
 $margins: () !default;
 $margin-options: () !default;
+$modifiers: map-deep-merge($modifiers, (margins: $margins, margin-options: $margin-options));
 
 $paddings: () !default;
 $padding-options: () !default;
+$modifiers: map-deep-merge($modifiers, (paddings: $paddings, padding-options: $padding-options));
 
 $sizes: () !default;
 $size-options: () !default;
+$modifiers: map-deep-merge($modifiers, (sizes: $sizes, size-options: $size-options));
 
 $widths: () !default;
 $width-options: () !default;
+$modifiers: map-deep-merge($modifiers, (widths: $widths, width-options: $width-options));
 
 $corners: () !default;
 $corner-options: () !default;
+$modifiers: map-deep-merge($modifiers, (corners: $corners, corner-options: $corner-options));
 
 $borders: () !default;
 $border-options: () !default;
+$modifiers: map-deep-merge($modifiers, (borders: $borders, border-options: $border-options));
 
 $focus-types: () !default;
 $focus-options: () !default;
+$modifiers: map-deep-merge($modifiers, (focus-types: $focus-types, focus-options: $focus-options));
 
 $disabled-types: () !default;
 $disabled-options: () !default;
+$modifiers: map-deep-merge($modifiers, (disabled-types: $disabled-types, disabled-options: $disabled-options));
 
 $breakpoints: () !default;
 $breakpoint-options: () !default;
+$modifiers: map-deep-merge($modifiers, (breakpoints: $breakpoints, breakpoint-options: $breakpoint-options));
 
-// TODO : Include modifiers that have only options to exclude flavors
+// Non-Configurable Modifiers
+$case-options: () !default;
+$hover-options: () !default;
+$active-options: () !default;
+$alignment-options: () !default;
+$position-options: () !default;
+$highlight-options: () !default;
+
+$modifiers: map-deep-merge($modifiers, (
+  case-options: $case-options, hover-options: $hover-options, active-options: $active-options,
+  alignment-options: $alignment-options, position-options: $position-options, highlight-options: $highlight-options,
+));
 
 $options: () !default; // Global modifier settings and utility configuration
 $components: () !default; // Default modifier flavors for each component
+$types: () !default; // Default compound types
 
 // Single Theme: Merged all the 'simple' options into one object
 $configuration: () !default;
@@ -49,11 +76,13 @@ $configuration: () !default;
 $themes: (default: ()) !default;
 
 // Merge the simple options on top of the single configuration
-// TODO : Add modifiers to configuration
+
 $configuration: map-deep-merge($configuration, (
   base: $base,
   options: $options,
-  components: $components
+  components: $components,
+  modifiers: $modifiers,
+  types: $types
 ));
 
 // Merge the configuration on top of the default theme

@@ -68,3 +68,18 @@
 @include describe('is-null()') {
   // TODO : Implement
 }
+
+@include describe('strip-suffix()') {
+  @include it('should strip my suffix') {
+    $string: somethingsuffix;
+    $string: base.strip-suffix($string, suffix);
+
+    @include assert-equal($string, something);
+  }
+  @include it('should strip no characters if it does not exist') {
+    $string: something;
+    $string: base.strip-suffix($string, fake);
+
+    @include assert-equal($string, something);
+  }
+}

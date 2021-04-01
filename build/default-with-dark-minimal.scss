@@ -1,0 +1,14 @@
+@use '../themes/dark';
+
+$options: (
+  modifier-sets: minimal
+);
+
+$themes: (
+  dark: (
+    base: dark,
+    options: $options
+  )
+);
+
+@use '../scss' with ($themes: $themes, $options: $options);

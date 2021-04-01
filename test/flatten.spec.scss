@@ -3,15 +3,15 @@
 
 @include describe('get-flavors()') {
   @include it('should return a map of the given modifiers flavors') {
-    $theme: (colors: (primary: white, secondary: black));
-    $flavors: flatten.get-flavors($theme, color);
+    $modifiers: (colors: (primary: white, secondary: black));
+    $flavors: flatten.get-flavors($modifiers, color);
 
     @include assert-equal($flavors, (primary: white, secondary: black));
   }
 
   @include it('should return an empty map if the theme doesn\'t have the modifier') {
-    $theme: (margins: (m: 1rem));
-    $flavors: flatten.get-flavors($theme, color);
+    $modifiers: (margins: (m: 1rem));
+    $flavors: flatten.get-flavors($modifiers, color);
 
     @include assert-equal($flavors, ());
   }
@@ -46,6 +46,14 @@
     $options: flatten.get-modifier-options($theme, color);
 
     @include assert-equal($options, ());
+  }
+
+  // TODO : Create flatten test for -type and -type without options to get options method
+  @include it('Should take into account the -type suffix') {
+    $theme: (fill-options: (use: all, include: [first, last]));
+    $options: flatten.get-modifier-options($theme, fill-type);
+
+    @include assert-equal($options, (use: all, include: [first, last]));
   }
 }
 
@@ -181,36 +189,45 @@
 
 @include describe('flatten-modifiers()') {
   @include it('should merge & process the base & theme properly') {
-    $base: (
+    $base-modifiers: (
       colors: (primary: blue, secondary: red, tertiary: purple),
       default-color: secondary,
       paddings: (none: 0, xl: 1rem),
       default-padding: none
     );
-    $theme: (
+    $modifiers: (
       colors: (custom: purple, tertiary: hotpink),
       color-options: (set: basic, exclude: secondary),
       paddings: (huge: 2rem),
       padding-options:(include: none xl),
       default-padding: xl
     );
-    $modifiers: flatten.flatten-modifiers($base, $theme);
-    $result: (
+    $options: ();
+    $result: flatten.flatten-modifiers($base-modifiers, $modifiers, $options);
+    $expected: (
       colors: (primary: blue, custom: purple, tertiary: hotpink),
       default-color: primary,
       paddings:(none: 0, xl: 1rem, huge: 2rem),
       default-padding: xl
     );
-    @include assert-equal($modifiers, $result);
+    @include assert-equal($result, $expected);
   }
   @include it('should result in empty map if nothing is specified') {
-    $modifiers: flatten.flatten-modifiers((), ());
+    $modifiers: flatten.flatten-modifiers((), (), ());
     @include assert-equal($modifiers, ());
   }
 }
 
+@include describe('get-types()') {
+  // TODO : Implement & Implement function
+  //@include it('should return the compound types'){
+  //
+  //}
+}
+
 @include describe('flatten-theme()') {
   // TODO : Implement
+  // TODO : Change flatten to reflect this structure
 }
 
 @include describe('flatten-themes()') {

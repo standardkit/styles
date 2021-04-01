@@ -1,3 +1,4 @@
+// NOTE: Use :has() when it is available & supported (2022 ?)
 @mixin reset() {
   *,
   *::before,

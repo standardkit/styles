@@ -62,3 +62,11 @@
 @function is-null($variable) {
   @return type-of($variable) == 'null';
 }
+
+@function strip-suffix($string, $suffix) {
+  $index: str-index($string, $suffix);
+  @if is-null($index) or str-length($string) != $index - 1 + str-length($suffix) {
+    @return $string;
+  }
+  @return str-slice($string, 1, $index - 1);
+}

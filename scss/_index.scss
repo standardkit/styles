@@ -11,9 +11,7 @@
 
 // TODO : Add base mixin, that are needed for all the themes (based on config)
 
-// For every theme, load all the styles
 @each $theme, $configuration in $themes {
-
   .theme--#{$theme} {
     @include theme($configuration);
   }

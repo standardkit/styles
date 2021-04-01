@@ -18,21 +18,22 @@ $theme-configuration: (
   components: (
     alert: (default-color: info, default-fill: plain)
   ),
-  modifiers: (),
-  // Specific modifiers
-  colors: $colors,
-  default-color: primary,
-  fill-types: $fill-types,
-  default-fill: fill,
-  elevations: $elevations,
-  margins: $margins,
-  paddings: $paddings,
-  sizes: $text-sizes, // TODO : split up?
-  widths: $widths,
-  corners: $corners,
-  borders: $borders,
-  focus-types: (), // TODO : Implement
-  default-focus-type: outline,
-  disabled-types: (), // TODO : Implement
-  breakpoints: $breakpoints
+  modifiers: (
+    // Specific modifiers
+    colors: $colors,
+    default-color: primary,
+    fill-types: $fill-types,
+    default-fill: fill,
+    elevations: $elevations,
+    margins: $margins,
+    paddings: $paddings,
+    sizes: $text-sizes, // TODO : split up?
+    widths: $widths,
+    corners: $corners,
+    borders: $borders,
+    focus-types: (), // TODO : Implement
+    default-focus-type: outline,
+    disabled-types: (), // TODO : Implement
+    breakpoints: $breakpoints
+  ),
 );

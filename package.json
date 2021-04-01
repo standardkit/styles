@@ -3,8 +3,9 @@
   "version": "0.0.15",
   "description": "SCSS framework for the StandardKit Design & Build System",
   "scripts": {
-    "watch": "sass --watch scss/_index.scss css/style.css -s compressed",
-    "build": "sass scss/_index.scss css/style.min.css -s compressed && sass scss/_index.scss css/style.css",
+    "watch-dev": "sass --watch scss/_index.scss css/dev.css",
+    "build-dev": "sass scss/_index.scss css/dev.css",
+    "build": "sass build:css -s compressed",
     "test": "sass test/test.scss test/test.css"
   },
   "repository": {

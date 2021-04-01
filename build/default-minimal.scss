@@ -1,0 +1,5 @@
+$options: (
+  modifier-sets: minimal
+);
+
+@use '../scss' with ($options: $options);

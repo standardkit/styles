@@ -1,8 +1,10 @@
 $themes: () !default; // Set by earlier configuration
 
 @each $theme-name, $theme in $themes {
-  $colors: map-get-default($theme, colors);
+  $modifiers: map-get-default($theme, modifiers);
+  $colors: map-get-default($modifiers, colors);
   $colors: complete-color-sets($colors, map-get-default($theme, options));
-  $theme: map-set($theme, colors, $colors);
+  $modifiers: map-set($modifiers, colors, $colors);
+  $theme: map-set($theme, modifiers, $modifiers);
   $themes: map-set($themes, $theme-name, $theme);
 }

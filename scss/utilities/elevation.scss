@@ -47,7 +47,7 @@
 
 // TODO : make configurable (color and opacities)
 @function get-elevation(
-  $elevation,
+  $elevation, // Z-index, depth indicator, base measurements
   $color: #0f0f0f,
   $umbra-opacity: 0.2,
   $penumbra-opacity: 0.14,

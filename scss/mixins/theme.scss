@@ -1,23 +1,29 @@
 @mixin theme($theme: ()) {
-  // TODO : Implement
-  // Add all sub-mixins
-  @include mix-colors(map-get-default($theme, colors), map-get-default($theme, fill-types));
-  @include mix-paddings(map-get-default($theme, paddings)); // TODO : etc..
 
-  //  @import 'partials';
-  //  @import 'components';
+  @include mix-theme(map-get-default($theme, modifiers), map-get-default($theme, options));
+  @include mix-modifiers(map-get-default($theme, modifiers));
+
+  // TODO : types
+  // TODO : components
 }
 
-/*
-// TODO : Make mixin and change to *
-html, body { // TODO : Put this on the .theme-- class SOMEhow
-  // TODO : Use :has() when it is available (2022?)
-  background-color: get-color(text, contrast);
-  color: get-color(text); // TODO : Default text color, same as below
+@mixin mix-modifiers($modifiers: ()) {
+  // TODO : Complex Modifiers (color&fill, breakpoints)
+  @include mix-colors(get-flavors($modifiers, color), get-flavors($modifiers, fill-type));
+  @include mix-paddings(get-flavors($modifiers, padding));
+
+  // TODO : Modifiers
+
+  // TODO : Static Modifiers
 }
 
-// TODO : Make default font and get from configuration make sure it is there (text)
-* {
-  @extend .font--text;
+@mixin mix-theme($modifiers:(), $options:()) {
+  * {
+    // TODO : Make default font and get from configuration make sure it is there (text)
+    @extend .font--text !optional; // TODO  Get default font, get default text color
+    // Not using type-color-fill for * selector
+    background-color: get-color(get-flavors($modifiers, color), primary, contrast); // TODO : use configured color, put this on a layout component
+    // we can fix this with components putting class on the body
+    color: get-color(get-flavors($modifiers, color), text); // TODO : use configured color / fill combination
+  }
 }
-*/

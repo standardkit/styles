@@ -4,8 +4,14 @@
 @function flatten-theme($theme: ()) {
   $flat-theme: ();
   $base: map-get-default($theme, base);
+  $base-modifiers: map-get-default($base, modifiers);
+  $modifiers: map-get-default($theme, modifiers);
+  $options: map-get-default($theme, options);
+  $base-types: map-get-default($base, types);
+  $types: map-get-default($theme, types);
+
   $flat-theme: map-set($flat-theme, options, flatten-options($base, $theme));
-  $flat-theme: map-deep-merge($flat-theme, flatten-modifiers($base, $theme));
+  $flat-theme: map-set($flat-theme, modifiers, flatten-modifiers($base-modifiers, $base-modifiers, $options));
   $flat-theme: map-set($flat-theme, components, flatten-components($base, $theme, $flat-theme));
 
   @return $flat-theme;
@@ -16,16 +22,17 @@
   @return map-deep-merge(map-get-default($base, options), map-get-default($theme, options));
 }
 
-// For each modifier, create 'modifiers' and 'default-modifier' entries to be used in the theme map
-@function flatten-modifiers($base, $theme) {
+// For each modifier, create 'modifiers' and 'default-modifier' entries to be used in the theme: modifiers
+@function flatten-modifiers($base-modifiers, $modifiers, $theme-options) {
   $map: ();
   @each $modifier, $sets in $configurable-modifiers {
-    $base-flavors: get-flavors($base, $modifier);
-    $flavors: get-flavors($theme, $modifier);
-    $theme-options: map-get-default($theme, options);
-    $options: get-modifier-options($theme, $modifier);
+
+    $base-flavors: get-flavors($base-modifiers, $modifier);
+    $flavors: get-flavors($modifiers, $modifier);
+    $options: get-modifier-options($modifiers, $modifier);
+
     $flavors: flatten-modifier($base-flavors, $flavors, $sets, $theme-options, $options);
-    $default-modifier: flatten-default-flavor($modifier, $flavors, $theme-options, $theme);
+    $default-modifier: flatten-default-flavor($modifier, $flavors, $base-modifiers, $modifiers);
 
     @if $flavors != () {
       $map: map-deep-merge($map, (
@@ -61,13 +68,13 @@
 }
 
 // Checks if the preferred or base flavor is possible, otherwise default to the first possible flavor or '' if empty
-@function flatten-default-flavor($modifier, $flavors, $base-options, $options) {
-  $key: get-default-flavor($options, $modifier);
+@function flatten-default-flavor($modifier, $flavors, $base-modifiers, $modifiers) {
+  $key: get-default-flavor($modifiers, $modifier);
   $default: map-get($flavors, $key);
   @if not is-null($default) {
     @return $key;
   }
-  $key: get-default-flavor($base-options, $modifier);
+  $key: get-default-flavor($base-modifiers, $modifier);
   $default: map-get($flavors, $key);
   @if not is-null($default) {
     @return $key;
@@ -103,8 +110,8 @@
   @return $configured-components;
 }
 
-@function get-flavors($theme, $modifier) {
-  @return map-get-default($theme, #{$modifier}s);
+@function get-flavors($modifiers, $modifier) {
+  @return map-get-default($modifiers, #{$modifier}s);
 }
 
 @function get-default-flavor($theme, $modifier) {
@@ -112,5 +119,6 @@
 }
 
 @function get-modifier-options($theme, $modifier) {
+  $modifier: strip-suffix($modifier, -type);
   @return map-get-default($theme, #{$modifier}-options);
 }

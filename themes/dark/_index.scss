@@ -1,3 +1,10 @@
-@import 'colors';
-
-// TODO : fix
+$theme-configuration: (
+  options: (
+    prefer-dark-colors: true
+  ),
+  modifiers: (
+    colors: (
+      text: whitesmoke
+    )
+  )
+);

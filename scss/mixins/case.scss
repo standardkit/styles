@@ -1,14 +1,7 @@
-// TODO : Check all themes and include only once for size reduction
-@mixin mix-cases() {
-  .case--capitalize {
-    text-transform: capitalize;
-  }
-
-  .case--lowercase {
-    text-transform: lowercase;
-  }
-
-  .case--uppercase {
-    text-transform: uppercase;
+@mixin mix-cases($case-types: ()) {
+  @each $type, $case in $case-types {
+    .case--#{$type} {
+      text-transform: $case;
+    }
   }
 }

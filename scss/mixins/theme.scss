@@ -10,14 +10,23 @@
 @mixin mix-modifiers($modifiers: ()) {
   // TODO : Complex Modifiers (color&fill, breakpoints)
   @include mix-colors(get-flavors($modifiers, color), get-flavors($modifiers, fill-type));
-  @include mix-paddings(get-flavors($modifiers, padding));
 
   // TODO : Modifiers
+  @include mix-borders(get-flavors($modifiers, border));
+  @include mix-corners(get-flavors($modifiers, corner));
+  @include mix-elevations(get-flavors($modifiers, elevation));
+  @include mix-fonts(get-flavors($modifiers, font));
+  @include mix-margins(get-flavors($modifiers, margin));
+  @include mix-paddings(get-flavors($modifiers, padding));
+  @include mix-sizes(get-flavors($modifiers, size));
+  @include mix-widths(get-flavors($modifiers, width));
 
   // TODO : Static Modifiers
+  @include mix-cases(get-flavors($modifiers, case));
 }
 
 @mixin mix-theme($modifiers:(), $options:()) {
+  // TODO : Check the font imports, and based on option include then
   * {
     // TODO : Make default font and get from configuration make sure it is there (text)
     @extend .font--text !optional; // TODO  Get default font, get default text color

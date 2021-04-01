@@ -11,7 +11,7 @@
   $types: map-get-default($theme, types);
 
   $flat-theme: map-set($flat-theme, options, flatten-options($base, $theme));
-  $flat-theme: map-set($flat-theme, modifiers, flatten-modifiers($base-modifiers, $base-modifiers, $options));
+  $flat-theme: map-set($flat-theme, modifiers, flatten-modifiers($base-modifiers, $modifiers, $options));
   $flat-theme: map-set($flat-theme, components, flatten-components($base, $theme, $flat-theme));
 
   @return $flat-theme;

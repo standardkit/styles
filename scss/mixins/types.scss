@@ -6,9 +6,9 @@
   @each $type, $type-configuration in $types {
     .type--#{$type} {
       @each $modifier in modifiers.$all-modifiers {
-        $default-modifier: get-default-flavor($type-configuration, $modifier);
-        @if not is-null($default-modifier) {
-          @include flavors.mix-flavor($modifier, $default-modifier);
+        $flavor: get-default-flavor($type-configuration, $modifier);
+        @if not is-null($flavor) {
+          @include flavors.mix-flavor($modifier, $flavor);
         }
       }
     }

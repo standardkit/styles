@@ -1,9 +1,9 @@
-@use '../modifiers';
 @use '../utilities' as *;
+@use 'modifiers';
 
 @mixin theme($theme: ()) {
   @include mix-theme(map-get-default($theme, modifiers), map-get-default($theme, options));
-  @include mix-modifiers(map-get-default($theme, modifiers));
+  @include modifiers.mix-modifiers(map-get-default($theme, modifiers));
   @include mix-types(map-get-default($theme, types));
   @include mix-components(map-get-default($theme, components));
 }
@@ -14,25 +14,6 @@
 
 @mixin mix-components($components: ()) {
   // TODO : Implement
-}
-
-@mixin mix-modifiers($modifiers: ()) {
-  // TODO : Complex Modifiers (color&fill, breakpoints)
-  @include modifiers.mix-colors(get-flavors($modifiers, color), get-flavors($modifiers, fill-type));
-
-  // TODO : Complete all modifiers
-  // TODO : Make dynamic from list and optional if flavors empty
-  @include modifiers.mix-borders(get-flavors($modifiers, border));
-  @include modifiers.mix-corners(get-flavors($modifiers, corner));
-  @include modifiers.mix-elevations(get-flavors($modifiers, elevation));
-  @include modifiers.mix-fonts(get-flavors($modifiers, font));
-  @include modifiers.mix-margins(get-flavors($modifiers, margin));
-  @include modifiers.mix-paddings(get-flavors($modifiers, padding));
-  @include modifiers.mix-sizes(get-flavors($modifiers, size));
-  @include modifiers.mix-widths(get-flavors($modifiers, width));
-
-  // TODO : Static Modifiers
-  @include mix-cases(get-flavors($modifiers, case));
 }
 
 @mixin mix-theme($modifiers:(), $options:()) {

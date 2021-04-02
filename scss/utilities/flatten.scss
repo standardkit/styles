@@ -110,12 +110,13 @@
   @return $configured-components;
 }
 
+// TODO : Move this and these to separate file (also tests)
 @function get-flavors($modifiers, $modifier) {
   @return map-get-default($modifiers, #{$modifier}s);
 }
 
-@function get-default-flavor($theme, $modifier) {
-  @return map-get($theme, default-#{$modifier});
+@function get-default-flavor($modifiers, $modifier) {
+  @return map-get($modifiers, default-#{$modifier});
 }
 
 @function get-modifier-options($theme, $modifier) {

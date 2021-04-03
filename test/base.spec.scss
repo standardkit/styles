@@ -6,7 +6,18 @@
 }
 
 @include describe('map-get-default()') {
-  // TODO : Implement
+  @include it('should return empty map by default') {
+    $result: base.map-get-default((hello: abc), fake);
+    @include assert-equal($result, ());
+  }
+  @include it('should return value when it is available') {
+    $result: base.map-get-default((hello: abc), hello);
+    @include assert-equal($result, abc);
+  }
+  @include it('should return my custom default when value is not there') {
+    $result: base.map-get-default((hello: abc), fake, default-value);
+    @include assert-equal($result, default-value);
+  }
 }
 
 @include describe('map-exclude-keys()') {
@@ -58,7 +69,21 @@
 }
 
 @include describe('is-list()') {
-  // TODO : Implement
+  @include it('should return true on space separated list') {
+    @include assert-true(base.is-list(abc def efg));
+  }
+  @include it('should return true on comma separated list') {
+    @include assert-true(base.is-list([abc, def, efg]));
+  }
+  @include it('should return false on map') {
+    @include assert-false(base.is-list((abc: true)));
+  }
+  @include it('should return false on string') {
+    @include assert-false(base.is-list(hello));
+  }
+  @include it('should return false on number') {
+    @include assert-false(base.is-list(10));
+  }
 }
 
 @include describe('is-string()') {
@@ -81,5 +106,61 @@
     $string: base.strip-suffix($string, fake);
 
     @include assert-equal($string, something);
+  }
+}
+
+@include describe('get-flavors()') {
+  @include it('should return a map of the given modifiers flavors') {
+    $modifiers: (colors: (primary: white, secondary: black));
+    $flavors: base.get-flavors($modifiers, color);
+
+    @include assert-equal($flavors, (primary: white, secondary: black));
+  }
+
+  @include it('should return an empty map if the theme doesn\'t have the modifier') {
+    $modifiers: (margins: (m: 1rem));
+    $flavors: base.get-flavors($modifiers, color);
+
+    @include assert-equal($flavors, ());
+  }
+}
+
+@include describe('get-default-flavor()') {
+  @include it('should return a map of the given modifiers flavors') {
+    $theme: (colors: (primary: white, secondary: black));
+    $flavors: base.get-flavors($theme, color);
+
+    @include assert-equal($flavors, (primary: white, secondary: black));
+  }
+
+  @include it('should return an empty map if the theme doesn\'t have the modifier') {
+    $theme: (margins: (m: 1rem));
+    $flavors: base.get-flavors($theme, color);
+
+    @include assert-equal($flavors, ());
+  }
+}
+
+@include describe('get-modifier-options()') {
+  @include it('should return a map of the modifiers options') {
+    $theme: (color-options: (use: all, include: [first, last]));
+    $options: base.get-modifier-options($theme, color);
+
+    @include assert-equal($options, (use: all, include: [first, last]));
+  }
+
+  @include it('should return an empty map if the theme doesn\'t have the modifier options') {
+    $theme: (margin-options: (use: all));
+    $options: base.get-modifier-options($theme, color);
+
+    @include assert-equal($options, ());
+  }
+
+  // TODO : Create base test for -type and -type without options to get options method
+  @include it('Should take into account the -type suffix') {
+    $theme: (fill-options: (use: all, include: [first, last]));
+    $options: base.get-modifier-options($theme, fill-type);
+
+    @include assert-equal($options, (use: all, include: [first, last]));
   }
 }

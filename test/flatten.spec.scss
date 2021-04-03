@@ -1,74 +1,18 @@
 @use '../node_modules/sass-true' as *;
 @use '../scss/utilities/flatten';
 
-@include describe('get-flavors()') {
-  @include it('should return a map of the given modifiers flavors') {
-    $modifiers: (colors: (primary: white, secondary: black));
-    $flavors: flatten.get-flavors($modifiers, color);
-
-    @include assert-equal($flavors, (primary: white, secondary: black));
-  }
-
-  @include it('should return an empty map if the theme doesn\'t have the modifier') {
-    $modifiers: (margins: (m: 1rem));
-    $flavors: flatten.get-flavors($modifiers, color);
-
-    @include assert-equal($flavors, ());
-  }
-}
-
-@include describe('get-default-flavor()') {
-  @include it('should return a map of the given modifiers flavors') {
-    $theme: (colors: (primary: white, secondary: black));
-    $flavors: flatten.get-flavors($theme, color);
-
-    @include assert-equal($flavors, (primary: white, secondary: black));
-  }
-
-  @include it('should return an empty map if the theme doesn\'t have the modifier') {
-    $theme: (margins: (m: 1rem));
-    $flavors: flatten.get-flavors($theme, color);
-
-    @include assert-equal($flavors, ());
-  }
-}
-
-@include describe('get-modifier-options()') {
-  @include it('should return a map of the modifiers options') {
-    $theme: (color-options: (use: all, include: [first, last]));
-    $options: flatten.get-modifier-options($theme, color);
-
-    @include assert-equal($options, (use: all, include: [first, last]));
-  }
-
-  @include it('should return an empty map if the theme doesn\'t have the modifier options') {
-    $theme: (margin-options: (use: all));
-    $options: flatten.get-modifier-options($theme, color);
-
-    @include assert-equal($options, ());
-  }
-
-  // TODO : Create flatten test for -type and -type without options to get options method
-  @include it('Should take into account the -type suffix') {
-    $theme: (fill-options: (use: all, include: [first, last]));
-    $options: flatten.get-modifier-options($theme, fill-type);
-
-    @include assert-equal($options, (use: all, include: [first, last]));
-  }
-}
-
-@include describe('get-default-flavor()') {
+@include describe('flatten-default-flavor()') {
   $flavors: (primary: blue, secondary: red, tertiary: purple);
   @include it('should set the first possible flavor from the list if default is not set') {
-    $flavor: flatten.flatten-default-flavor(color, $flavors, (), ());
+    $flavor: flatten.flatten-default-flavor(color, $flavors, (), (), true);
     @include assert-equal($flavor, primary);
   }
   @include it('should set the first possible flavor from the list if base default does not exist') {
-    $flavor: flatten.flatten-default-flavor(color, $flavors, (default-color: custom), ());
+    $flavor: flatten.flatten-default-flavor(color, $flavors, (default-color: custom), (), true);
     @include assert-equal($flavor, primary);
   }
   @include it('should set the first possible flavor from the list if configured default does not exist') {
-    $flavor: flatten.flatten-default-flavor(color, $flavors, (), (default-color: custom));
+    $flavor: flatten.flatten-default-flavor(color, $flavors, (), (default-color: custom), true);
     @include assert-equal($flavor, primary);
   }
   @include it('should set the default to configured option if it exists') {
@@ -88,13 +32,17 @@
     @include assert-equal($flavor, secondary);
   }
   @include it('should fallback to first possible flavor if base & configured don\'t exist') {
-    $flavor: flatten.flatten-default-flavor(color, $flavors, (default-color: fake), (default-color: custom));
+    $flavor: flatten.flatten-default-flavor(color, $flavors, (default-color: fake), (default-color: custom), true);
     @include assert-equal($flavor, primary);
+  }
+  @include it('should return null if flavor doesn\'t exist') {
+    $flavor: flatten.flatten-default-flavor(color, $flavors, (), (default-color:fake));
+    @include assert-equal($flavor, null);
   }
 }
 
 @include describe('flatten-components()') {
-  @include it('should merge base & theme components or fallback to first possible flavor for modifier') {
+  @include it('should merge base & theme components and not fallback to first possible flavor for modifier') {
     $base: (components: (alert: (default-color: secondary, default-margin: xl), button: (default-padding: xl)));
     $theme: (components: (alert: (default-margin: xs, default-padding: fake), button: (default-color: tertiary)));
     $modifiers: (
@@ -103,7 +51,7 @@
       paddings: (m: 2rem, xl: 4rem)
     );
     $result: (
-      alert: (default-color: secondary, default-margin: xs, default-padding: m),
+      alert: (default-color: secondary, default-margin: xs, default-padding: null),
       button: (default-padding: xl, default-color: tertiary)
     );
     $components: flatten.flatten-components($base, $theme, $modifiers);

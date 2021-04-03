@@ -32,7 +32,7 @@
     $options: get-modifier-options($modifiers, $modifier);
 
     $flavors: flatten-modifier($base-flavors, $flavors, $sets, $theme-options, $options);
-    $default-modifier: flatten-default-flavor($modifier, $flavors, $base-modifiers, $modifiers);
+    $default-modifier: flatten-default-flavor($modifier, $flavors, $base-modifiers, $modifiers, true);
 
     @if $flavors != () {
       $map: map-deep-merge($map, (
@@ -68,7 +68,7 @@
 }
 
 // Checks if the preferred or base flavor is possible, otherwise default to the first possible flavor or '' if empty
-@function flatten-default-flavor($modifier, $flavors, $base-modifiers, $modifiers) {
+@function flatten-default-flavor($modifier, $flavors, $base-modifiers, $modifiers, $use-first: false) {
   $key: get-default-flavor($modifiers, $modifier);
   $default: map-get($flavors, $key);
   @if not is-null($default) {
@@ -79,13 +79,14 @@
   @if not is-null($default) {
     @return $key;
   }
-  @if length($flavors) > 0 {
+  @if $use-first and length($flavors) > 0 {
     @return nth(map-keys($flavors), 1);
   }
-  @return '';
+  @return null;
 }
 
-@function flatten-components($base, $theme, $modifiers) {
+// Check all the default modifiers from theme onto base and validate with the flattened list to see if they exist
+@function flatten-components($base, $theme, $flattened-modifiers) {
 
   $base-components: map-get-default($base, components);
   $theme-components: map-get-default($theme, components);
@@ -95,7 +96,7 @@
     @each $modifier in $all-modifiers {
 
       @if map-has-key($component-modifiers, default-#{$modifier}) {
-        $flavors: get-flavors($modifiers, $modifier);
+        $flavors: get-flavors($flattened-modifiers, $modifier);
         $default: flatten-default-flavor(
             $modifier,
             $flavors,
@@ -110,16 +111,6 @@
   @return $configured-components;
 }
 
-// TODO : Move this and these to separate file (also tests)
-@function get-flavors($modifiers, $modifier) {
-  @return map-get-default($modifiers, #{$modifier}s);
-}
-
-@function get-default-flavor($modifiers, $modifier) {
-  @return map-get($modifiers, default-#{$modifier});
-}
-
-@function get-modifier-options($theme, $modifier) {
-  $modifier: strip-suffix($modifier, -type);
-  @return map-get-default($theme, #{$modifier}-options);
+// Check all the types and set default values to null for non-existing values
+@function flatten-types($base, $theme, $flattened-modifiers) {
 }

@@ -167,16 +167,37 @@
 }
 
 @include describe('flatten-types()') {
-  @include it('should merge theme and base, nullifying impossible flavors') {
-    $base-types: (custom: (default-color: secondary), other: (default-margin: fake));
+  $base-types: (custom: (default-color: secondary), other: (default-margin: fake));
+  $modifiers: (colors: (primary: red, secondary: blue), margins: (small: 1rem, big: 2rem));
+
+  @include it('should merge theme and base, removing impossible flavors') {
     $theme-types: (custom: (default-color: primary, default-margin: small), other: (default-color: primary));
-    $modifiers: (colors: (primary: red, secondary: blue), margins: (small: 1rem, big: 2rem));
     $result: flatten.flatten-types($base-types, $theme-types, $modifiers);
     $expected: (
       custom: (default-color: primary, default-margin: small),
-      other: (default-color: primary, default-margin: null)
+      other: (default-color: primary)
     );
     @include assert-equal($result, $expected);
+  }
+  @include it('extends another type if it exists') {
+    $theme-types: (
+      base: (default-color: primary),
+      one: (extend: base, default-margin: small),
+      two: (extend: custom));
+    $result: flatten.flatten-types($base-types, $theme-types, $modifiers);
+    $expected: (
+      custom: (default-color: secondary),
+      other: (),
+      base: (default-color: primary),
+      one: (default-color: primary, default-margin: small),
+      two: (default-color: secondary)
+    );
+    @include assert-equal($result, $expected);
+  }
+  @include it('extends another type if it exists and not extended already') {
+    $types: (loop: (extend: loop, default-color: primary));
+    $result: flatten.flatten-types((), $types, $modifiers);
+    @include assert-equal($result, (loop: (default-color: primary)));
   }
 }
 

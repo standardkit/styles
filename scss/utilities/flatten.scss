@@ -122,21 +122,50 @@
 @function flatten-types($base-types, $theme-types, $flattened-modifiers) {
   $types: map-deep-merge($base-types, $theme-types);
 
-  @each $type, $type-modifiers in $types {
-
-    @each $modifier in $all-modifiers {
-      @if map-has-key($type-modifiers, default-#{$modifier}) {
-        $flavors: get-flavors($flattened-modifiers, $modifier);
-        $default: flatten-default-flavor(
-            $modifier,
-            $flavors,
-            map-get-default($base-types, $type),
-            map-get-default($theme-types, $type)
-        );
-        $type-modifiers: map-set($type-modifiers, default-#{$modifier}, $default);
-      }
-    }
-    $types: map-set($types, $type, $type-modifiers);
+  @each $type, $modifiers in $types {
+    $modifiers: flatten-type($base-types, $theme-types, $modifiers, $flattened-modifiers, $types, $type);
+    $types: map-set($types, $type, $modifiers);
   }
   @return $types;
+}
+
+@function flatten-type($base-types, $theme-types, $modifiers, $flattened-modifiers, $types, $type, $extended: []) {
+  $modifiers: flatten-modifiers-for-type($base-types, $theme-types, $modifiers, $flattened-modifiers, $type);
+
+  $extend-key: map-get($modifiers, extend);
+  @if not is-null($extend-key) {
+    $modifiers: map-remove($modifiers, extend);
+    @if $extend-key == $type or in-list($extended, $extend-key) {
+      $error: error('Circular extension detected for type "#{$type}". "#{$extend-key}" already in extension tree');
+      @return $modifiers;
+    } @else if not map-has-key($types, $extend-key) {
+      $error: error('Unable to extend type "#{$extend-key}". Type is not available');
+      @return $modifiers;
+    } @else {
+      $extended: append($extended, $extend-key);
+      $extended-type: map-get($types, $extend-key);
+      $extended-type: flatten-type($base-types, $theme-types, $extended-type, $flattened-modifiers, $types, $extend-key, $extended);
+      @return map-merge($extended-type, $modifiers);
+
+    }
+  } @else {
+    @return $modifiers;
+  }
+}
+
+@function flatten-modifiers-for-type($base-types, $theme-types, $type-modifiers, $flattened-modifiers, $type) {
+  @each $modifier in $all-modifiers {
+    @if map-has-key($type-modifiers, default-#{$modifier}) {
+      $flavors: get-flavors($flattened-modifiers, $modifier);
+      $default: flatten-default-flavor(
+          $modifier,
+          $flavors,
+          map-get-default($base-types, $type),
+          map-get-default($theme-types, $type)
+      );
+      $type-modifiers: map-set($type-modifiers, default-#{$modifier}, $default);
+    }
+  }
+  $type-modifiers: map-deep-clean($type-modifiers);
+  @return $type-modifiers;
 }

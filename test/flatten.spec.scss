@@ -166,11 +166,18 @@
   }
 }
 
-@include describe('get-types()') {
-  // TODO : Implement & Implement function
-  //@include it('should return the compound types'){
-  //
-  //}
+@include describe('flatten-types()') {
+  @include it('should merge theme and base, nullifying impossible flavors') {
+    $base-types: (custom: (default-color: secondary), other: (default-margin: fake));
+    $theme-types: (custom: (default-color: primary, default-margin: small), other: (default-color: primary));
+    $modifiers: (colors: (primary: red, secondary: blue), margins: (small: 1rem, big: 2rem));
+    $result: flatten.flatten-types($base-types, $theme-types, $modifiers);
+    $expected: (
+      custom: (default-color: primary, default-margin: small),
+      other: (default-color: primary, default-margin: null)
+    );
+    @include assert-equal($result, $expected);
+  }
 }
 
 @include describe('flatten-theme()') {

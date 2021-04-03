@@ -1,0 +1,43 @@
+$log-level: error !default;
+
+$log-levels: (
+  none: 5,
+  error: 4,
+  warning: 3,
+  info: 2,
+  success: 1,
+  all: 0
+);
+
+@function error($message) {
+  @return log(error, 'ERROR: #{$message}');
+}
+
+@function warning($message) {
+  @return log(warning, 'WARNING: #{$message}');
+}
+
+@function info($message) {
+  @return log(info, 'INFO: #{$message}');
+}
+
+@function success($message) {
+  @return log(success, 'SUCCESS: #{$message}');
+}
+
+@function log($level, $message) {
+  @if get-log-level($level) >= get-log-level($log-level) {
+    @debug $message;
+  }
+  @return null;
+}
+
+@function get-log-level($level) {
+  @each $key, $value in $log-levels {
+    @if $key == $level {
+      @return $value;
+    }
+  }
+  @warn 'Log level "#{$log-level}" invalid! must be of type: "error", "warning", "info" or "success"';
+  @return 0;
+}

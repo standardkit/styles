@@ -1,4 +1,5 @@
 @use '../../themes/default' as default-theme;
+@use '../utilities' as *;
 
 @each $theme-name, $theme in $themes {
 
@@ -9,6 +10,7 @@
 
   $theme: map-set($theme, base, $base); // Set the base
   $theme: flatten-theme($theme);
+  $theme: map-deep-clean($theme);
 
   $themes: map-set($themes, $theme-name, $theme); // Flatten and save to the $themes object
 }

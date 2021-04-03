@@ -164,3 +164,14 @@
     @include assert-equal($options, (use: all, include: [first, last]));
   }
 }
+
+@include describe('map-deep-clean()') {
+  @include it('should remove my single entry') {
+    $result: base.map-deep-clean((default-color: null));
+    @include assert-equal($result, ());
+  }
+  @include it('should remove my nested entry') {
+    $result: base.map-deep-clean((something: true, else: (default-color: null)));
+    @include assert-equal($result, (something: true, else: ()));
+  }
+}

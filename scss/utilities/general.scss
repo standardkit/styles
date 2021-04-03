@@ -1,12 +1,10 @@
+// TODO : Remove this file and all code in favor of mixins for components / flavors
+
 @function get-color($colors: (), $color: primary, $key: main) {
   @if $key == none {
     @return transparent;
   }
   @return map-get(map-get($colors, $color), $key);
-}
-
-@function get-font($fonts: (),$font: text) {
-  @return map-get($fonts, $font);
 }
 
 @function get-margin($margins: (), $margin: m) {

@@ -1,4 +1,5 @@
 @use '../node_modules/sass-true';
+@use '../scss/utilities/log' with ($log-level: none);
 
 @use 'base.spec';
 @use 'flatten.spec';

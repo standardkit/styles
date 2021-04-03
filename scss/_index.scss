@@ -6,6 +6,9 @@
 // Get user input and process it to usable & predictable configuration
 @import 'configuration';
 
+$log-level: null !default;
+@use 'utilities/log' with ($log-level: $log-level);
+
 // Reset formatting of html, needs to be done only once
 @include reset();
 

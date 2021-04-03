@@ -1,4 +1,5 @@
 @use 'base' as *;
+@use 'log' as *;
 @use '../variables' as *;
 
 @function flatten-theme($theme: ()) {
@@ -73,15 +74,21 @@
   $default: map-get($flavors, $key);
   @if not is-null($default) {
     @return $key;
+  } @else if not is-null($key) {
+    $error: error('Configured flavor: "#{$key}" for modifier: "#{$modifier}" not defined');
   }
   $key: get-default-flavor($base-modifiers, $modifier);
   $default: map-get($flavors, $key);
   @if not is-null($default) {
+    $warning: warning('Base-theme default: "#{$key}" for modifier: "#{$modifier}" is not available');
     @return $key;
   }
   @if $use-first and length($flavors) > 0 {
-    @return nth(map-keys($flavors), 1);
+    $fallback: nth(map-keys($flavors), 1);
+    $warning: info('Default #{$modifier} "#{$key}" not found, falling back to "#{$fallback}"');
+    @return $fallback;
   }
+
   @return null;
 }
 
@@ -112,5 +119,24 @@
 }
 
 // Check all the types and set default values to null for non-existing values
-@function flatten-types($base, $theme, $flattened-modifiers) {
+@function flatten-types($base-types, $theme-types, $flattened-modifiers) {
+  $types: map-deep-merge($base-types, $theme-types);
+
+  @each $type, $type-modifiers in $types {
+
+    @each $modifier in $all-modifiers {
+      @if map-has-key($type-modifiers, default-#{$modifier}) {
+        $flavors: get-flavors($flattened-modifiers, $modifier);
+        $default: flatten-default-flavor(
+            $modifier,
+            $flavors,
+            map-get-default($base-types, $type),
+            map-get-default($theme-types, $type)
+        );
+        $type-modifiers: map-set($type-modifiers, default-#{$modifier}, $default);
+      }
+    }
+    $types: map-set($types, $type, $type-modifiers);
+  }
+  @return $types;
 }

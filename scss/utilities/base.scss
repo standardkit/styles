@@ -83,3 +83,15 @@
   $modifier: strip-suffix($modifier, -type);
   @return map-get-default($theme, #{$modifier}-options);
 }
+
+@function map-deep-clean($map: ()) {
+  @each $key, $value in $map {
+    @if is-null($value) {
+      $map: map-remove($map, $key);
+    } @else if is-map($value) {
+      $map: map-set($map, $key, map-deep-clean($value));
+    }
+  }
+  @return $map;
+}
+

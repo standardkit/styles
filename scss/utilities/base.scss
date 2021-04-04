@@ -29,7 +29,7 @@
 }
 
 @function map-exclude-prefixed-keys($map, $prefix) {
-  @each $key, $value in $map {
+  @each $key in map-keys($map) {
     @if str-index($key, $prefix) == 1 {
       $map: map-remove($map, $key);
     }
@@ -45,6 +45,15 @@
     }
   }
   @return $new-map;
+}
+
+@function map-filter-prefixed-keys($map, $prefix) {
+  @each $key in map-keys($map) {
+    @if str-index($key, $prefix) != 1 {
+      $map: map-remove($map, $key);
+    }
+  }
+  @return $map;
 }
 
 @function in-list($list, $key) {

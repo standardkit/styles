@@ -45,14 +45,15 @@
   $modifiers: (
     colors: (primary: red, secondary: blue, tertiary: purple),
     margins: (none: 0, xs: 1rem, xl: 2rem),
-    paddings: (m: 2rem, xl: 4rem)
+    paddings: (m: 2rem, xl: 4rem),
+    sizes: (m: 1rem, l: 2rem)
   );
   @include it('should merge base & theme components and not fallback to first possible flavor for modifier') {
-    $base: (components: (alert: (default-color: secondary, default-margin: xl), button: (default-padding: xl)));
-    $theme: (components: (alert: (default-margin: xs, default-padding: fake), button: (default-color: tertiary)));
+    $base: (alert: (default-color: secondary, default-margin: xl), button: (default-padding: xl));
+    $theme: (alert: (default-margin: xs, default-padding: fake), button: (default-color: tertiary));
 
     $result: (
-      alert: (default-color: secondary, default-margin: xs, default-padding: null),
+      alert: (default-color: secondary, default-margin: xs),
       button: (default-padding: xl, default-color: tertiary)
     );
     $components: flatten.flatten-components($base, $theme, $modifiers, ());
@@ -64,36 +65,55 @@
       custom: (default-color: secondary),
       other: (default-margin: xl)
     );
-    $base: (components: (
+    $base-components: (
       button: (
         custom: (default-margin: xs, default-padding: m),
         basething: (default-color: primary, default-padding: m),
         base-extend: (extend: custom)
       )
-    ));
-    $theme: (components: (
+    );
+    $theme-components: (
       button: (
         custom: (default-padding: xl),
         extended: (extend: other, default-color: tertiary),
         extend-base: (extend: basething, default-padding: xl)
       )
-    ));
+    );
     $expected: (
       button: (
-        custom: (default-padding: xl, default-margin:xs, default-color: secondary),
-        extended: (default-color:tertiary, default-margin: xl),
+        custom: (default-color: secondary, default-margin:xs, default-padding: xl),
+        other: (default-margin: xl),
         basething: (default-color: primary, default-padding: m),
-        extend-base: (default-color: primary, default-padding: xl),
-        base-extend: (default-color: secondary)
+        base-extend: (default-color: secondary, default-margin: xs, default-padding:xl),
+        extended: (default-color:tertiary, default-margin: xl),
+        extend-base: (default-color: primary, default-padding: xl) // padding fout
       )
     );
-    $result: flatten.flatten-components($base, $theme, $modifiers, $types);
+    $result: flatten.flatten-components($base-components, $theme-components, $modifiers, $types);
     @include assert-equal($result, $expected);
   }
-  @include it('should extend base types from type') {
+  @include it('should extend base types from type and include the base types') {
     $types: (custom: (default-color: primary));
     $result: flatten.flatten-components((button: (extend: custom)), (), $modifiers, $types);
-    @include assert-equal($result, (button: (default-color: primary)));
+    @include assert-equal($result, (button: (default-color: primary, custom: (default-color: primary))));
+  }
+  @include it('should work when you use circular extension') {
+    $type-configuration: (
+      button: (
+        one: (extend: three, default-color: primary, default-size: m),
+        two: (extend: one, default-color: secondary, default-padding: xl),
+        three: (extend: two, default-color: tertiary, default-margin: xs)
+      )
+    );
+    $expected: (
+      button: (
+        one:(default-color: primary, default-size: m, default-padding: xl, default-margin: xs),
+        two:(default-color: secondary, default-size: m, default-padding: xl, default-margin: xs),
+        three:(default-color: tertiary, default-size: m, default-padding: xl, default-margin: xs)
+      )
+    );
+    $result: flatten.flatten-components((), $type-configuration, $modifiers, ());
+    @include assert-equal($result, $expected);
   }
 }
 

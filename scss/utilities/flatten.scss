@@ -148,7 +148,6 @@
     @if map-has-key($component-configuration, extend) {
       $extend-key: map-get($component-configuration, extend);
       @if not in-list(map-keys($types), $extend-key) {
-        @debug $types;
         $log: log.warning('Base extend "#{$extend-key}" for component "#{$component}" invalid. Type not available');
         $component-configuration: map-remove($component-configuration, extend);
       }
@@ -160,6 +159,7 @@
         $base-types: map-get-default($base-components, $component);
         $base-types: get-component-types($base-types);
         $possible-types: map-deep-merge($types, $base-types);
+        $possible-types: map-deep-merge($possible-types, $component-types);
         @if not in-list(map-keys($possible-types), $extend-key) {
           $log: log.error('Type extend from "#{$type}" extending: "#{$extend-key}" not possible. "#{$extend-key}" not available.');
           $type-configuration: map-remove($type-configuration, extend);
@@ -189,28 +189,45 @@
 
 @function process-components-extends($components, $types) {
   @each $component, $configuration in $components {
-    $configuration: process-component-extends($configuration, $components, $types);
+    $configuration: process-component-extends($configuration, $types);
     $components: map-set($components, $component, $configuration);
   }
   @return $components;
 }
 
-@function process-component-extends($configuration, $components, $types) {
+@function process-component-extends($configuration, $types) {
   @if map-has-key($configuration, extend) {
     $extend-key: map-get($configuration, extend);
     $configuration: map-remove($configuration, extend);
     $configuration: map-merge($configuration, map-get($types, $extend-key));
-    @return process-component-extends($configuration, $components, $types);
+    @return process-component-extends($configuration, $types);
   } @else {
     $component-types: get-component-types($configuration);
+    $component-types: map-deep-merge($types, $component-types);
+    $flattened-component-types: ();
     @each $type, $type-configuration in $component-types {
-      // TODO : Merge on top of the type if the same name maybe do that first for all of them?
-      @if map-has-key($type-configuration, extend) {
-        $extend-key: map-get($configuration, extend);
-        $type-configuration: map-remove($type-configuration, extend);
-        // TODO : Check
-      }
+      $type-configuration: process-type-extend($type-configuration, $type, $component-types);
+      $flattened-component-types: map-set($flattened-component-types, $type, $type-configuration);
     }
+    $configuration: map-filter-prefixed-keys($configuration, default-);
+    $configuration: map-merge($configuration, $flattened-component-types);
+    @return $configuration;
+  }
+}
+
+@function process-type-extend($configuration, $type, $types, $keys: []) {
+  @if map-has-key($configuration, extend) {
+    $extend-key: map-get($configuration, extend);
+    $configuration: map-remove($configuration, extend);
+    @if $extend-key == $type or in-list($keys, $extend-key) {
+      $log: log.error('Circular extension detected for type "#{$type}". "#{$extend-key}" already in extension tree');
+      @return $configuration;
+    } @else {
+      $keys: append($keys, $extend-key);
+      $configuration: map-deep-merge(map-get($types, $extend-key), $configuration);
+      @return process-type-extend($configuration, $extend-key, $types, $keys);
+    }
+  } @else {
     @return $configuration;
   }
 }

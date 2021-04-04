@@ -1,5 +1,5 @@
 @use '../node_modules/sass-true';
-@use '../scss/utilities/log' with ($log-level: none);
+@use '../scss/utilities/log' with ($log-level: all);
 
 @use 'base.spec';
 @use 'flatten.spec';
@@ -7,9 +7,6 @@
 
 @include sass-true.report();
 
-// TODO : Compound Types
-// TODO : Extend in type
-// TODO : Types refer to flavors
 // TODO : Breakpoints to max width
 // TODO : Breakpoints in compound types
 // TODO : Breakpoints in modifiers

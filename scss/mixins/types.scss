@@ -7,7 +7,7 @@
   @each $type-name, $type-configuration in $types {
     @if $type-name == $type {
       $found: true;
-      @each $modifier in modifiers.$all-modifiers {
+      @each $modifier in modifiers.$all {
         $flavor: get-default-flavor($type-configuration, $modifier);
         @if not is-null($flavor) {
           @include flavors.mix-flavor($modifier, $flavor);

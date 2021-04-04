@@ -42,21 +42,58 @@
 }
 
 @include describe('flatten-components()') {
+  $modifiers: (
+    colors: (primary: red, secondary: blue, tertiary: purple),
+    margins: (none: 0, xs: 1rem, xl: 2rem),
+    paddings: (m: 2rem, xl: 4rem)
+  );
   @include it('should merge base & theme components and not fallback to first possible flavor for modifier') {
     $base: (components: (alert: (default-color: secondary, default-margin: xl), button: (default-padding: xl)));
     $theme: (components: (alert: (default-margin: xs, default-padding: fake), button: (default-color: tertiary)));
-    $modifiers: (
-      colors: (primary: red, secondary: blue, tertiary: purple),
-      margins: (none: 0, xs: 1rem, xl: 2rem),
-      paddings: (m: 2rem, xl: 4rem)
-    );
+
     $result: (
       alert: (default-color: secondary, default-margin: xs, default-padding: null),
       button: (default-padding: xl, default-color: tertiary)
     );
-    $components: flatten.flatten-components($base, $theme, $modifiers);
+    $components: flatten.flatten-components($base, $theme, $modifiers, ());
 
     @include assert-equal($components, $result);
+  }
+  @include it('should merge types and be able to extend them') {
+    $types: (
+      custom: (default-color: secondary),
+      other: (default-margin: xl)
+    );
+    $base: (components: (
+      button: (
+        custom: (default-margin: xs, default-padding: m),
+        basething: (default-color: primary, default-padding: m),
+        base-extend: (extend: custom)
+      )
+    ));
+    $theme: (components: (
+      button: (
+        custom: (default-padding: xl),
+        extended: (extend: other, default-color: tertiary),
+        extend-base: (extend: basething, default-padding: xl)
+      )
+    ));
+    $expected: (
+      button: (
+        custom: (default-padding: xl, default-margin:xs, default-color: secondary),
+        extended: (default-color:tertiary, default-margin: xl),
+        basething: (default-color: primary, default-padding: m),
+        extend-base: (default-color: primary, default-padding: xl),
+        base-extend: (default-color: secondary)
+      )
+    );
+    $result: flatten.flatten-components($base, $theme, $modifiers, $types);
+    @include assert-equal($result, $expected);
+  }
+  @include it('should extend base types from type') {
+    $types: (custom: (default-color: primary));
+    $result: flatten.flatten-components((button: (extend: custom)), (), $modifiers, $types);
+    @include assert-equal($result, (button: (default-color: primary)));
   }
 }
 
@@ -199,6 +236,40 @@
     $result: flatten.flatten-types((), $types, $modifiers);
     @include assert-equal($result, (loop: (default-color: primary)));
   }
+}
+
+@include describe('check-defaults()') {
+  $modifiers: (colors: (primary: red), padding: (big: 1rem));
+  @include it('should remove non-existing defaults') {
+    $default-flavors: (default-color: primary, default-padding: fake, default-margin: also-fake);
+    $expected: (default-color: primary);
+    $result: flatten.check-defaults($default-flavors, $modifiers);
+    @include assert-equal($result, $expected);
+  }
+  @include it('should keep trivial entries that are not valid components or defaults at all') {
+    $default-flavors: (default-color: primary, default-padding: fake, extend: something, default-fake: keep-entry);
+    $expected: (default-color: primary, extend: something, default-fake: keep-entry);
+    $result: flatten.check-defaults($default-flavors, $modifiers);
+    @include assert-equal($result, $expected);
+  }
+}
+
+@include describe('check-component-configurations()') {
+  @include it('should remove invalid defaults and remove empty maps') {
+    $components: (button: (default-color: primary, default-margin: fake), alert: (default-padding: fake));
+    $modifiers: (colors: (primary: red), padding: (big: 1rem));
+    $expected: (button: (default-color: primary));
+    $result: flatten.check-component-configurations($components, $modifiers);
+    @include assert-equal($result, $expected);
+  }
+  @include it('should remove invalid defaults and remove empty maps per custom type') {
+    $components: (button: (cta: (default-color: primary, default-margin: fake), save: (default-padding: fake)));
+    $modifiers: (colors: (primary: red), padding: (big: 1rem));
+    $expected: (button: (cta: (default-color: primary)));
+    $result: flatten.check-component-configurations($components, $modifiers);
+    @include assert-equal($result, $expected);
+  }
+
 }
 
 @include describe('flatten-theme()') {

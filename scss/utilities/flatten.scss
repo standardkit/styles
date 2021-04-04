@@ -1,19 +1,32 @@
 @use 'base' as *;
-@use 'log' as *;
-@use '../variables' as *;
+@use 'log';
+@use '../variables/modifiers';
 
 @function flatten-theme($theme: ()) {
   $flat-theme: ();
+
+  // Options
   $base: map-get-default($theme, base);
+  $options: flatten-options($base, $theme);
+  $flat-theme: map-set($flat-theme, options, $options);
+
+  // Modifiers
   $base-modifiers: map-get-default($base, modifiers);
   $modifiers: map-get-default($theme, modifiers);
-  $options: map-get-default($theme, options);
+  $modifiers: flatten-modifiers($base-modifiers, $modifiers, $options);
+  $flat-theme: map-set($flat-theme, modifiers, $modifiers);
+
+  // Types
   $base-types: map-get-default($base, types);
   $types: map-get-default($theme, types);
+  $types: flatten-types($base-types, $types, $modifiers);
+  $flat-theme: map-set($flat-theme, types, $types);
 
-  $flat-theme: map-set($flat-theme, options, flatten-options($base, $theme));
-  $flat-theme: map-set($flat-theme, modifiers, flatten-modifiers($base-modifiers, $modifiers, $options));
-  $flat-theme: map-set($flat-theme, components, flatten-components($base, $theme, $flat-theme));
+  // Components
+  $base-components: map-get-default($base, components);
+  $components: map-get-default($theme, components);
+  $components: flatten-components($base-components, $components, $modifiers, $types);
+  $flat-theme: map-set($flat-theme, components, $components);
 
   @return $flat-theme;
 }
@@ -26,7 +39,7 @@
 // For each modifier, create 'modifiers' and 'default-modifier' entries to be used in the theme: modifiers
 @function flatten-modifiers($base-modifiers, $modifiers, $theme-options) {
   $map: ();
-  @each $modifier, $sets in $configurable-modifiers {
+  @each $modifier, $sets in modifiers.$sets {
 
     $base-flavors: get-flavors($base-modifiers, $modifier);
     $flavors: get-flavors($modifiers, $modifier);
@@ -75,47 +88,151 @@
   @if not is-null($default) {
     @return $key;
   } @else if not is-null($key) {
-    $error: error('Configured flavor: "#{$key}" for modifier: "#{$modifier}" not defined');
+    $error: log.error('Configured flavor: "#{$key}" for modifier: "#{$modifier}" not defined');
   }
   $key: get-default-flavor($base-modifiers, $modifier);
   $default: map-get($flavors, $key);
   @if not is-null($default) {
-    $warning: warning('Base-theme default: "#{$key}" for modifier: "#{$modifier}" is not available');
+    $warning: log.warning('Base-theme default: "#{$key}" for modifier: "#{$modifier}" is not available');
     @return $key;
   }
   @if $use-first and length($flavors) > 0 {
     $fallback: nth(map-keys($flavors), 1);
-    $warning: info('Default #{$modifier} "#{$key}" not found, falling back to "#{$fallback}"');
+    $warning: log.info('Default #{$modifier} "#{$key}" not found, falling back to "#{$fallback}"');
     @return $fallback;
   }
 
   @return null;
 }
 
-// Check all the default modifiers from theme onto base and validate with the flattened list to see if they exist
-@function flatten-components($base, $theme, $flattened-modifiers) {
-
-  $base-components: map-get-default($base, components);
-  $theme-components: map-get-default($theme, components);
-  $configured-components: map-deep-merge($base-components, $theme-components);
-
-  @each $component, $component-modifiers in $configured-components {
-    @each $modifier in $all-modifiers {
-
-      @if map-has-key($component-modifiers, default-#{$modifier}) {
-        $flavors: get-flavors($flattened-modifiers, $modifier);
-        $default: flatten-default-flavor(
-            $modifier,
-            $flavors,
-            map-get-default($base-components, $component),
-            map-get-default($theme-components, $component)
-        );
-        $component-modifiers: map-set($component-modifiers, default-#{$modifier}, $default);
+@function check-component-configurations($components, $modifiers) {
+  @each $component, $component-configuration in $components {
+    $component-configuration: check-defaults($component-configuration, $modifiers);
+    $component-types: get-component-types($component-configuration);
+    @each $type, $type-configuration in $component-types {
+      $type-configuration: check-defaults($type-configuration, $modifiers);
+      @if $type-configuration == () {
+        $log: log.info('Type configuration "#{$type}" for "#{$component}" empty after validation. Removing...');
+        $component-configuration: map-remove($component-configuration, $type);
+      } @else {
+        $component-configuration: map-set($component-configuration, $type, $type-configuration);
       }
     }
-    $configured-components: map-set($configured-components, $component, $component-modifiers);
+    @if $component-configuration == () {
+      $log: log.info('Component configuration for "#{$component}" empty after validation. Removing...');
+      $components: map-remove($components, $component);
+    } @else {
+      $components: map-set($components, $component, $component-configuration);
+    }
   }
-  @return $configured-components;
+  @return $components;
+}
+
+@function check-defaults($default-flavors, $modifiers) {
+  @each $modifier in modifiers.$all {
+    $key: default-#{$modifier};
+    @if map-has-key($default-flavors, $key) {
+      $flavor: map-get($default-flavors, $key);
+      $flavors: get-flavors($modifiers, $modifier);
+      @if not in-list(map-keys($flavors), $flavor) {
+        $error: log.error('Configured flavor: "#{$flavor}" for modifier: "#{$modifier}" not defined');
+        $default-flavors: map-remove($default-flavors, $key);
+      }
+    }
+  }
+  @return $default-flavors;
+}
+
+@function check-component-extends($components, $types, $base-components: ()) {
+  @each $component, $component-configuration in $components {
+    @if map-has-key($component-configuration, extend) {
+      $extend-key: map-get($component-configuration, extend);
+      @if not in-list(map-keys($types), $extend-key) {
+        @debug $types;
+        $log: log.warning('Base extend "#{$extend-key}" for component "#{$component}" invalid. Type not available');
+        $component-configuration: map-remove($component-configuration, extend);
+      }
+    }
+    $component-types: get-component-types($component-configuration);
+    @each $type, $type-configuration in $component-types {
+      @if map-has-key($type-configuration, extend) {
+        $extend-key: map-get($type-configuration, extend);
+        $base-types: map-get-default($base-components, $component);
+        $base-types: get-component-types($base-types);
+        $possible-types: map-deep-merge($types, $base-types);
+        @if not in-list(map-keys($possible-types), $extend-key) {
+          $log: log.error('Type extend from "#{$type}" extending: "#{$extend-key}" not possible. "#{$extend-key}" not available.');
+          $type-configuration: map-remove($type-configuration, extend);
+        }
+        @if $type-configuration == () {
+          $log: log.info('Type configuration for "#{$type}" empty after validation. Removing...');
+          $component-configuration: map-remove($component-configuration, $type);
+        } @else {
+          $component-configuration: map-set($component-configuration, $type, $type-configuration);
+        }
+      }
+    }
+    @if $component-configuration == () {
+      $log: log.info('Component configuration for component "#{$component}" empty after validation. Removing...');
+      $components: map-remove($components, $component);
+    } @else {
+      $components: map-set($components, $component, $component-configuration);
+    }
+  }
+  @return $components;
+}
+
+@function get-component-types($component) {
+  $component: map-exclude-keys($component, [extend]);
+  @return map-exclude-prefixed-keys($component, default-);
+}
+
+@function process-components-extends($components, $types) {
+  @each $component, $configuration in $components {
+    $configuration: process-component-extends($configuration, $components, $types);
+    $components: map-set($components, $component, $configuration);
+  }
+  @return $components;
+}
+
+@function process-component-extends($configuration, $components, $types) {
+  @if map-has-key($configuration, extend) {
+    $extend-key: map-get($configuration, extend);
+    $configuration: map-remove($configuration, extend);
+    $configuration: map-merge($configuration, map-get($types, $extend-key));
+    @return process-component-extends($configuration, $components, $types);
+  } @else {
+    $component-types: get-component-types($configuration);
+    @each $type, $type-configuration in $component-types {
+      // TODO : Merge on top of the type if the same name maybe do that first for all of them?
+      @if map-has-key($type-configuration, extend) {
+        $extend-key: map-get($configuration, extend);
+        $type-configuration: map-remove($type-configuration, extend);
+        // TODO : Check
+      }
+    }
+    @return $configuration;
+  }
+}
+
+// Check all the default modifiers from theme onto base and validate with the flattened list to see if they exist
+@function flatten-components($base-components, $theme-components, $flattened-modifiers, $flattened-types) {
+
+  // Remove all the non-existing defaults (e.g. default-color: fake)
+  $base-components: check-component-configurations($base-components, $flattened-modifiers);
+  $theme-components: check-component-configurations($theme-components, $flattened-modifiers);
+
+  // Remove all the non-existing type extensions (e.g. extend: fake)
+  $base-components: check-component-extends($base-components, $flattened-types);
+  $theme-components: check-component-extends($theme-components, $flattened-types, $base-components);
+
+  // Merge everything together now that it's valid
+  $components: map-deep-merge($base-components, $theme-components);
+
+  // Hook all the extends up and flatten the structure
+  $components: process-components-extends($components, $flattened-types);
+
+  @return $components;
 }
 
 // Check all the types and set default values to null for non-existing values
@@ -136,10 +253,10 @@
   @if not is-null($extend-key) {
     $modifiers: map-remove($modifiers, extend);
     @if $extend-key == $type or in-list($extended, $extend-key) {
-      $error: error('Circular extension detected for type "#{$type}". "#{$extend-key}" already in extension tree');
+      $error: log.error('Circular extension detected for type "#{$type}". "#{$extend-key}" already in extension tree');
       @return $modifiers;
     } @else if not map-has-key($types, $extend-key) {
-      $error: error('Unable to extend type "#{$extend-key}". Type is not available');
+      $error: log.error('Unable to extend type "#{$extend-key}". Type is not available');
       @return $modifiers;
     } @else {
       $extended: append($extended, $extend-key);
@@ -154,7 +271,7 @@
 }
 
 @function flatten-modifiers-for-type($base-types, $theme-types, $type-modifiers, $flattened-modifiers, $type) {
-  @each $modifier in $all-modifiers {
+  @each $modifier in modifiers.$all {
     @if map-has-key($type-modifiers, default-#{$modifier}) {
       $flavors: get-flavors($flattened-modifiers, $modifier);
       $default: flatten-default-flavor(

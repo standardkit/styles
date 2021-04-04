@@ -8,8 +8,9 @@ SCSS Framework for the StandardKit Design & Component System
 
 ## Principles
 
-The idea of StandardKit is based on a collection of thoughts and issues with the state of SCSS Frameworks, 
-Component Libraries & UI Kits. To name a few:
+The idea of StandardKit is based on a collection of thoughts and issues with the state of SCSS Frameworks, Component
+Libraries & UI Kits. To name a few:
+
 - It should be easy to use
 - It should look good by default
 - It should take into account accessibility & other web-standards
@@ -26,8 +27,8 @@ Component Libraries & UI Kits. To name a few:
 - I should be able to quickly build something with it
 - Different parts of the framework should work as they do elsewhere
 
-All of this is meant to put the developer first. 
-You should be able to quickly & easily design & build quality applications for your users.
+All of this is meant to put the developer first. You should be able to quickly & easily design & build quality
+applications for your users.
 
 This makes StandardKit a great fit for Rapid Prototyping but also prepared for expansion.
 
@@ -36,17 +37,21 @@ These ideas distill into the four main principles to which we validate our frame
 <hr>  
 
 ### Defaults & Standards
-Everything should look & work simply by default.
-It uses standards to give you multiple way of doing things while remaining consistent & straight-forward.
+
+Everything should look & work simply by default. It uses standards to give you multiple way of doing things while
+remaining consistent & straight-forward.
 
 Easy way to style a button:
+
 ```html
+
 <button class="button">
     Click
 </button>
 ```
 
 An example of standards: Modifiers work the same across components.
+
 ```html
 <!--A button with modified margin-->
 <button class="button margin--xl">
@@ -58,10 +63,12 @@ An example of standards: Modifiers work the same across components.
     Message
 </div>
 ```
+
 <sub>Just an example, it is possible with configuration to set `padding--xl` for all alerts by default</sub>
 <hr>
 
 ### Multi-Path Solutions
+
 There are no one-way solutions. Instead, we provide utilities for different strategies.
 
 <sub>If you find a strategy, perspective or solution that is missing, let us know!</sub>
@@ -69,6 +76,7 @@ There are no one-way solutions. Instead, we provide utilities for different stra
 <hr>
 
 ### Cascading Configuration
+
 Everything should be configurable and cascade on multiple levels.
 
 ```scss
@@ -76,23 +84,27 @@ Everything should be configurable and cascade on multiple levels.
 $components: (
   button: (
     default-color: primary,
-    save: ( default-color: success, default-fill: outline ),
-    cancel: ( extend: save, default-color: error )
+    save: (default-color: success, default-fill: outline),
+    cancel: (extend: save, default-color: error)
   )
 );
 ```
+
 ```html
 <!--page.html-->
 <button class="button">Button</button>
 <button class="button--save">Save</button>
 <button class="button--cancel">Cancel</button>
 ```
+
 <sub>Here, the `cancel` button extends and overwrites the `save` button, which overwrite the `default` button.</sub>
 
 <hr>
 
 ### Built-to-Extend
+
 Everything should be easily extendable, we even expect you to add your own customizations.
+
 ```scss
 // Adding a custom color
 $colors: (
@@ -100,11 +112,13 @@ $colors: (
 );
 
 // Extending the button and adding behaviour
-@extend .button--custom {
+@extend .button--custom
+{
   border-radius: 1rem;
   transition: background-color 2s ease-out;
 }
 ```
+
 <hr>
 
 ## Modifiers, Flavors, Components & Types
@@ -321,7 +335,6 @@ complex modifiers, like `color` or `elevation`.
 
 ## Configuration
 
-
 ### Theme Options
 
 A list of the default theme options.
@@ -358,17 +371,19 @@ $configuration: (
 )
 ```
 
-
 ## Modifiers
 
 Below is a list of all modifiers and their default flavors. The values in the format are placeholders, check the theme
 reference for actual values.
 
-
 ### Configurable Modifiers
+
+#### Complex ( e.g. #fff or (main: #fff, contrast: #000) )
 - color
 - fill-type
 - elevation
+  
+#### Value based ( e.g. 1rem )
 - margin
 - padding
 - size
@@ -378,6 +393,9 @@ reference for actual values.
 - breakpoints
 
 ### Non-Flavorable Modifiers
+
+For these modifiers you can not add your own flavors. However, you can of course still in- or exclude certain sets or
+individual standard flavors.
 
 - capitalization
 - focus

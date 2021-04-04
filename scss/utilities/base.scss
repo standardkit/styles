@@ -20,13 +20,21 @@
 }
 
 @function map-exclude-keys($map, $keys: []) {
-  $new-map: ();
   @each $key, $value in $map {
-    @if not index($keys, $key) {
-      $new-map: map-set($new-map, $key, $value);
+    @if index($keys, $key) {
+      $map: map-remove($map, $key);
     }
   }
-  @return $new-map;
+  @return $map;
+}
+
+@function map-exclude-prefixed-keys($map, $prefix) {
+  @each $key, $value in $map {
+    @if str-index($key, $prefix) == 1 {
+      $map: map-remove($map, $key);
+    }
+  }
+  @return $map;
 }
 
 @function map-filter-keys($map, $keys: []) {

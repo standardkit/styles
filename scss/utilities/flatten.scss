@@ -300,6 +300,5 @@
       $type-modifiers: map-set($type-modifiers, default-#{$modifier}, $default);
     }
   }
-  $type-modifiers: map-deep-clean($type-modifiers);
-  @return $type-modifiers;
+  @return map-deep-clean($type-modifiers);
 }

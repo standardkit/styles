@@ -170,8 +170,8 @@
     $result: base.map-deep-clean((default-color: null));
     @include assert-equal($result, ());
   }
-  @include it('should remove my nested entry') {
+  @include it('should remove my nested entry and the resulting empty map') {
     $result: base.map-deep-clean((something: true, else: (default-color: null)));
-    @include assert-equal($result, (something: true, else: ()));
+    @include assert-equal($result, (something: true));
   }
 }

@@ -1,3 +1,5 @@
+@use 'log';
+
 @function map-deep-merge($parent-map, $child-map) {
   $result: $parent-map;
   @each $key, $value in $child-map {
@@ -103,10 +105,17 @@
 
 @function map-deep-clean($map: ()) {
   @each $key, $value in $map {
-    @if is-null($value) {
+    @if is-null($value) or $value == () {
+      $log: log.info('Removing null value "#{$key}" from configuration...');
       $map: map-remove($map, $key);
     } @else if is-map($value) {
-      $map: map-set($map, $key, map-deep-clean($value));
+      $value: map-deep-clean($value);
+      @if $value == () {
+        $log: log.info('Removing empty map "#{$key}" from configuration...');
+        $map: map-remove($map, $key);
+      } @else {
+        $map: map-set($map, $key, $value);
+      }
     }
   }
   @return $map;

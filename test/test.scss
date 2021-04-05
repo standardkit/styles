@@ -7,10 +7,10 @@
 
 @include sass-true.report();
 
-// TODO : Breakpoints to max width
-// TODO : Breakpoints in compound types
-// TODO : Breakpoints in modifiers
-// TODO : Breakpoints in complex modifiers
+
+// TODO : Breakpoints to also have max width
+// TODO : Breakpoints in flavors
+// TODO : Breakpoints in complex modifiers (color,fill,elevation)
 // TODO : Breakpoint values refer to (custom) flavors
 // TODO : Shadows refactor and tweak
 // TODO : Base refer to other base
@@ -22,3 +22,8 @@
 // TODO : Documentation
 // TODO : Website
 // TODO : Google Cloud
+
+
+// TODO : Base only types? for size reduction?
+//  How does it work when you DO want to include it without adding extra fields?
+//  For forms, would you add a type group? tables, forms etc?

@@ -1,8 +1,7 @@
-// Check format
-@import 'normalize'; // Normalize all different ways of input into unified $themes object
-@import 'flatten'; // Merge user options onto theme base onto default theme base using configured options
-
-// Process per modifiers
-@import 'colors'; // Generate complete color sets based on flavor values
-@import 'elevations'; // Generate full shadow sets based on flavor values
-// TODO : etc...
+@forward 'breakpoints';
+@forward 'colors';
+@forward 'elevations';
+@forward 'fill-types';
+@forward 'flatten';
+@forward 'modifiers';
+@forward 'normalize';

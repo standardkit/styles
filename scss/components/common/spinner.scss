@@ -1,7 +1,7 @@
 .spinner__container {
   @include default-text-size();
   @include default-margin();
-  @include type-color-fill(primary, plain, spinner);
+  @include mix-color-fill(primary, plain, spinner);
 
   display: inline-flex;
   align-items: center;

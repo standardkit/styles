@@ -1,10 +1,33 @@
-$themes: () !default; // Set by earlier configuration
+@use '../utilities/base' as *;
+@use '../utilities/colors' as *;
 
-@each $theme-name, $theme in $themes {
-  $modifiers: map-get-default($theme, modifiers);
-  $colors: map-get-default($modifiers, colors);
-  $colors: complete-color-sets($colors, map-get-default($theme, options));
-  $modifiers: map-set($modifiers, colors, $colors);
-  $theme: map-set($theme, modifiers, $modifiers);
-  $themes: map-set($themes, $theme-name, $theme);
+@function complete-color-sets($colors: (), $options: null) {
+
+  @each $key, $color in $colors {
+    @if not is-map($color) {
+      $colors: map-set($colors, $key, generate-color-set($color, $options));
+    } @else {
+      @if not map-has-key($color, main) and not map-has-key($color, complement) {
+        @error 'Key "main" or "complement" not defined in map "#{$key}"';
+      }
+      @if not map-has-key($color, main) {
+        $main: generate-complement-color(map-get($color, complement), $options);
+        $color: map-set($color, complement, $main);
+      }
+      @if not map-has-key($color, contrast) {
+        $contrast: generate-contrast-color(map-get($color, main), $options);
+        $color: map-set($color, complement, $contrast);
+      }
+      @if not map-has-key($color, complement) {
+        $complement: generate-complement-color(map-get($color, main), $options);
+        $color: map-set($color, complement, $complement);
+      }
+      @if not map-has-key($color, complement-contrast) {
+        $complement-contrast: generate-contrast-color(map-get($color, complement), $options);
+        $color: map-set($color, complement-contrast, $complement-contrast);
+      }
+      $colors: map-set($colors, $key, $color);
+    }
+  }
+  @return $colors;
 }

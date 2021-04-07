@@ -1,3 +1,5 @@
+@use 'base' as *;
+
 // Color Value Percentages (shade, tint)
 $default-value-percentage: 50% !default;
 $complement-value-percentage: 7% !default;
@@ -51,36 +53,6 @@ $color-options: (
     complement: $complement,
     complement-contrast: generate-contrast-color($complement, $options)
   );
-}
-
-@function complete-color-sets($colors: (), $options: $color-options) {
-  @each $key, $color in $colors {
-    @if not is-map($color) {
-      $colors: map-set($colors, $key, generate-color-set($color, $options));
-    } @else {
-      @if not map-has-key($color, main) and not map-has-key($color, complement) {
-        @error 'Key "main" or "complement" not defined in map "#{$key}"';
-      }
-      @if not map-has-key($color, main) {
-        $main: generate-complement-color(map-get($color, complement), $options);
-        $color: map-set($color, complement, $main);
-      }
-      @if not map-has-key($color, contrast) {
-        $contrast: generate-contrast-color(map-get($color, main), $options);
-        $color: map-set($color, complement, $contrast);
-      }
-      @if not map-has-key($color, complement) {
-        $complement: generate-complement-color(map-get($color, main), $options);
-        $color: map-set($color, complement, $complement);
-      }
-      @if not map-has-key($color, complement-contrast) {
-        $complement-contrast: generate-contrast-color(map-get($color, complement), $options);
-        $color: map-set($color, complement-contrast, $complement-contrast);
-      }
-      $colors: map-set($colors, $key, $color);
-    }
-  }
-  @return $colors;
 }
 
 @function get-brightness($color, $options) {

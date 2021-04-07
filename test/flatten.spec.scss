@@ -1,5 +1,5 @@
 @use '../node_modules/sass-true' as *;
-@use '../scss/utilities/flatten';
+@use '../scss/configuration/flatten';
 
 @include describe('flatten-default-flavor()') {
   $flavors: (primary: blue, secondary: red, tertiary: purple);

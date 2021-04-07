@@ -1,5 +1,5 @@
 .button {
-  @include type-color-fill(primary, fill, button);
+  @include mix-color-fill(primary, fill, button);
   @include default-corner();
   @include default-elevation();
   @include default-text-size();

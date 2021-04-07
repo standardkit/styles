@@ -2,7 +2,7 @@
   display: flex;
   border: 1px solid; // TODO: implement border configuration
   align-items: center;
-  @include type-color-fill(info, plain, alert);
+  @include mix-color-fill(info, plain, alert);
   @include default-corner();
   @include default-padding();
   @include default-margin(vertical-m);

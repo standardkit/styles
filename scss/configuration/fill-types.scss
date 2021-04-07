@@ -1,0 +1,8 @@
+@function complete-fill-type-sets($fill-types: ()) {
+  // TODO : Implement
+  //  Check if all fields in the map are there
+  //  text, background, border
+  //  If not, set to defaults, depending on text
+
+  @return $fill-types;
+}

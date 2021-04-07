@@ -20,6 +20,6 @@
     }
   }
 
-  @include type-color-fill(primary, fill, navigation-bar); // TODO : Configurable
+  @include mix-color-fill(primary, fill, navigation-bar); // TODO : Configurable
 }
 

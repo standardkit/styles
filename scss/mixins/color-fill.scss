@@ -1,0 +1,32 @@
+@use '../modifiers/color' as *;
+
+@mixin mix-color-fill($colors, $fill-types, $default-color, $default-fill) {
+
+  // If type/color & fill are not set, use default color & fill
+  &:not([class*=color--]) {
+    @include color-fill($default-color, $default-fill);
+  }
+
+  // For each fill type, if type/color is not set, use default color
+  @each $fill in map-keys($fill-types) {
+    &.fill--#{$fill}:not([class*=color--]) {
+      @include color-fill($default-color, $fill);
+    }
+  }
+
+  // Fore each color, if fill is not set, use default fill
+  @each $color in map-keys($colors) {
+    &--#{$color}:not([class*=fill--]) {
+      @include color-fill($color, $default-fill);
+    }
+  }
+
+  // For each fill & color combination, use configured values
+  @each $color in map-keys($colors) {
+    @each $fill in map-keys($fill-types) {
+      &--#{$color}.fill--#{$fill} {
+        @include color-fill($color, $fill);
+      }
+    }
+  }
+}

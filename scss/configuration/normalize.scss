@@ -1,3 +1,5 @@
+@use '../utilities/base' as *;
+
 // Flat Configuration: simplest level of input for the user
 $base: () !default;
 

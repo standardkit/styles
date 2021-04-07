@@ -1,0 +1,20 @@
+@use 'reset' as *;
+@use 'theme' as *;
+
+@mixin standardkit($themes:()) {
+  @include reset();
+
+  // TODO : Add base mixin, for configuration and css shared across themes
+
+  // Include each theme configuration
+  @each $theme, $configuration in $themes {
+    .theme--#{$theme} {
+      @include theme($configuration);
+    }
+  }
+
+  // If no theme is set, use the default theme
+  :not([class*=theme--]) {
+    @extend .theme--default;
+  }
+}

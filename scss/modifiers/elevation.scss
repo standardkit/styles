@@ -1,3 +1,5 @@
+@use '../utilities/elevation' as *;
+
 @mixin mix-elevations($elevations: ()) {
   @each $key, $elevation in $elevations {
     .elevation--#{$key} {

@@ -1,3 +1,6 @@
+@use '../utilities/base' as *;
+@use '../components/common/button' as *;
+
 @mixin mix-components($components: ()) {
-  // TODO : Implement
+  @include button(map-get-default($components, button));
 }

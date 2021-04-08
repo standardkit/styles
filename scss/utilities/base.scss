@@ -98,6 +98,14 @@
   @return str-slice($string, 1, $index - 1);
 }
 
+@function strip-prefix($string: '', $prefix: '') {
+  $index: str-index($string, $prefix);
+  @if $index != 1 {
+    @return $string;
+  }
+  @return str-slice($string, str-length($prefix) + 1);
+}
+
 @function get-flavors($modifiers, $modifier) {
   @return map-get-default($modifiers, #{$modifier}s);
 }

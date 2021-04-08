@@ -1,9 +1,3 @@
-$themes: (
-  default: (
-    options: (
-      modifier-sets: basic
-    )
-  )
-);
+$options: (modifier-sets: basic);
 
-@use '../scss' with ($themes: $themes);
+@use '../scss' with ($options: $options);

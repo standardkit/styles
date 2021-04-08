@@ -1,20 +1,22 @@
-@use '../modifiers';
-@use '../utilities' as *;
+@use '../modifiers' as *;
+@use '../utilities/base' as *;
 
 @mixin mix-modifiers($modifiers: ()) {
   // TODO : Complex Modifiers (color&fill, breakpoints)
-  @include modifiers.mix-colors(get-flavors($modifiers, color), get-flavors($modifiers, fill-type));
+
+  // TODO : Use configuration per modifier
+  @include mix-colors-and-fill-types(get-flavors($modifiers, color), get-flavors($modifiers, fill-type));
 
   // TODO : Complete all modifiers
   // TODO : Make dynamic from list and optional if flavors empty
-  @include modifiers.mix-borders(get-flavors($modifiers, border));
-  @include modifiers.mix-corners(get-flavors($modifiers, corner));
-  @include modifiers.mix-elevations(get-flavors($modifiers, elevation));
-  @include modifiers.mix-fonts(get-flavors($modifiers, font));
-  @include modifiers.mix-margins(get-flavors($modifiers, margin));
-  @include modifiers.mix-paddings(get-flavors($modifiers, padding));
-  @include modifiers.mix-sizes(get-flavors($modifiers, size));
-  @include modifiers.mix-widths(get-flavors($modifiers, width));
+  @include mix-borders(get-flavors($modifiers, border));
+  @include mix-corners(get-flavors($modifiers, corner));
+  @include mix-elevations(get-flavors($modifiers, elevation));
+  @include mix-fonts(get-flavors($modifiers, font));
+  @include mix-margins(get-flavors($modifiers, margin));
+  @include mix-paddings(get-flavors($modifiers, padding));
+  @include mix-sizes(get-flavors($modifiers, size));
+  @include mix-widths(get-flavors($modifiers, width));
 
   // TODO : Static Modifiers
   @include mix-cases(get-flavors($modifiers, case));

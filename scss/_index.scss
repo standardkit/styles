@@ -1,45 +1,43 @@
 $log-level: null !default;
 @use 'utilities/log' with ($log-level: $log-level);
 
-$base: null !default;
-$modifiers: null !default;
-$colors: null !default;
-$color-options: null !default;
-$fill-types: null !default;
-$fill-options: null !default;
-$elevations: null !default;
-$elevation-options: null !default;
-$margins: null !default;
-$margin-options: null !default;
-$paddings: null !default;
-$padding-options: null !default;
-$sizes: null !default;
-$size-options: null !default;
-$widths: null !default;
-$width-options: null !default;
-$corners: null !default;
-$corner-options: null !default;
-$borders: null !default;
-$border-options: null !default;
-$focus-types: null !default;
-$focus-options: null !default;
-$disabled-types: null !default;
-$disabled-options: null !default;
-$breakpoints: null !default;
-$breakpoint-options: null !default;
-$case-options: null !default;
-$hover-options: null !default;
-$active-options: null !default;
-$alignment-options: null !default;
-$position-options: null !default;
-$highlight-options: null !default;
-$options: null !default;
-$components: null !default;
-$types: null !default;
-$configuration: null !default;
-$themes: null !default;
-)
-;
+$base: () !default;
+$modifiers: () !default;
+$colors: () !default;
+$color-options: () !default;
+$fill-types: () !default;
+$fill-options: () !default;
+$elevations: () !default;
+$elevation-options: () !default;
+$margins: () !default;
+$margin-options: () !default;
+$paddings: () !default;
+$padding-options: () !default;
+$sizes: () !default;
+$size-options: () !default;
+$widths: () !default;
+$width-options: () !default;
+$corners: () !default;
+$corner-options: () !default;
+$borders: () !default;
+$border-options: () !default;
+$focus-types: () !default;
+$focus-options: () !default;
+$disabled-types: () !default;
+$disabled-options: () !default;
+$breakpoints: () !default;
+$breakpoint-options: () !default;
+$case-options: () !default;
+$hover-options: () !default;
+$active-options: () !default;
+$alignment-options: () !default;
+$position-options: () !default;
+$highlight-options: () !default;
+$options: () !default;
+$components: () !default;
+$types: () !default;
+$configuration: () !default;
+$themes: () !default;
 
 @use 'configuration/normalize' with (
 $base: $base,
@@ -91,3 +89,5 @@ $themes: check-and-complete-modifiers($themes);
 
 @use 'mixins/standardkit' as *;
 @include standardkit($themes);
+
+// TODO : Make new build 16 and package release

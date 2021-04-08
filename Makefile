@@ -4,6 +4,8 @@ build : ; make test && npm run build
 
 test : ; npm run test
 
+dev : ; npm run build-dev
+
 watch : ; npm run watch
 
 server : ; php -S localhost:19111

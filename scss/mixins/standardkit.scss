@@ -1,7 +1,7 @@
 @use 'reset' as *;
 @use 'theme' as *;
 
-@mixin standardkit($themes:()) {
+@mixin standardkit($themes: ()) {
   @include reset();
 
   // TODO : Add base mixin, for configuration and css shared across themes

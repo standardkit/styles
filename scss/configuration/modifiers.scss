@@ -19,19 +19,21 @@
     // Colors
     $colors: map-get-default($modifiers, colors);
     $colors: colors.complete-color-sets($colors, $options);
-    $configuration: map-set($configuration, colors, $colors);
+    $modifiers: map-set($modifiers, colors, $colors);
 
     // Elevations
     $elevations: map-get-default($modifiers, elevations);
     $elevations: elevations.complete-elevation-sets($elevations, $options);
-    $configuration: map-set($configuration, elevations, $elevations);
+    $modifiers: map-set($modifiers, elevations, $elevations);
 
     // Fill Types
     $fill-types: map-get-default($modifiers, fill-types);
     $fill-types: fill-types.complete-fill-type-sets($fill-types);
-    $configuration: map-set($configuration, fill-types, $fill-types);
+    $modifiers: map-set($modifiers, fill-types, $fill-types);
 
     // Save new settings
+    $configuration: map-set($configuration, modifiers, $modifiers);
     $themes: map-set($themes, $theme, $configuration);
   }
+  @return $themes;
 }

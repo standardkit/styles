@@ -1,21 +1,29 @@
-@import 'alignment';
-@import 'borders';
-@import 'breakpoints';
-@import 'colors';
-@import 'corners';
-@import 'elevations';
-@import 'fill-types';
-@import 'fonts';
-@import 'margins';
-@import 'paddings';
-@import 'size';
-@import 'widths';
+@use 'alignment' as *;
+@use 'borders' as *;
+@use 'breakpoints' as *;
+@use 'colors' as *;
+@use 'corners' as *;
+@use 'elevations' as *;
+@use 'fill-types' as *;
+@use 'fonts' as *;
+@use 'margins' as *;
+@use 'paddings' as *;
+@use 'size' as *;
+@use 'widths' as *;
+
+$theme-alert-types: (
+  info: (default-color: info),
+  error: (default-color: error),
+  warning: (default-color: warning),
+  success: (default-color: success)
+);
 
 $theme-configuration: (
   // Theme-wide
   options: (),
   components: (
-    alert: (default-color: info, default-fill: plain)
+    alert: map-merge((default-color: info, default-fill: plain), $theme-alert-types),
+    button: map-merge((default-color: primary, default-fill: fill), $theme-alert-types)
   ),
   modifiers: (
     // Specific modifiers

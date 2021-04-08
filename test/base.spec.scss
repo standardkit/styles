@@ -2,7 +2,28 @@
 @use '../scss/utilities/base';
 
 @include describe('map-deep-merge()') {
-  // TODO : Implement
+  @include it('should deep merge options map (theme normalization bug)') {
+    $configuration: (options: ());
+    $themes: (default: (options: (modifier-sets: basic)));
+
+    $result: base.map-deep-merge($themes, (default: $configuration));
+    $expected: (default: (options: (modifier-sets: basic)));
+    @include assert-equal($result, $expected);
+  }
+  @include it('should combine two maps into one') {
+    $map1: (one: true);
+    $map2: (two: false);
+    $result: base.map-deep-merge($map1, $map2);
+    $expected: (one: true, two: false);
+    @include assert-equal($result, $expected);
+  }
+  @include it('should combine values of two nested maps into one') {
+    $map1: (one: true, three: (four: yes, six: default));
+    $map2: (two: false, three: (five: no, six: override));
+    $result: base.map-deep-merge($map1, $map2);
+    $expected: (one: true, two: false, three: (four: yes, five: no, six: override));
+    @include assert-equal($result, $expected);
+  }
 }
 
 @include describe('map-get-default()') {

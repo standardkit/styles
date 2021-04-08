@@ -7,7 +7,7 @@
   @each $theme-name, $theme in $themes {
 
     // TODO : Make base merging optional and also use the same merge rules, recursive until base == theme
-
+    // TODO : Base refer to other base
     $base: map-get-default($theme, base);
     $base: map-deep-merge(default-theme.$theme-configuration, $base);
 
@@ -16,6 +16,8 @@
 
     $themes: map-set($themes, $theme-name, $theme);
   }
+
+  @return $themes;
 }
 
 @function flatten-theme($theme: ()) {
@@ -151,7 +153,7 @@
       $flavor: map-get($default-flavors, $key);
       $flavors: get-flavors($modifiers, $modifier);
       @if not in-list(map-keys($flavors), $flavor) {
-        $error: log.error('Configured flavor: "#{$flavor}" for modifier: "#{$modifier}" not defined');
+        $error: log.warning('Default flavor: "#{$flavor}" for modifier: "#{$modifier}" not defined');
         $default-flavors: map-remove($default-flavors, $key);
       }
     }
@@ -267,6 +269,11 @@
 
   @return $components;
 }
+
+
+// TODO : Base only types? for size reduction?
+//  How does it work when you DO want to include it without adding extra fields?
+//  For forms, would you add a type group? tables, forms etc?
 
 // Check all the types and set default values to null for non-existing values
 @function flatten-types($base-types, $theme-types, $flattened-modifiers) {

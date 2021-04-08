@@ -1,17 +1,18 @@
 @use 'log';
 
 @function map-deep-merge($parent-map, $child-map) {
-  $result: $parent-map;
+
   @each $key, $value in $child-map {
-    @if (not map-has-key($result, $key))
-    or (type-of(map-get($result, $key)) != type-of($value))
-    or (not (type-of(map-get($result, $key)) == map and type-of($value) == map)) {
-      $result: map-merge($result, ($key: $value));
+    $parent-value: map-get($parent-map, $key);
+
+    @if (is-map($parent-value) or $parent-value == ()) and (is-map($value) or $value == ()) {
+      $new-value: map-deep-merge($parent-value, $value);
+      $parent-map: map-set($parent-map, $key, $new-value);
     } @else {
-      $result: map-merge($result, ($key: map-deep-merge(map-get($result, $key), $value)));
+      $parent-map: map-set($parent-map, $key, $value);
     }
   }
-  @return $result;
+  @return $parent-map;
 }
 
 @function map-get-default($map, $key, $default: ()) {
@@ -82,6 +83,13 @@
   @return type-of($variable) == 'null';
 }
 
+@function if-not-null-else($variable, $default) {
+  @if is-null($variable) {
+    @return $default;
+  }
+  @return $variable;
+}
+
 @function strip-suffix($string, $suffix) {
   $index: str-index($string, $suffix);
   @if is-null($index) or str-length($string) != $index - 1 + str-length($suffix) {
@@ -103,15 +111,19 @@
   @return map-get-default($theme, #{$modifier}-options);
 }
 
-@function map-deep-clean($map: ()) {
+@function map-deep-clean($map: (), $log: true) {
   @each $key, $value in $map {
     @if is-null($value) or $value == () {
-      $log: log.info('Removing null value "#{$key}" from configuration...');
+      @if $log {
+        $log: log.info('Removing null value "#{$key}" from configuration...');
+      }
       $map: map-remove($map, $key);
     } @else if is-map($value) {
       $value: map-deep-clean($value);
       @if $value == () {
-        $log: log.info('Removing empty map "#{$key}" from configuration...');
+        @if $log {
+          $log: log.info('Removing empty map "#{$key}" from configuration...');
+        }
         $map: map-remove($map, $key);
       } @else {
         $map: map-set($map, $key, $value);

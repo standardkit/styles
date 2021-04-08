@@ -1,21 +1,22 @@
+@use '../utilities/base' as *;
 @use '../variables/modifiers';
-@use '../utilities' as *;
-@use 'flavors';
+@use '../modifiers/flavors' as *;
 
-@mixin mix-type($types: (), $type) {
+@mixin mix-types($types: ()) {
+  // TODO : Implement
+}
+
+@mixin type($types: (), $type: '') {
   $found: false;
-  @each $type-name, $type-configuration in $types {
-    @if $type-name == $type {
+  @each $type-key, $type-configuration in $types {
+    @if not $found and $type-key == $type {
       $found: true;
       @each $modifier in modifiers.$all {
         $flavor: get-default-flavor($type-configuration, $modifier);
         @if not is-null($flavor) {
-          @include flavors.mix-flavor($modifier, $flavor);
+          @include flavor($modifier, $flavor);
         }
       }
-    }
-    @if $found {
-      @return true;
     }
   }
 }

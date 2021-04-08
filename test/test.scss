@@ -6,24 +6,3 @@
 @use 'colors.spec';
 
 @include sass-true.report();
-
-// TODO : Complex modifiers name check with breakpoints
-// TODO : Breakpoints to also have max width
-// TODO : Breakpoints in flavors
-// TODO : Breakpoints in complex modifiers (color,fill,elevation)
-// TODO : Breakpoint values refer to (custom) flavors
-// TODO : Shadows refactor and tweak
-// TODO : Base refer to other base
-// TODO : Use configuration per modifier
-// TODO : Breakpoint mixin
-// TODO : Use configuration per component
-// TODO : Make new build 16 and package release
-// TODO : Make all bootstrap components
-// TODO : Documentation
-// TODO : Website
-// TODO : Google Cloud
-
-
-// TODO : Base only types? for size reduction?
-//  How does it work when you DO want to include it without adding extra fields?
-//  For forms, would you add a type group? tables, forms etc?

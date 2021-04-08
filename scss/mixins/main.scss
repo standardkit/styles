@@ -1,0 +1,15 @@
+@mixin main($theme: ()) {
+}
+
+
+@mixin mix-theme($modifiers:(), $options:()) {
+  // TODO : Check the font imports, and based on option include then
+  //* {
+  // TODO : Make default font and get from configuration make sure it is there (text)
+  //@extend .font--text !optional; // TODO  Get default font, get default text color
+  // Not using type-color-fill for * selector
+  //background-color: get-color(get-flavors($modifiers, color), primary, contrast); // TODO : use configured color, put this on a layout component
+  // we can fix this with components putting class on the body
+  //color: get-color(get-flavors($modifiers, color), text); // TODO : use configured color / fill combination
+  //}
+}

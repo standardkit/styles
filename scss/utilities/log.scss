@@ -1,4 +1,9 @@
 $log-level: error !default;
+// Hack because @use with ($log-level: null) overrides the above default
+// Also can't use 'if-not-null-else($variable, $default)' from base because of circular dependency
+@if is-null($log-level) {
+  $log-level: error;
+}
 
 $log-levels: (
   none: 5,

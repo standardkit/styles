@@ -75,10 +75,9 @@ $types: () !default; // Default compound types
 $configuration: () !default;
 
 // Multi Theme: Define a lot of themes at once
-$themes: (default: ()) !default;
+$themes: () !default;
 
 // Merge the simple options on top of the single configuration
-
 $configuration: map-deep-merge($configuration, (
   base: $base,
   options: $options,
@@ -86,6 +85,7 @@ $configuration: map-deep-merge($configuration, (
   modifiers: $modifiers,
   types: $types
 ));
+$configuration: map-deep-clean($configuration, false);
 
 // Merge the configuration on top of the default theme
 $themes: map-deep-merge($themes, (default: $configuration));

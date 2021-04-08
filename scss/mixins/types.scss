@@ -1,6 +1,6 @@
 @use '../utilities/base' as *;
 @use '../variables/modifiers';
-@use '../modifiers/flavors' as *;
+@use 'flavors' as *;
 
 @mixin mix-types($types: ()) {
   // TODO : Implement

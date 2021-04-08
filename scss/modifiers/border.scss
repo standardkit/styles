@@ -1,3 +1,7 @@
 @mixin mix-borders($flavors: ()) {
-  // TODO : Implement
+  @each $key, $value in $flavors {
+    .border--#{$key} {
+      border: $value; // TODO : Make complex modifier?
+    }
+  }
 }

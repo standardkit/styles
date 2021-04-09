@@ -6,7 +6,13 @@
 
 @mixin theme($theme: ()) {
   @include main($theme); // body font and general settings
-  @include mix-modifiers(map-get-default($theme, modifiers));
-  @include mix-types(map-get-default($theme, types));
-  @include mix-components(map-get-default($theme, components));
+
+  $modifiers: map-get-default($theme, modifiers);
+  @include mix-modifiers($modifiers);
+
+  $types: map-get-default($theme, types);
+  @include mix-types($types);
+
+  $components: map-get-default($theme, components);
+  @include mix-components($components, $modifiers, $types);
 }

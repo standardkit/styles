@@ -1,0 +1,24 @@
+@use '../utilities/base' as *;
+
+$opacity-prefix: opacity--;
+$grayscale-prefix: grayscale--;
+
+@mixin mix-disabled-types($disabled-types: ()) {
+
+  @each $type, $disabled in $disabled-types {
+
+    [class*=disabled--]:disabled {
+      filter: brightness(100%);
+      cursor: not-allowed;
+    }
+
+    .disabled--#{$type}:disabled {
+      @if str-has-prefix($disabled, $opacity-prefix) {
+        opacity: #{strip-prefix($disabled, $opacity-prefix)} * 1%;
+
+      } @else if str-has-prefix($disabled, $grayscale-prefix) {
+        filter: brightness(100%) grayscale(#{strip-prefix($disabled, $grayscale-prefix)} * 1%);
+      }
+    }
+  }
+}

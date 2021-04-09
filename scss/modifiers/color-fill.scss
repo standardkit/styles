@@ -4,8 +4,8 @@
   @include create-color-fill-compound-selectors($colors, $fill-types);
   @each $color in map-keys($colors) {
     @each $fill in map-keys($fill-types) {
-      .color--#{$color}.fill--#{$fill} {
-        @extend %fill--#{$color}--#{$fill} !optional;
+      .color--#{$color}.fill-type--#{$fill} {
+        @extend %fill-type--#{$color}--#{$fill} !optional;
       }
     }
   }
@@ -15,7 +15,7 @@
 @mixin create-color-fill-compound-selectors($colors, $fill-types) {
   @each $color, $color-set in $colors {
     @each $fill, $fill-color-keys in $fill-types {
-      %fill--#{$color}--#{$fill} {
+      %fill-type--#{$color}--#{$fill} {
         color: get-color($colors, $color, map-get($fill-color-keys, text));
         border-color: get-color($colors, $color, map-get($fill-color-keys, border));
         background-color: get-color($colors, $color, map-get($fill-color-keys, background));

@@ -1,0 +1,35 @@
+@use '../utilities/base' as *;
+
+// TODO : Add more options
+//  outline, opacity, elevation
+
+// TODO : Make generic for all the prefix flavored modifiers (active, disabled, focus, hover)
+
+$dark-prefix: darker--;
+$light-prefix: lighter--;
+$fill-prefix: fill--;
+$color-prefix: color--;
+
+@mixin mix-hover-types($hover-types: ()) {
+
+  @each $type, $hover in $hover-types {
+    .hover-type--#{$type} {
+      &:hover {
+        @if str-has-prefix($hover, $dark-prefix) {
+          $brightness: str-to-number(strip-prefix($hover, $dark-prefix));
+          filter: brightness((100 - $brightness) * 1%);
+
+        } @else if str-has-prefix($hover, $light-prefix) {
+          $brightness: str-to-number(strip-prefix($hover, $light-prefix));
+          filter: brightness((100 + $brightness) * 1%);
+
+        } @else if str-has-prefix($hover, $fill-prefix) {
+          @extend .fill-type--#{strip-prefix($hover, $fill-prefix)} !optional; // TODO : Check if this works
+
+        } @else if str-has-prefix($hover, $color-prefix) {
+          @extend .color--#{strip-prefix($hover, $color-prefix)} !optional; // TODO : Check if this works
+        }
+      }
+    }
+  }
+}

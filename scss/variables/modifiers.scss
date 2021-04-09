@@ -1,42 +1,48 @@
 // includes the modifiers to which you can not add custom flavors
-$all: [ color, fill-type, elevation, margin, padding, size, width, corner, border, breakpoint, focus-type,
-disabled-type, capitalization, focus, hover, disabled, active, alignment, position, highlight ] !default;
 
-// All the modifiers that can be configured and their configuration sets (basic, minimal)
+$all: [
+  // Complex Modifiers
+  color,
+  fill-type,
+  elevation-type,
+  breakpoint,
+
+  // Dynamic Modifiers
+  border,
+  corner,
+  margin,
+  padding,
+  size,
+  width,
+
+  // Prefix Flavored Modifiers
+  active-type,
+  disabled-type,
+  focus-type,
+  hover-type,
+
+  // Static Modifiers
+  alignment,
+  capitalization,
+  highlight,
+  position
+
+] !default;
+
+
 $sets: (
+  //
+  // Complex Modifiers
+  //
   color: (
     basic: error warning success info primary text,
     minimal: text primary
   ),
   fill-type: (
     basic: fill plain outline,
-    minimal: fill
+    minimal: fill outline
   ),
-  elevation: (
-    basic: none s m l,
-    minimal: m
-  ),
-  margin: (// TODO : How about text-margins?
-    basic: none s m l,
-    minimal: m
-  ),
-  padding: (
-    basic: none s m l,
-    minimal: m
-  ),
-  size: (// TODO : Split up size?
-    basic: s m l,
-    minimal: m
-  ),
-  width: (// TODO : Split up width?
-    basic: s m l full,
-    minimal: m
-  ),
-  corner: (
-    basic: square s m l round,
-    minimal: m
-  ),
-  border: (
+  elevation-type: (
     basic: none s m l,
     minimal: m
   ),
@@ -44,8 +50,72 @@ $sets: (
     basic: start s m l,
     minimal: start m
   ),
-  focus-type: (), // TODO : Implement
-  disabled-type: () // TODO : Implement
+  //
+  // Dynamic Modifiers
+  //
+  border: (
+    basic: none s m l,
+    minimal: m
+  ),
+  corner: (
+    basic: square s m l round,
+    minimal: m
+  ),
+  margin: (
+    basic: none s m l,
+    minimal: m
+  ),
+  padding: (
+    basic: none s m l,
+    minimal: m
+  ),
+  size: (
+    basic: s m l,
+    minimal: m
+  ),
+  width: (
+    basic: s m l full,
+    minimal: m
+  ),
+  //
+  // Prefix Flavored Modifiers
+  //
+  active-type: (// TODO : Expand
+    basic: [],
+    minimal: [],
+  ),
+  disabled-type: (
+    basic: opacity grayscale,
+    minimal: opacity,
+  ),
+  focus-type: (
+    basic: outline elevation, // TODO : Implement & Check after
+    minimal: outline,
+  ),
+  hover-type: (
+    basic: fill brightness outline,
+    minimal: brightness,
+  ),
+  //
+  // Static Modifiers
+  //
+  alignment: (
+    basic: left center right space-between,
+    minimal: left center right
+  ),
+  capitalization: (
+    basic: lowercase uppercase,
+    minimal: uppercase
+  ),
+  // TODO : Investigate if we can partially add highlight to prefix flavored modifiers (e.g. color--primary)
+  highlight: (
+    basic: bold color,
+    minimal: bold color
+  ),
+  position: (
+    basic: top bottom middle,
+    minimal: top middle
+  )
 ) !default;
 
 $color-keys: [main, complement, contrast, complement-contrast];

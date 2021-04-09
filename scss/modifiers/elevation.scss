@@ -1,7 +1,7 @@
 @use '../utilities/elevation' as *;
 
-@mixin mix-elevations($elevations: ()) {
-  @each $key, $elevation in $elevations {
+@mixin mix-elevation-types($elevation-types: ()) {
+  @each $key, $elevation in $elevation-types {
     .elevation--#{$key} {
       box-shadow: get-elevation($elevation);
     }

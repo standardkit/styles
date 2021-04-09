@@ -7,14 +7,19 @@
   // TODO : Add base mixin, for configuration and css shared across themes
 
   // Include each theme configuration
-  @each $theme, $configuration in $themes {
-    .theme--#{$theme} {
-      @include theme($configuration);
+  @if length($themes) == 1 {
+    @include theme(map-get($themes, default));
+  } @else {
+    @each $theme, $configuration in $themes {
+      .theme--#{$theme} {
+        @include theme($configuration);
+      }
     }
-  }
 
-  // If no theme is set, use the default theme
-  :not([class*=theme--]) {
-    @extend .theme--default;
+    // TODO : Make this configurable
+    // If no theme is set, use the default theme
+    :not([class*=theme--]) {
+      @extend .theme--default;
+    }
   }
 }

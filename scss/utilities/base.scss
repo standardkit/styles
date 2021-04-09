@@ -59,6 +59,16 @@
   @return $map;
 }
 
+@function map-strip-key-prefix($map: (), $prefix: '') {
+  @each $key, $value in $map {
+    @if str-has-prefix($key, $prefix) {
+      $map: map-set($map, strip-prefix($key, $prefix), $value);
+      $map: map-remove($map, $key);
+    }
+  }
+  @return $map;
+}
+
 @function in-list($list, $key) {
   @return not is-null(index($list, $key));
 }
@@ -104,6 +114,31 @@
     @return $string;
   }
   @return str-slice($string, str-length($prefix) + 1);
+}
+
+@function str-has-prefix($string: '', $prefix: '') {
+  @return str-index($string, $prefix) == 1;
+}
+
+@function str-to-number($string: '') {
+  $strings: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9';
+  $numbers: 0 1 2 3 4 5 6 7 8 9;
+  $result: 0;
+
+  @for $index from 1 through str-length($string) {
+    $character: str-slice($string, $index, $index);
+    $character-index: index($strings, $character);
+
+    @if not $character-index {
+      $log: log.error('Invalid character "#{$character}" in string "#{$string}" for number conversion');
+      @return false;
+    }
+
+    $number: nth($numbers, $character-index);
+    $result: $result * 10 + $number;
+  }
+
+  @return $result;
 }
 
 @function get-flavors($modifiers, $modifier) {

@@ -5,7 +5,7 @@ $base: () !default;
 
 $modifiers: () !default; // All modifiers
 
-// Configurable Modifiers
+// Complex Modifiers
 $colors: () !default;
 $color-options: () !default;
 $modifiers: map-deep-merge($modifiers, (colors: $colors, color-options: $color-options));
@@ -14,10 +14,15 @@ $fill-types: () !default;
 $fill-options: () !default;
 $modifiers: map-deep-merge($modifiers, (fill-types: $fill-types, fill-options: $fill-options));
 
-$elevations: () !default;
+$elevation-types: () !default;
 $elevation-options: () !default;
-$modifiers: map-deep-merge($modifiers, (elevations: $elevations, elevation-options: $elevation-options));
+$modifiers: map-deep-merge($modifiers, (elevation-types: $elevation-types, elevation-options: $elevation-options));
 
+$breakpoints: () !default;
+$breakpoint-options: () !default;
+$modifiers: map-deep-merge($modifiers, (breakpoints: $breakpoints, breakpoint-options: $breakpoint-options));
+
+// Dynamic Modifiers
 $margins: () !default;
 $margin-options: () !default;
 $modifiers: map-deep-merge($modifiers, (margins: $margins, margin-options: $margin-options));
@@ -42,6 +47,19 @@ $borders: () !default;
 $border-options: () !default;
 $modifiers: map-deep-merge($modifiers, (borders: $borders, border-options: $border-options));
 
+$font-types: () !default;
+$font-options: () !default;
+$modifiers: map-deep-merge($modifiers, (font-types: $font-types, font-options: $font-options));
+
+// Prefix Flavored Modifiers
+$hover-types: () !default;
+$hover-options: () !default;
+$modifiers: map-deep-merge($modifiers, (hover-types: $hover-types, hover-options: $hover-options));
+
+$active-types: () !default;
+$active-options: () !default;
+$modifiers: map-deep-merge($modifiers, (active-types: $active-types, active-options: $active-options));
+
 $focus-types: () !default;
 $focus-options: () !default;
 $modifiers: map-deep-merge($modifiers, (focus-types: $focus-types, focus-options: $focus-options));
@@ -50,21 +68,17 @@ $disabled-types: () !default;
 $disabled-options: () !default;
 $modifiers: map-deep-merge($modifiers, (disabled-types: $disabled-types, disabled-options: $disabled-options));
 
-$breakpoints: () !default;
-$breakpoint-options: () !default;
-$modifiers: map-deep-merge($modifiers, (breakpoints: $breakpoints, breakpoint-options: $breakpoint-options));
-
-// Non-Configurable Modifiers
+// Static Modifiers
 $case-options: () !default;
-$hover-options: () !default;
-$active-options: () !default;
 $alignment-options: () !default;
 $position-options: () !default;
 $highlight-options: () !default;
 
 $modifiers: map-deep-merge($modifiers, (
-  case-options: $case-options, hover-options: $hover-options, active-options: $active-options,
-  alignment-options: $alignment-options, position-options: $position-options, highlight-options: $highlight-options,
+  case-options: $case-options,
+  alignment-options: $alignment-options,
+  position-options: $position-options,
+  highlight-options: $highlight-options
 ));
 
 $options: () !default; // Global modifier settings and utility configuration

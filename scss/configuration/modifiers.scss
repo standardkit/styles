@@ -2,7 +2,7 @@
 
 @use 'breakpoints';
 @use 'colors';
-@use 'elevations';
+@use 'elevation-types';
 @use 'fill-types';
 
 // Checks naming conflicts and completeness of complex modifiers
@@ -21,15 +21,17 @@
     $colors: colors.complete-color-sets($colors, $options);
     $modifiers: map-set($modifiers, colors, $colors);
 
-    // Elevations
-    $elevations: map-get-default($modifiers, elevations);
-    $elevations: elevations.complete-elevation-sets($elevations, $options);
-    $modifiers: map-set($modifiers, elevations, $elevations);
+    // Elevation Types
+    $elevation-types: map-get-default($modifiers, elevation-types);
+    $elevation-types: elevation-types.complete-elevation-sets($elevation-types, $options);
+    $modifiers: map-set($modifiers, elevation-types, $elevation-types);
 
     // Fill Types
     $fill-types: map-get-default($modifiers, fill-types);
     $fill-types: fill-types.complete-fill-type-sets($fill-types);
     $modifiers: map-set($modifiers, fill-types, $fill-types);
+
+    // TODO : Add hover / disabled / active prefixed naming flavor checks
 
     // Save new settings
     $configuration: map-set($configuration, modifiers, $modifiers);

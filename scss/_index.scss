@@ -3,12 +3,16 @@ $log-level: null !default;
 
 $base: () !default;
 $modifiers: () !default;
+
 $colors: () !default;
 $color-options: () !default;
 $fill-types: () !default;
 $fill-options: () !default;
-$elevations: () !default;
+$elevation-types: () !default;
 $elevation-options: () !default;
+$breakpoints: () !default;
+$breakpoint-options: () !default;
+
 $margins: () !default;
 $margin-options: () !default;
 $paddings: () !default;
@@ -21,18 +25,23 @@ $corners: () !default;
 $corner-options: () !default;
 $borders: () !default;
 $border-options: () !default;
+$font-types: () !default;
+$font-options: () !default;
+
 $focus-types: () !default;
 $focus-options: () !default;
 $disabled-types: () !default;
 $disabled-options: () !default;
-$breakpoints: () !default;
-$breakpoint-options: () !default;
-$case-options: () !default;
+$hover-types: () !default;
 $hover-options: () !default;
+$active-types: () !default;
 $active-options: () !default;
+
+$case-options: () !default;
 $alignment-options: () !default;
 $position-options: () !default;
 $highlight-options: () !default;
+
 $options: () !default;
 $components: () !default;
 $types: () !default;
@@ -42,12 +51,19 @@ $themes: () !default;
 @use 'configuration/normalize' with (
 $base: $base,
 $modifiers: $modifiers,
+$options: $options,
+$components: $components,
+$types: $types,
+
 $colors: $colors,
 $color-options: $color-options,
 $fill-types: $fill-types,
 $fill-options: $fill-options,
-$elevations: $elevations,
+$elevation-types: $elevation-types,
 $elevation-options: $elevation-options,
+$breakpoints: $breakpoints,
+$breakpoint-options: $breakpoint-options,
+
 $margins: $margins,
 $margin-options: $margin-options,
 $paddings: $paddings,
@@ -60,21 +76,23 @@ $corners: $corners,
 $corner-options: $corner-options,
 $borders: $borders,
 $border-options: $border-options,
+$font-types: $font-types,
+$font-options: $font-options,
+
 $focus-types: $focus-types,
 $focus-options: $focus-options,
 $disabled-types: $disabled-types,
 $disabled-options: $disabled-options,
-$breakpoints: $breakpoints,
-$breakpoint-options: $breakpoint-options,
-$case-options: $case-options,
+$hover-types: $hover-types,
 $hover-options: $hover-options,
+$active-types: $active-types,
 $active-options: $active-options,
+
+$case-options: $case-options,
 $alignment-options: $alignment-options,
 $position-options: $position-options,
 $highlight-options: $highlight-options,
-$options: $options,
-$components: $components,
-$types: $types,
+
 $configuration: $configuration,
 $themes: $themes
 );

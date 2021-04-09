@@ -1,31 +1,9 @@
-@use '../../utilities/base' as *;
 @use '../../mixins/flavors' as *;
+
+$component-modifiers: [color, fill-type, margin, padding, size, corner, border, hover-type, disabled-type] !default;
 
 @mixin button($configuration: (), $modifiers: ()) {
   .button {
-
-    // Go through modifiers.$all
-    // if modifier exists in config, put it here default-flavor
-    // if not use modifiers default flavor
-    // for each type, do the same but one level deeper
-
-    $default-modifiers: map-filter-prefixed-keys($configuration, default--);
-    @each $modifier, $default in $default-modifiers {
-      @include default-flavor(strip-prefix($modifier), $default);
-    }
-    // TODO : Move to hover modifier
-    &:hover {
-      filter: brightness(115%); // TODO : Add in the color fill on selectable matcher
-    }
-
-    // TODO : Move to disabled modifier
-    &:disabled {
-      opacity: 65%; // TODO : Configurable
-      filter: brightness(100%);
-      cursor: not-allowed;
-    }
-
-    // TODO : Add version for perfectly round button with icon inside (icon slot?)
-    // width & (line-)height: ..em e.g. 1.25em
+    @include default-flavors($modifiers, $configuration, $component-modifiers);
   }
 }

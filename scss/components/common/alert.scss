@@ -1,73 +1,71 @@
-.alert {
-  display: flex;
-  border: 1px solid; // TODO: implement border configuration
-  align-items: center;
-  @include mix-color-fill(info, plain, alert);
-  @include default-corner();
-  @include default-padding();
-  @include default-margin(vertical-m);
-  @include default-elevation(s); // TODO : Configure & tweak elevations
+@use '../../mixins/flavors' as *;
+@use '../../utilities/base' as *;
 
-  .alert__content {
-    flex-grow: 1;
-  }
+$component-modifiers: [color, fill-type, margin, padding, size, corner, border] !default;
 
-  .alert__icon {
-    align-self: flex-start;
+@mixin alert($configuration: (), $modifiers: ()) {
+  .alert {
+    @include default-flavors($modifiers, $configuration, $component-modifiers);
 
-    &--top {
-      align-self: flex-start;
-    }
-
-    &--middle {
-      align-self: center;
-    }
-
-    &--bottom {
-      align-self: flex-end;
-    }
-  }
-
-  .alert__dismiss {
-    align-self: flex-start;
-    cursor: pointer;
-
-    &--top {
-      align-self: flex-start;
-    }
-
-    &--middle {
-      align-self: center;
-    }
-
-    &--bottom {
-      align-self: flex-end;
-    }
-  }
-
-  &.full-width {
     display: flex;
-  }
+    align-items: center;
 
-  @each $size, $padding in $paddings {
-    &.padding--#{$size} {
-      $padding-x: get-padding-x($size);
-      $padding-y: get-padding-y($size);
+    .alert__content {
+      flex-grow: 1;
+    }
 
-      .alert__icon {
-        margin-left: -$padding-x * .2;
-        padding-right: $padding-x * .8;
+    .alert__icon {
+      align-self: flex-start;
+
+      // TODO : Move to position
+      &--top {
+        align-self: flex-start;
       }
 
-      .alert__dismiss {
-        margin-right: -$padding-x;
-        margin-top: -$padding-y;
-        margin-bottom: -$padding-y;
-        padding: $padding-y $padding-x * .8;
+      &--middle {
+        align-self: center;
+      }
+
+      &--bottom {
+        align-self: flex-end;
+      }
+    }
+
+    .alert__dismiss {
+      align-self: flex-start;
+      cursor: pointer;
+
+      // TODO : Move to position
+      &--top {
+        align-self: flex-start;
+      }
+
+      &--middle {
+        align-self: center;
+      }
+
+      &--bottom {
+        align-self: flex-end;
+      }
+    }
+
+    @each $size, $padding in map-get-default($modifiers, padding) {
+      &.padding--#{$size} {
+        $padding-x: get-padding-x($size);
+        $padding-y: get-padding-y($size);
+
+        .alert__icon {
+          margin-left: -$padding-x * .2;
+          padding-right: $padding-x * .8;
+        }
+
+        .alert__dismiss {
+          margin-right: -$padding-x;
+          margin-top: -$padding-y;
+          margin-bottom: -$padding-y;
+          padding: $padding-y $padding-x * .8;
+        }
       }
     }
   }
 }
-
-
-

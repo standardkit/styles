@@ -3,8 +3,10 @@
 @use 'breakpoints' as *;
 @use 'colors' as *;
 @use 'corners' as *;
-@use 'elevations' as *;
+@use 'elevation-types' as *;
+@use 'disabled-types' as *;
 @use 'fill-types' as *;
+@use 'hover-types' as *;
 @use 'fonts' as *;
 @use 'margins' as *;
 @use 'paddings' as *;
@@ -22,25 +24,39 @@ $theme-configuration: (
   // Theme-wide
   options: (),
   components: (
-    alert: map-merge((default-color: info, default-fill: plain), $theme-alert-types),
-    button: map-merge((default-color: primary, default-fill: fill), $theme-alert-types)
+    alert: map-merge((default-color: info, default-fill-type: plain), $theme-alert-types),
+    button: map-merge((default-color: primary, default-fill-type: fill), $theme-alert-types)
   ),
   modifiers: (
-    // Specific modifiers
+    // Complex
     colors: $colors,
     default-color: primary,
     fill-types: $fill-types,
-    default-fill: fill,
-    elevations: $elevations,
+    default-fill-type: fill,
+    elevation-types: $elevation-types,
+    default-elevation-type: m,
+    breakpoints: $breakpoints,
+
+    // Dynamic
     margins: $margins,
+    default-margin: m,
     paddings: $paddings,
-    sizes: $text-sizes, // TODO : split up?
+    default-padding: m,
+    sizes: $sizes,
+    default-size: m,
     widths: $widths,
+    default-width: m,
     corners: $corners,
+    default-corner: m,
     borders: $borders,
+    default-border: m,
+
+    // Prefix Flavored
+    hover-types: $hover-types,
+    default-hover-type: brightness,
     focus-types: (), // TODO : Implement
     default-focus-type: outline,
-    disabled-types: (), // TODO : Implement
-    breakpoints: $breakpoints
+    disabled-types: $disabled-types,
+    default-disabled-type: opacity
   ),
 );

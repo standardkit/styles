@@ -11,12 +11,12 @@
   @return map-get($margins, $margin);
 }
 
-@function get-padding($paddings: (),$padding: m) {
+@function get-padding($paddings: (), $padding: m) {
   @return map-get($paddings, $padding);
 }
 
 // TODO : Refactor this with new theme setup
-@function get-padding-x($paddings: (),$size: m) {
+@function get-padding-x($paddings: (), $size: m) {
   $padding: map-get($paddings, $size);
   @return nth($padding, 2);
 }

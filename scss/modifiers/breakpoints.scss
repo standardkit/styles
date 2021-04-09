@@ -9,7 +9,7 @@ $separator: -- !default;
 @mixin breakpoint($breakpoints: (), $breakpoint: '') {
   $separator-index: str-index($breakpoint, $separator);
 
-  @if is-null($separator-index) {
+  @if is-null($separator-index) or $separator-index + str-length($separator) == str-length($breakpoint) + 1 {
     $min-width: map-get($breakpoints, $breakpoint);
     @media (min-width: $min-width) {
       @content;

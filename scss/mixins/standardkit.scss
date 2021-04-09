@@ -1,14 +1,16 @@
 @use 'reset' as *;
 @use 'theme' as *;
+@use '../utilities/base' as *;
 
 @mixin standardkit($themes: ()) {
   @include reset();
 
   // TODO : Add base mixin, for configuration and css shared across themes
 
+  $default-theme: map-get($themes, default);
   // Include each theme configuration
   @if length($themes) == 1 {
-    @include theme(map-get($themes, default));
+    @include theme($default-theme);
   } @else {
     @each $theme, $configuration in $themes {
       .theme--#{$theme} {
@@ -16,10 +18,12 @@
       }
     }
 
-    // TODO : Make this configurable
-    // If no theme is set, use the default theme
-    :not([class*=theme--]) {
-      @extend .theme--default;
+    $default-options: map-get-default($default-theme, options);
+    @if not map-get($default-options, exclude-default-selector) == true {
+      // If no theme is set, use the default theme
+      :not([class*=theme--]) {
+        @extend .theme--default;
+      }
     }
   }
 }

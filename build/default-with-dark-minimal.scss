@@ -1,6 +1,9 @@
 @use '../themes/dark';
 
-$options: (modifier-sets: minimal);
+$options: (
+  modifier-sets: minimal,
+  exclude-default-selector: true
+);
 
 $themes: (
   dark: (

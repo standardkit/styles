@@ -25,7 +25,7 @@ $theme-configuration: (
   options: (),
   components: (
     alert: map-merge((default-color: info, default-fill-type: plain), $theme-alert-types),
-    button: map-merge((default-color: primary, default-fill-type: fill), $theme-alert-types)
+    button: map-merge((default-color: warning, default-fill-type: outline, default-hover-type: fill), $theme-alert-types)
   ),
   modifiers: (
     // Complex
@@ -36,7 +36,6 @@ $theme-configuration: (
     elevation-types: $elevation-types,
     default-elevation-type: m,
     breakpoints: $breakpoints,
-
     // Dynamic
     margins: $margins,
     default-margin: m,
@@ -50,8 +49,7 @@ $theme-configuration: (
     default-corner: m,
     borders: $borders,
     default-border: m,
-
-    // Prefix Flavored
+    // State
     hover-types: $hover-types,
     default-hover-type: brightness,
     focus-types: (), // TODO : Implement

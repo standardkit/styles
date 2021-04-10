@@ -1,9 +1,11 @@
 @use '../../mixins/flavors' as *;
+@use '../../mixins/types' as *;
 
 $component-modifiers: [color, fill-type, margin, padding, size, corner, border, hover-type, disabled-type] !default;
 
-@mixin button($configuration: (), $modifiers: ()) {
+@mixin button($configuration: (), $modifiers: (), $types: ()) {
   .button {
-    @include default-flavors($modifiers, $configuration, $component-modifiers);
+    @include default-flavors($configuration, $modifiers, $component-modifiers);
+    @include default-types($configuration, $modifiers);
   }
 }

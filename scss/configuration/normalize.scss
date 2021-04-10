@@ -51,7 +51,7 @@ $font-types: () !default;
 $font-options: () !default;
 $modifiers: map-deep-merge($modifiers, (font-types: $font-types, font-options: $font-options));
 
-// Prefix Flavored Modifiers
+// State Modifiers
 $hover-types: () !default;
 $hover-options: () !default;
 $modifiers: map-deep-merge($modifiers, (hover-types: $hover-types, hover-options: $hover-options));

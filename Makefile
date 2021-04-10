@@ -6,7 +6,7 @@ test : ; npm run test
 
 dev : ; npm run build-dev
 
-watch : ; npm run watch
+watch : ; npm run watch-dev
 
 server : ; php -S localhost:19111
 

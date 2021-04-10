@@ -19,8 +19,7 @@
     }
 
     $default-options: map-get-default($default-theme, options);
-    @if not map-get($default-options, exclude-default-selector) == true {
-      // If no theme is set, use the default theme
+    @if not map-get($default-options, exclude-default-theme-selector) == true {
       :not([class*=theme--]) {
         @extend .theme--default;
       }

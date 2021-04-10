@@ -15,7 +15,7 @@ $all: [
   size,
   width,
 
-  // Prefix Flavored Modifiers
+  // State Modifiers
   active-type,
   disabled-type,
   focus-type,
@@ -78,7 +78,7 @@ $sets: (
     minimal: m
   ),
   //
-  // Prefix Flavored Modifiers
+  // State Modifiers
   //
   active-type: (// TODO : Expand
     basic: [],
@@ -107,7 +107,7 @@ $sets: (
     basic: lowercase uppercase,
     minimal: uppercase
   ),
-  // TODO : Investigate if we can partially add highlight to prefix flavored modifiers (e.g. color--primary)
+  // TODO : Investigate if we can partially add highlight to state modifiers (e.g. color--primary)
   highlight: (
     basic: bold color,
     minimal: bold color

@@ -14,10 +14,10 @@ $grayscale-prefix: grayscale--;
 
     .disabled--#{$type}:disabled {
       @if str-has-prefix($disabled, $opacity-prefix) {
-        opacity: #{strip-prefix($disabled, $opacity-prefix)} * 1%;
+        opacity: percentage(str-to-number(strip-prefix($disabled, $opacity-prefix)));
 
       } @else if str-has-prefix($disabled, $grayscale-prefix) {
-        filter: brightness(100%) grayscale(#{strip-prefix($disabled, $grayscale-prefix)} * 1%);
+        filter: brightness(100%) grayscale(percentage(str-to-number(strip-prefix($disabled, $grayscale-prefix))));
       }
     }
   }

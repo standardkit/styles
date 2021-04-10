@@ -1,21 +1,23 @@
 @use '../utilities/base' as *;
-@use '../variables/modifiers';
 @use 'flavors' as *;
 
-@mixin mix-types($types: ()) {
-  // TODO : Implement
-}
+// TODO : Fix override issues
+//  When a color or fill is present in any of the types, put a :not( component-- ) around the default
+//  AND
+//  For each type, put the modifier in the type (configuration?)
+//  _
+//  Same for hovers, when hover type has color or fill, put :not :hover around the extend of the fill
+//  AND
+//  Put the extend in every hovertype for default fill (somehow?)
 
-@mixin type($types: (), $type: '') {
-  $found: false;
-  @each $type-key, $type-configuration in $types {
-    @if not $found and $type-key == $type {
-      $found: true;
-      @each $modifier in modifiers.$all {
-        $flavor: get-default-flavor($type-configuration, $modifier);
-        @if not is-null($flavor) {
-          @include flavor($modifier, $flavor);
-        }
+
+@mixin default-types($configuration: (), $modifiers: ()) {
+  $types: map-exclude-prefixed-keys($configuration, default-);
+  @each $type, $default-flavors in $types {
+    &--#{$type} {
+      $default-flavors: map-strip-key-prefix($default-flavors, default-);
+      @each $modifier, $flavor in $default-flavors {
+        @include default-flavor($modifier, $flavor);
       }
     }
   }

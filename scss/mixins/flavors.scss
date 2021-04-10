@@ -1,15 +1,8 @@
-@use '../variables/modifiers';
 @use '../utilities/base' as *;
+@use '../variables/modifiers';
 
-@mixin default-flavor($modifier, $flavor) {
-  &:not([class*=#{$modifier}--]) {
-    @extend .#{$modifier}--#{$flavor} !optional;
-  }
-}
-
-
-@mixin default-flavors($modifiers: (), $component-configuration: (), $component-modifiers: ()) {
-  $default-modifiers: map-filter-prefixed-keys($component-configuration, default-);
+@mixin default-flavors($configuration: (), $modifiers: (), $component-modifiers: ()) {
+  $default-modifiers: map-filter-prefixed-keys($configuration, default-);
   $default-modifiers: map-strip-key-prefix($default-modifiers, default-);
   $configured-keys: map-keys($default-modifiers);
 
@@ -23,5 +16,11 @@
   $default-modifiers: map-filter-keys($default-modifiers, $component-modifiers);
   @each $modifier, $default in $default-modifiers {
     @include default-flavor($modifier, $default);
+  }
+}
+
+@mixin default-flavor($modifier, $flavor) {
+  &:not([class*=#{$modifier}--]) {
+    @extend .#{$modifier}--#{$flavor} !optional;
   }
 }

@@ -6,24 +6,25 @@
   // Complex Modifiers
   @include modifiers.mix-colors-and-fill-types(get-flavors($modifiers, color), get-flavors($modifiers, fill-type));
   @include modifiers.mix-elevation-types(get-flavors($modifiers, elevation));
-  // TODO : Breakpoints
 
   // Dynamic Modifiers
   @include modifiers.mix-borders(get-flavors($modifiers, border));
   @include modifiers.mix-corners(get-flavors($modifiers, corner));
-  @include modifiers.mix-fonts(get-flavors($modifiers, font));
+  @include modifiers.mix-fonts(get-flavors($modifiers, font)); // TODO : Add everywhere
   @include modifiers.mix-margins(get-flavors($modifiers, margin));
   @include modifiers.mix-paddings(get-flavors($modifiers, padding));
   @include modifiers.mix-sizes(get-flavors($modifiers, size));
   @include modifiers.mix-widths(get-flavors($modifiers, width));
-  // TODO : Complete
 
-  // Prefix Flavored Modifiers
+  // State Modifiers
+  //@include modifiers.mix-active-types(get-flavors($modifiers, active-type)); // TODO : Implement
+  @include modifiers.mix-disabled-types(get-flavors($modifiers, disabled-type));
+  //@include modifiers.mix-focus-types(get-flavors($modifiers, focus-type)); // TODO : Implement
   @include modifiers.mix-hover-types(get-flavors($modifiers, hover-type));
 
   // Static Modifiers
   @include modifiers.mix-case-types(get-flavors($modifiers, case));
-  // TODO : Highlight
-  // TODO : Alignment
-  // TODO : Position
+  //@include modifiers.mix-highlights(get-flavors($modifiers, highlight)); // TODO : Implement
+  //@include modifiers.mix-alignments(get-flavors($modifiers, alignment)); // TODO : Implement
+  //@include modifiers.mix-positions(get-flavors($modifiers, position)); // TODO : Implement
 }

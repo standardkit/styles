@@ -342,7 +342,7 @@ A list of the default theme options.
 ```scss
 $options: (
   prefer-dark-colors: false, 
-  exclude-default-selector: false,
+  exclude-default-theme-selector: false,
   contrast-threshold: 42%,
   contrast-value-percentage: 2%,
   complement-value-percentage: 7%,

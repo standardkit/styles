@@ -1,8 +1,65 @@
 @use '../utilities/base' as *;
 @use '../variables/modifiers';
 
-@mixin default-flavors($configuration: (), $modifiers: (), $component-modifiers: ()) {
-  $default-modifiers: map-filter-prefixed-keys($configuration, default-);
+// TODO : breakpoints in flavors
+
+@mixin flavors-and-types($class: '', $configuration: (), $modifiers: (), $component-modifiers: []) {
+  .#{$class} {
+
+    $default-modifiers: map-filter-prefixed-keys($configuration, default-);
+    $types: map-exclude-prefixed-keys($configuration, default-);
+
+    $default-color: null;
+    $default-fill-type: null;
+    $default-hover-type: null;
+
+    $non-overridable-flavors: get-non-overridable-modifiers($types, $modifiers, $default-modifiers, $component-modifiers);
+
+    @include default-flavors(
+        $default-modifiers,
+        $modifiers,
+        $component-modifiers,
+        $class,
+        $non-overridable-flavors
+    );
+    @include default-types($types, $modifiers, $non-overridable-flavors);
+  }
+
+}
+
+@function get-non-overridable-modifiers($types: (), $modifiers: (), $default-modifiers: (), $component-modifiers: ()) {
+  $flavors: ();
+  @if not types-contains-flavor($types, color) and
+      not types-contains-flavor($types, fill-type) and
+      not types-contains-flavor($types, hover-type) {
+    @return $flavors;
+  }
+  @each $modifier in [color, fill-type, hover-type] {
+    @if in-list($component-modifiers, $modifier) {
+      $flavor: get-default-flavor($default-modifiers, $modifier);
+      $flavor: get-default-flavor($modifiers, $modifier) !default;
+      $flavors: map-set($flavors, $modifier, $flavor);
+    }
+  }
+  @return $flavors;
+}
+
+@function types-contains-flavor($types: (), $flavor) {
+  @each $type, $type-configuration in $types {
+    @if in-list(map-keys($type-configuration), default-#{$flavor}) {
+      @return true;
+    }
+  }
+  @return false;
+}
+
+@mixin default-flavors(
+  $default-modifiers: (),
+  $modifiers: (),
+  $component-modifiers: (),
+  $class: '',
+  $non-overridable-flavors: ()
+) {
   $default-modifiers: map-strip-key-prefix($default-modifiers, default-);
   $configured-keys: map-keys($default-modifiers);
 
@@ -12,12 +69,34 @@
       $default-modifiers: map-set($default-modifiers, $modifier, $flavor);
     }
   }
-
   $default-modifiers: map-filter-keys($default-modifiers, $component-modifiers);
   @each $modifier, $default in $default-modifiers {
-    @include default-flavor($modifier, $default);
+    @if in-list(map-keys($non-overridable-flavors), $modifier) {
+      &:not([class*=#{$class}--]) {
+        @include default-flavor($modifier, $default);
+      }
+    } @else {
+      @include default-flavor($modifier, $default);
+    }
   }
 }
+
+@mixin default-types($types: (), $modifiers: (), $non-overridable-modifiers: ()) {
+  @each $type, $default-flavors in $types {
+    &--#{$type} {
+      $default-flavors: map-strip-key-prefix($default-flavors, default-);
+      @each $modifier, $flavor in $default-flavors {
+        @include default-flavor($modifier, $flavor);
+      }
+      @each $modifier, $flavor in $non-overridable-modifiers {
+        @if not in-list(map-keys($default-flavors), $modifier) {
+          @include default-flavor($modifier, $flavor);
+        }
+      }
+    }
+  }
+}
+
 
 @mixin default-flavor($modifier, $flavor) {
   &:not([class*=#{$modifier}--]) {

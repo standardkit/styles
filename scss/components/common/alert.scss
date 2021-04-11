@@ -4,9 +4,8 @@
 $component-modifiers: [color, fill-type, margin, padding, size, corner, border] !default;
 
 @mixin alert($configuration: (), $modifiers: ()) {
+  @include flavors-and-types(alert, $configuration, $modifiers, $component-modifiers);
   .alert {
-    @include default-flavors($modifiers, $configuration, $component-modifiers);
-
     display: flex;
     align-items: center;
 
@@ -51,8 +50,8 @@ $component-modifiers: [color, fill-type, margin, padding, size, corner, border] 
 
     @each $size, $padding in map-get-default($modifiers, padding) {
       &.padding--#{$size} {
-        $padding-x: get-padding-x($size);
-        $padding-y: get-padding-y($size);
+        $padding-x: if(is-list($padding), nth($padding, 2), $padding);
+        $padding-y: if(is-list($padding), nth($padding, 1), $padding);
 
         .alert__icon {
           margin-left: -$padding-x * .2;

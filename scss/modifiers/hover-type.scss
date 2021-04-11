@@ -14,21 +14,30 @@ $color-prefix: color--;
   @each $type, $hover in $hover-types {
     .hover-type--#{$type} {
       &:hover {
-        @if str-has-prefix($hover, $dark-prefix) {
-          $brightness: str-to-number(strip-prefix($hover, $dark-prefix));
-          filter: brightness((100 - $brightness) * 1%);
-
-        } @else if str-has-prefix($hover, $light-prefix) {
-          $brightness: str-to-number(strip-prefix($hover, $light-prefix));
-          filter: brightness((100 + $brightness) * 1%);
-
-        } @else if str-has-prefix($hover, $fill-prefix) {
-          @extend .fill-type--#{strip-prefix($hover, $fill-prefix)} !optional; // TODO : Check if this works
-
-        } @else if str-has-prefix($hover, $color-prefix) {
-          @extend .color--#{strip-prefix($hover, $color-prefix)} !optional; // TODO : Check if this works
+        @if not is-list($hover) {
+          $hover: ($hover);
+        }
+        @each $effect in $hover {
+          @include apply-hover($effect);
         }
       }
     }
+  }
+}
+
+@mixin apply-hover($hover) {
+  @if str-has-prefix($hover, $dark-prefix) {
+    $brightness: str-to-number(strip-prefix($hover, $dark-prefix));
+    filter: brightness((100 - $brightness) * 1%);
+
+  } @else if str-has-prefix($hover, $light-prefix) {
+    $brightness: str-to-number(strip-prefix($hover, $light-prefix));
+    filter: brightness((100 + $brightness) * 1%);
+
+  } @else if str-has-prefix($hover, $fill-prefix) {
+    @extend .fill-type--#{strip-prefix($hover, $fill-prefix)} !optional;
+
+  } @else if str-has-prefix($hover, $color-prefix) {
+    @extend .color--#{strip-prefix($hover, $color-prefix)} !optional;
   }
 }

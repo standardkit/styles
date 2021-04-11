@@ -1,7 +1,14 @@
+@use '../utilities/base' as *;
+
 @mixin mix-borders($flavors: ()) {
   @each $key, $value in $flavors {
     .border--#{$key} {
-      border: $value; // TODO : Make complex modifier?
+      @if is-list($value) and length($value) > 1 {
+        border-width: nth($value, 1);
+        border-style: nth($value, 2);
+      } @else {
+        border: $value;
+      }
     }
   }
 }

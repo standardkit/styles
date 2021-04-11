@@ -17,7 +17,7 @@ $theme-alert-types: (
   info: (default-color: info),
   error: (default-color: error),
   warning: (default-color: warning),
-  success: (default-color: success, default-hover-type: fill)
+  success: (default-color: success)
 );
 
 // TODO : Rename all the -type versions to remove -type suffix
@@ -27,7 +27,7 @@ $theme-configuration: (
   options: (),
   components: (
     alert: map-merge((default-color: info, default-fill-type: plain), $theme-alert-types),
-    button: map-merge((default-color: warning, default-fill-type: plain, default-hover-type: outline), $theme-alert-types)
+    button: map-merge((default-fill-type: fill, default-color: primary), $theme-alert-types)
   ),
   modifiers: (
     // Complex

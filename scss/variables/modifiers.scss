@@ -6,10 +6,12 @@ $all: [
   fill-type,
   elevation-type,
   breakpoint,
+   // TODO : Animation
 
   // Dynamic Modifiers
   border,
   corner,
+  font,
   margin,
   padding,
   size,
@@ -20,6 +22,7 @@ $all: [
   disabled-type,
   focus-type,
   hover-type,
+  // TODO : Visited
 
   // Static Modifiers
   alignment,

@@ -1,0 +1,7 @@
+@mixin mix-alignments($flavors) {
+  @each $key, $value in $flavors {
+    &.alignment--#{$key} {
+      justify-content: $value;
+    }
+  }
+}

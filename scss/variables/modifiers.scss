@@ -26,7 +26,7 @@ $all: [
 
   // Static Modifiers
   alignment,
-  capitalization,
+  case,
   highlight,
   position
 
@@ -106,7 +106,7 @@ $sets: (
     basic: left center right space-between,
     minimal: left center right
   ),
-  capitalization: (
+  case: (
     basic: lowercase uppercase,
     minimal: uppercase
   ),

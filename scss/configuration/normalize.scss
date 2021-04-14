@@ -47,9 +47,9 @@ $borders: () !default;
 $border-options: () !default;
 $modifiers: map-deep-merge($modifiers, (borders: $borders, border-options: $border-options));
 
-$font-types: () !default;
+$fonts: () !default;
 $font-options: () !default;
-$modifiers: map-deep-merge($modifiers, (font-types: $font-types, font-options: $font-options));
+$modifiers: map-deep-merge($modifiers, (fonts: $fonts, font-options: $font-options));
 
 // State Modifiers
 $hover-types: () !default;

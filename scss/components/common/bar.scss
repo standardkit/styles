@@ -1,8 +1,15 @@
+@use '../../mixins/flavors' as *;
+
+@mixin bar($configuration: (), $modifiers: ()) {
+  @include flavors-and-types(bar, $configuration, $modifiers, [alignment]);
+}
+
 .bar {
   display: flex;
   flex-wrap: wrap;
   align-items: center; // TODO : Make configurable with mixin default-alignment
 
+  // TODO : Rename to v-align or something
   &.position--bottom {
     align-items: flex-end;
   }
@@ -13,9 +20,4 @@
     align-items: flex-start;
   }
 
-  @each $type, $value in $alignment-types {
-    &.bar--#{$type} {
-      justify-content: $value;
-    }
-  }
 }

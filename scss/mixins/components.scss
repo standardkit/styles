@@ -1,6 +1,10 @@
 @use '../utilities/base' as *;
 @use '../components/common/button' as *;
+@use '../components/common/code-block' as *;
 
 @mixin mix-components($components: (), $modifiers: ()) {
+
+  // Common
   @include button(map-get-default($components, button), $modifiers);
+  @include code-block(map-get-default($components, code-block), $modifiers);
 }

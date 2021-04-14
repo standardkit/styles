@@ -1,3 +1,5 @@
-.brand {
-  @extend .font--title;
+@use '../../mixins/flavors' as *;
+
+@mixin brand($configuration: (), $modifiers: ()) {
+  @include flavors-and-types(brand, $configuration, $modifiers, [font]);
 }

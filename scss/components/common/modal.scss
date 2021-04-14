@@ -1,37 +1,38 @@
+@use '../../mixins/flavors' as *;
+
+@mixin modal($configuration: (), $modifiers: ()) {
+  @include flavors-and-types(modal__container, $configuration, $modifiers, [padding]);
+  @include flavors-and-types(modal, $configuration, $modifiers, [corner, elevation, size, color, fill]);
+
+  @include flavors-and-types(modal__content, $configuration, $modifiers, [padding]);
+  @include flavors-and-types(modal__header, $configuration, $modifiers, [padding]);
+}
+
+
 .modal__container {
   display: flex;
   position: fixed;
   width: 100%;
   height: 100%;
-  background-color: rgba(get-color(text), .3);
+  background-color: rgba(black, .3); // TODO : Make configurable
   left: 0;
   top: 0;
   z-index: 10; // TODO : Put in list and make configurable
   justify-content: center;
   align-items: center;
-  @include default-padding();
 }
 
 .modal {
   position: relative;
   top: -10%; // TODO : Make configurable
-  background: get-color(text, contrast); // TODO : Make configurable
   min-width: 24rem;
-  @include default-corner();
-  @include default-elevation();
-  @include default-text-size();
 
   .modal__content {
-    border-top: 1px solid rgba(get-color(text), 10%);
+    border-top: 1px solid rgba(get-color(text), 10%); // TODO : Make configurable
   }
-}
-
-.modal__content, .modal__header {
-  @include default-padding();
 }
 
 .modal__close {
   font-size: 1.5em;
-  color: get-color(text);
-  padding: get-padding-y();
+  padding: get-padding-y(); // TODO : Check if its there, use padding from config and reset in parent
 }

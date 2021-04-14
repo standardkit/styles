@@ -1,3 +1,13 @@
+@use '../../mixins/flavors' as *;
+
+@mixin card-layout($configuration: (), $modifiers: ()) {
+  @include flavors-and-types(card-layout__container, $configuration, $modifiers, [color, fill]);
+  // TODO : Where to get this configuration changes from (split page and card?)
+  @include flavors-and-types(card-layout, $configuration, $modifiers, [color, fill, width]);
+  @include flavors-and-types(card-layout__content, $configuration, $modifiers, [corner, elevation, size, margin, padding]);
+}
+
+
 .card-layout__container {
   background-color: get-color(primary); // TODO : Configure
   position: absolute;
@@ -14,8 +24,6 @@
     display: inline-flex;
     flex-direction: column;
     flex-grow: 1;
-    @include default-margin();
-    @include default-width(l);
 
     &__brand, &__footer {
       color: get-color(primary, contrast); // TODO : Configure
@@ -23,12 +31,6 @@
 
     &__content {
       width: 100%;
-      background-color: get-color(text, contrast);
-      @include default-corner();
-      @include default-elevation();
-      @include default-text-size();
-      @include default-padding();
-      @include default-margin();
     }
   }
 }

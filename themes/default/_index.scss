@@ -27,11 +27,13 @@ $theme-configuration: (
   options: (),
   components: (
     alert: map-merge((default-color: info, default-fill-type: plain), $theme-alert-types),
-    button: map-merge((default-fill-type: fill, default-color: primary), $theme-alert-types)
+    button: map-merge((default-fill-type: fill, default-color: primary), $theme-alert-types),
+    code-block: (default-font: monospace, default-fill: plain, default-color: text)
   ),
   modifiers: (
     // Complex
     colors: $colors,
+    color-options: (),
     default-color: primary,
     fill-types: $fill-types,
     default-fill-type: fill,
@@ -39,6 +41,12 @@ $theme-configuration: (
     default-elevation-type: m,
     breakpoints: $breakpoints,
     // Dynamic
+    corners: $corners,
+    default-corner: m,
+    borders: $borders,
+    default-border: m,
+    fonts: $fonts,
+    default-font: text,
     margins: $margins,
     default-margin: m,
     paddings: $paddings,
@@ -47,10 +55,6 @@ $theme-configuration: (
     default-size: m,
     widths: $widths,
     default-width: m,
-    corners: $corners,
-    default-corner: m,
-    borders: $borders,
-    default-border: m,
     // State
     hover-types: $hover-types,
     default-hover-type: brightness,
@@ -58,5 +62,6 @@ $theme-configuration: (
     default-focus-type: outline,
     disabled-types: $disabled-types,
     default-disabled-type: opacity
+    // Static
   ),
 );

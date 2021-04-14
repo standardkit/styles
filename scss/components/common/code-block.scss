@@ -1,5 +1,6 @@
-.code-block {
-  background-color: get-color(text, complement); // TODO : Different fill styles?
-  @include default-padding();
-  @extend .font--monospace;
+@use '../../mixins/flavors' as *;
+
+@mixin code-block($configuration: (), $modifiers: ()) {
+  @include flavors-and-types(code-block, $configuration, $modifiers, [color, fill, padding, margin, font]);
 }
+

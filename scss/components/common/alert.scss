@@ -5,6 +5,13 @@ $component-modifiers: [color, fill-type, margin, padding, size, corner, border] 
 
 @mixin alert($configuration: (), $modifiers: ()) {
   @include flavors-and-types(alert, $configuration, $modifiers, $component-modifiers);
+
+  // TODO : Get padding configuration from parent and merge for the icons
+  // TODO : Provide some way to get children config for icon and dismiss (flat or nested?)
+
+  @include flavors-and-types(alert__icon, $configuration, $modifiers, [padding, position]);
+  @include flavors-and-types(alert__dismiss, $configuration, $modifiers, [padding, position]);
+
   .alert {
     display: flex;
     align-items: center;
@@ -14,39 +21,17 @@ $component-modifiers: [color, fill-type, margin, padding, size, corner, border] 
     }
 
     .alert__icon {
-      align-self: flex-start;
-
-      // TODO : Move to position
-      &--top {
-        align-self: flex-start;
-      }
-
-      &--middle {
-        align-self: center;
-      }
-
-      &--bottom {
-        align-self: flex-end;
-      }
+      align-self: flex-start; // TODO : Check if this is set by default
     }
 
     .alert__dismiss {
       align-self: flex-start;
       cursor: pointer;
-
-      // TODO : Move to position
-      &--top {
-        align-self: flex-start;
-      }
-
-      &--middle {
-        align-self: center;
-      }
-
-      &--bottom {
-        align-self: flex-end;
-      }
     }
+
+    // TODO : If has icon, remove padding on the side of the icon wall (right or left)
+    // TODO : Apply padding to the alert_icon component
+    // TODO : Do the same for alert dismiss
 
     @each $size, $padding in map-get-default($modifiers, padding) {
       &.padding--#{$size} {

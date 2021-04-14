@@ -1,3 +1,12 @@
+@use '../../mixins/flavors' as *;
+
+@mixin table($configuration: (), $modifiers: ()) {
+  @include flavors-and-types(table, $configuration, $modifiers, [margin, color, fill]);
+  @include flavors-and-types(table-title, $configuration, $modifiers, [font]);
+  @include flavors-and-types(table-cell, $configuration, $modifiers, [padding]);
+}
+
+
 .table {
 
   width: 100%;
@@ -11,7 +20,6 @@
     }
   }
 
-  @include default-margin(vertical-m);
 
   &--fit {
     width: unset;
@@ -21,21 +29,11 @@
   thead {
     td, th {
       border-bottom: 1px solid rgba(get-color(text), 10%);
-      @extend .font--title;
       font-weight: bold;
     }
   }
 
   td {
-    @include default-padding();
     white-space: nowrap;
-  }
-
-  @each $size, $padding in $paddings {
-    &.padding--#{$size} {
-      td {
-        padding: $padding;
-      }
-    }
   }
 }

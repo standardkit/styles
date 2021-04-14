@@ -1,35 +1,29 @@
+@use '../../mixins/flavors' as *;
+
+@mixin list($configuration: (), $modifiers: ()) {
+  @include flavors-and-types(list, $configuration, $modifiers, [elevation, corner]);
+  @include flavors-and-types(list-item, $configuration, $modifiers, [color, fill]);
+  @include flavors-and-types(list-item__content, $configuration, $modifiers, [padding]);
+  @include flavors-and-types(list-item__icon, $configuration, $modifiers, [padding, position]);
+}
+
+
 .list {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  @include default-elevation(xs);
-  @include default-corner(s);
 
   .list-item {
     display: flex;
     flex-direction: row;
-    @include mix-color-fill(text, outline, list-item);
 
     .list-item__content {
       flex: 1 1 auto;
-      padding: get-padding(); // TODO : make configurable
       flex-direction: column;
     }
 
     .list-item__icon {
-      padding: get-padding() 0 get-padding() get-padding(); // TODO : make configurable
-
-      &--top {
-        align-self: flex-start;
-      }
-
-      &--middle {
-        align-self: center;
-      }
-
-      &--bottom {
-        align-self: flex-end;
-      }
+      padding-right: 0; // TODO : Make configurable and depending on side of icon
     }
   }
 }

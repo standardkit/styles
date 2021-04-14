@@ -1,8 +1,12 @@
-.spinner__container {
-  @include default-text-size();
-  @include default-margin();
-  @include mix-color-fill(primary, plain, spinner);
+@use '../../mixins/flavors' as *;
 
+@mixin spinner($configuration: (), $modifiers: ()) {
+  @include flavors-and-types(spinner__container, $configuration, $modifiers, [size, margin, fill, color]);
+}
+
+// TODO : Fix the color situation
+
+.spinner__container {
   display: inline-flex;
   align-items: center;
   justify-content: center;

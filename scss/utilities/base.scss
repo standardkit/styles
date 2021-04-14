@@ -142,7 +142,7 @@
 }
 
 @function get-flavors($modifiers, $modifier) {
-  @return map-get-default($modifiers, #{$modifier}s);
+  @return map-get-default($modifiers, $modifier);
 }
 
 @function get-default-flavor($modifiers, $modifier) {

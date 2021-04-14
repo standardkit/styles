@@ -28,6 +28,7 @@
   $options: flatten-options($base, $theme);
   $flat-theme: map-set($flat-theme, options, $options);
 
+  // TODO : Check font imports with option
   // Modifiers
   $base-modifiers: map-get-default($base, modifiers);
   $modifiers: map-get-default($theme, modifiers);
@@ -68,7 +69,7 @@
 
     @if $flavors != () {
       $map: map-deep-merge($map, (
-        #{$modifier}s: $flavors,
+        $modifier: $flavors,
         default-#{$modifier}: $default-modifier
       ));
     }

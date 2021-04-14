@@ -1,7 +1,7 @@
 @use '../../mixins/flavors' as *;
 @use '../../utilities/base' as *;
 
-$component-modifiers: [color, fill-type, margin, padding, size, corner, border] !default;
+$component-modifiers: [color, fill, margin, padding, size, corner, border] !default;
 
 @mixin alert($configuration: (), $modifiers: ()) {
   @include flavors-and-types(alert, $configuration, $modifiers, $component-modifiers);

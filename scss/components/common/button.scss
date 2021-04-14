@@ -1,9 +1,9 @@
 @use '../../mixins/flavors' as *;
 
 $component-modifiers: [
-  color, fill-type, elevation,
+  color, fill, elevation,
   corner, border, font, margin, padding, size,
-  hover-type, disabled-type
+  hover, disabled
 ] !default;
 
 @mixin button($configuration: (), $modifiers: ()) {

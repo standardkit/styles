@@ -1,11 +1,11 @@
 @use '../utilities/base' as *;
 @use '../utilities/colors' as *;
 
-@function complete-color-sets($colors: (), $options: null) {
+@function complete-color-sets($color-map: (), $options: null) {
 
-  @each $key, $color in $colors {
+  @each $key, $color in $color-map {
     @if not is-map($color) {
-      $colors: map-set($colors, $key, generate-color-set($color, $options));
+      $color-map: map-set($color-map, $key, generate-color-set($color, $options));
     } @else {
       @if not map-has-key($color, main) and not map-has-key($color, complement) {
         @error 'Key "main" or "complement" not defined in map "#{$key}"';
@@ -26,8 +26,8 @@
         $complement-contrast: generate-contrast-color(map-get($color, complement), $options);
         $color: map-set($color, complement-contrast, $complement-contrast);
       }
-      $colors: map-set($colors, $key, $color);
+      $color-map: map-set($color-map, $key, $color);
     }
   }
-  @return $colors;
+  @return $color-map;
 }

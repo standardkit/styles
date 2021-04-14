@@ -1,14 +1,14 @@
 @use '../utilities/base' as *;
-@use 'general' as *;
-@use 'modifiers' as *;
-@use 'components' as *;
+@use 'general';
+@use 'modifiers';
+@use 'components';
 
 @mixin theme($theme: ()) {
-  @include mix-general($theme);
+  @include general.mix-general($theme);
 
   $modifiers: map-get-default($theme, modifiers);
-  @include mix-modifiers($modifiers);
+  @include modifiers.mix-modifiers($modifiers);
 
   $components: map-get-default($theme, components);
-  @include mix-components($components, $modifiers);
+  @include components.mix-components($components, $modifiers);
 }

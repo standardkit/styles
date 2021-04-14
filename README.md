@@ -381,29 +381,32 @@ reference for actual values.
 
 #### Complex ( e.g. #fff or (main: #fff, contrast: #000) )
 - color
-- fill-type
+- fill
 - elevation
+- breakpoint
+- animation
   
-#### Value based ( e.g. 1rem )
+#### Dynamic ( value based e.g. 1rem )
+- corner
+- border
+- font
+- font-import
 - margin
 - padding
 - size
 - width
-- corner
-- border
-- breakpoints
 
-### Non-Flavorable Modifiers
-
-For these modifiers you can not add your own flavors. However, you can of course still in- or exclude certain sets or
-individual standard flavors.
-
-- capitalization
+### State ( combines other modifiers on state e.g. different fill on hover )
+- active
+- disabled
 - focus
 - hover
-- disabled
-- active
+
+## Static
+For these modifiers you can not add your own flavors. However, you can of course still in- or exclude certain sets or
+individual standard flavors.
 - alignment
+- case
 - position
 - highlight
 
@@ -413,7 +416,7 @@ individual standard flavors.
 |---|---|---|
 &nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;
 color | #fff, red <br>(<br>main: #fff,<br>complement: #fff,<br>contrast: #fff,<br>complement-contrast:&nbsp;#fff<br>) | A single color or a color map. all values of the map are optional, but it needs at least a main or a complement to generate the rest.
-fill-type | (<br>text: main,<br>border: contrast,<br>background: complement<br>) | The way color is used to fill elements.
+fill | (<br>text: main,<br>border: contrast,<br>background: complement<br>) | The way color is used to fill elements.
 elevation |
 
 ## Components

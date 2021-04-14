@@ -1,7 +1,7 @@
 @use '../utilities/base' as *;
 
-@mixin mix-borders($flavors: ()) {
-  @each $key, $value in $flavors {
+@mixin mix-border($border-map: ()) {
+  @each $key, $value in $border-map {
     .border--#{$key} {
       @if is-list($value) and length($value) > 1 {
         border-width: nth($value, 1);

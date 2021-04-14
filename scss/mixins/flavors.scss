@@ -10,8 +10,8 @@
     $types: map-exclude-prefixed-keys($configuration, default-);
 
     $default-color: null;
-    $default-fill-type: null;
-    $default-hover-type: null;
+    $default-fill: null;
+    $default-hover: null;
 
     $non-overridable-flavors: get-non-overridable-modifiers($types, $modifiers, $default-modifiers, $component-modifiers);
 
@@ -29,12 +29,12 @@
 
 @function get-non-overridable-modifiers($types: (), $modifiers: (), $default-modifiers: (), $component-modifiers: ()) {
   $flavors: ();
-  @if not types-contains-flavor($types, color) and
-      not types-contains-flavor($types, fill-type) and
-      not types-contains-flavor($types, hover-type) {
+  @if not types-contains-flavor($types, 'color') and
+      not types-contains-flavor($types, 'fill') and
+      not types-contains-flavor($types, 'hover') {
     @return $flavors;
   }
-  @each $modifier in [color, fill-type, hover-type] {
+  @each $modifier in ['color', 'fill', 'hover'] {
     @if in-list($component-modifiers, $modifier) {
       $flavor: get-default-flavor($default-modifiers, $modifier);
       $flavor: get-default-flavor($modifiers, $modifier) !default;

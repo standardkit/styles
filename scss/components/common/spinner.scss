@@ -28,12 +28,13 @@
     }
   }
 
+  // TODO : Fix spinner color fill situation
   &[class*=fill--]:not([class*=spinner--]) {
-    @each $fill, $fill-map in $fill-types {
-      &.fill--#{$fill} {
+    @each $key, $value in $fill-map {
+      &.fill--#{$key} {
         .spinner {
-          border-color: get-color(primary, map-get($fill-map, background));
-          border-top-color: get-color(primary, map-get($fill-map, text));
+          border-color: get-color(primary, map-get($value, background));
+          border-top-color: get-color(primary, map-get($value, text));
         }
       }
     }

@@ -1,9 +1,10 @@
 @use '../utilities/elevation' as *;
 
-@mixin mix-elevation-types($elevation-types: ()) {
-  @each $key, $elevation in $elevation-types {
+@mixin mix-elevation($elevation-map: ()) {
+  @each $key, $value in $elevation-map {
     .elevation--#{$key} {
-      box-shadow: get-elevation($elevation);
+      box-shadow: get-elevation($value);
+      // TODO : Add text shadow version
     }
   }
 }

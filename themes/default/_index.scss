@@ -1,67 +1,8 @@
-@use 'alignment' as *;
-@use 'borders' as *;
-@use 'breakpoints' as *;
-@use 'colors' as *;
-@use 'corners' as *;
-@use 'elevation-types' as *;
-@use 'disabled-types' as *;
-@use 'fill-types' as *;
-@use 'hover-types' as *;
-@use 'fonts' as *;
-@use 'margins' as *;
-@use 'paddings' as *;
-@use 'size' as *;
-@use 'widths' as *;
-
-$theme-alert-types: (
-  info: (default-color: info),
-  error: (default-color: error),
-  warning: (default-color: warning),
-  success: (default-color: success)
-);
-
-// TODO : Rename all the -type versions to remove -type suffix
+@use 'components';
+@use 'modifiers';
 
 $theme-configuration: (
-  // Theme-wide
   options: (),
-  components: (
-    alert: map-merge((default-color: info, default-fill-type: plain), $theme-alert-types),
-    button: map-merge((default-fill-type: fill, default-color: primary), $theme-alert-types),
-    code-block: (default-font: monospace, default-fill: plain, default-color: text)
-  ),
-  modifiers: (
-    // Complex
-    colors: $colors,
-    color-options: (),
-    default-color: primary,
-    fill-types: $fill-types,
-    default-fill-type: fill,
-    elevation-types: $elevation-types,
-    default-elevation-type: m,
-    breakpoints: $breakpoints,
-    // Dynamic
-    corners: $corners,
-    default-corner: m,
-    borders: $borders,
-    default-border: m,
-    fonts: $fonts,
-    default-font: text,
-    margins: $margins,
-    default-margin: m,
-    paddings: $paddings,
-    default-padding: m,
-    sizes: $sizes,
-    default-size: m,
-    widths: $widths,
-    default-width: m,
-    // State
-    hover-types: $hover-types,
-    default-hover-type: brightness,
-    focus-types: (), // TODO : Implement
-    default-focus-type: outline,
-    disabled-types: $disabled-types,
-    default-disabled-type: opacity
-    // Static
-  ),
+  components: components.$components,
+  modifiers: modifiers.$modifiers
 );

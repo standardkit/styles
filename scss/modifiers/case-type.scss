@@ -1,7 +1,0 @@
-@mixin mix-case-types($case-types: ()) {
-  @each $type, $case in $case-types {
-    .case-type--#{$type} {
-      text-transform: $case;
-    }
-  }
-}

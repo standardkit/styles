@@ -1,9 +1,13 @@
-@mixin mix-fonts($fonts: ()) {
-  @each $key, $font in $fonts {
+@mixin mix-font($font-map: ()) {
+  @each $key, $value in $font-map {
     .font--#{$key} {
-      font-family: $font;
+      font-family: $value;
     }
   }
 }
 
-// TODO Font imports
+@mixin mix-font-import($font-import-map: ()) {
+  @each $key, $value in $font-import-map {
+    @import url($value);
+  }
+}

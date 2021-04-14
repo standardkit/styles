@@ -1,0 +1,7 @@
+@mixin mix-case($case-map: ()) {
+  @each $key, $value in $case-map {
+    .case--#{$key} {
+      text-transform: $value;
+    }
+  }
+}

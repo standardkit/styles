@@ -1,16 +1,16 @@
 @use '../utilities/base' as *;
 @use '../utilities/log';
-@use '../variables';
+@use '../variables/modifiers';
 
 // Checks if the keys for breakpoints don't cause conflicts with any complex modifier
 @function check-configuration($modifiers: ()) {
 
-  $breakpoints: map-get-default($modifiers, breakpoints);
+  $breakpoints: get-flavors($modifiers, 'breakpoint');
   $keys: map-keys($breakpoints);
 
-  $check: check-naming-conflicts(color, variables.$color-keys, $keys);
-  $check: check-naming-conflicts(fill-type, variables.$fill-type-keys, $keys);
-  $check: check-naming-conflicts(elevation, variables.$elevation-keys, $keys);
+  $check: check-naming-conflicts('color', modifiers.$color-keys, $keys);
+  $check: check-naming-conflicts('fill', modifiers.$fill-keys, $keys);
+  $check: check-naming-conflicts('elevation', modifiers.$elevation-keys, $keys);
 
   @return null;
 }

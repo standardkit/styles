@@ -1,7 +1,7 @@
-@mixin mix-paddings($paddings: ()) {
-  @each $size, $padding in $paddings {
-    .padding--#{$size} {
-      padding: $padding;
+@mixin mix-padding($padding-map: ()) {
+  @each $key, $value in $padding-map {
+    .padding--#{$key} {
+      padding: $value;
     }
   }
 }

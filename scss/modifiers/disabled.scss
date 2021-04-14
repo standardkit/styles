@@ -3,21 +3,23 @@
 $opacity-prefix: opacity--;
 $grayscale-prefix: grayscale--;
 
-@mixin mix-disabled-types($disabled-types: ()) {
+@mixin mix-disabled($disabled-map: ()) {
 
-  @each $type, $disabled in $disabled-types {
+  @each $key, $value in $disabled-map {
 
     [class*=disabled--]:disabled {
       filter: brightness(100%);
       cursor: not-allowed;
     }
 
-    .disabled--#{$type}:disabled {
-      @if str-has-prefix($disabled, $opacity-prefix) {
-        opacity: percentage(str-to-number(strip-prefix($disabled, $opacity-prefix)));
+    // TODO : Add multiple effect possibility for disabled
 
-      } @else if str-has-prefix($disabled, $grayscale-prefix) {
-        filter: brightness(100%) grayscale(percentage(str-to-number(strip-prefix($disabled, $grayscale-prefix))));
+    .disabled--#{$key}:disabled {
+      @if str-has-prefix($value, $opacity-prefix) {
+        opacity: percentage(str-to-number(strip-prefix($value, $opacity-prefix)));
+
+      } @else if str-has-prefix($value, $grayscale-prefix) {
+        filter: brightness(100%) grayscale(percentage(str-to-number(strip-prefix($value, $grayscale-prefix))));
       }
     }
   }

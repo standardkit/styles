@@ -3,10 +3,10 @@
 $all: [
   // Complex Modifiers
   color,
-  fill-type,
-  elevation-type,
+  fill,
+  elevation,
   breakpoint,
-   // TODO : Animation
+  animation,
 
   // Dynamic Modifiers
   border,
@@ -18,11 +18,10 @@ $all: [
   width,
 
   // State Modifiers
-  active-type,
-  disabled-type,
-  focus-type,
-  hover-type,
-  // TODO : Visited
+  active,
+  disabled,
+  focus,
+  hover,
 
   // Static Modifiers
   alignment,
@@ -41,11 +40,11 @@ $sets: (
     basic: error warning success info primary text,
     minimal: text primary
   ),
-  fill-type: (
+  fill: (
     basic: fill plain outline,
     minimal: fill outline
   ),
-  elevation-type: (
+  elevation: (
     basic: none s m l,
     minimal: m
   ),
@@ -53,6 +52,7 @@ $sets: (
     basic: start s m l,
     minimal: start m
   ),
+  animation: (), // TODO : Fill animation sets
   //
   // Dynamic Modifiers
   //
@@ -63,6 +63,14 @@ $sets: (
   corner: (
     basic: square s m l round,
     minimal: m
+  ),
+  font: (
+    basic: title text monospace,
+    minimal: text
+  ),
+  font-import: (
+    basic: roboto-slab open-sans roboto-mono,
+    minimal: open-sans
   ),
   margin: (
     basic: none s m l,
@@ -83,19 +91,16 @@ $sets: (
   //
   // State Modifiers
   //
-  active-type: (// TODO : Expand
-    basic: [],
-    minimal: [],
-  ),
-  disabled-type: (
+  active: (), // TODO : Fill active state sets
+  disabled: (
     basic: opacity grayscale,
     minimal: opacity,
   ),
-  focus-type: (
-    basic: outline elevation, // TODO : Implement & Check after
+  focus: (
+    basic: outline elevation, // TODO : Implement focus sets
     minimal: outline,
   ),
-  hover-type: (
+  hover: (
     basic: fill brightness outline,
     minimal: brightness,
   ),
@@ -110,7 +115,6 @@ $sets: (
     basic: lowercase uppercase,
     minimal: uppercase
   ),
-  // TODO : Investigate if we can partially add highlight to state modifiers (e.g. color--primary)
   highlight: (
     basic: bold color,
     minimal: bold color
@@ -122,5 +126,5 @@ $sets: (
 ) !default;
 
 $color-keys: [main, complement, contrast, complement-contrast];
-$fill-type-keys: [text, background, border];
+$fill-keys: [text, background, border];
 $elevation-keys: []; // TODO : Implement

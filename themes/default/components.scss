@@ -1,0 +1,26 @@
+$components: (
+  //
+  // Common
+  //
+  alert: (default-color: info, default-fill: plain),
+  alert-icon: (default-position: top),
+  button: (default-fill: fill, default-color: primary),
+  code-block: (default-font: monospace, default-fill: plain, default-color: text),
+  //
+  // Form
+  //
+  input: (default-color: input),
+  //
+  // Typography
+  //
+  title: (default-size: h1),
+  subtitle: (default-size: h2),
+  //
+  // Tables & Lists
+  //
+  table: (),
+  //
+  // Layout
+  //
+  card-layout: ()
+);

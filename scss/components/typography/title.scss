@@ -1,6 +1,5 @@
-.title,
-.subtitle {
-  @extend .font--title;
-  @include default-text-margin();
-  // TODO : Configurable padding & border
+@use '../../mixins/flavors' as *;
+
+@mixin title($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('title', $configuration, $modifiers, ['font', 'size', 'margin']);
 }

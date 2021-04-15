@@ -1,5 +1,5 @@
 @use '../../mixins/flavors' as *;
 
 @mixin image($configuration: (), $modifiers: ()) {
-  @include flavors-and-types(image, $configuration, $modifiers, [corner, border]);
+  @include flavors-and-types('image', $configuration, $modifiers, []);
 }

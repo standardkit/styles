@@ -17,6 +17,7 @@
 @use 'padding';
 @use 'position';
 @use 'size';
+@use 'vertical-alignment';
 @use 'width';
 
 $modifiers: (
@@ -31,6 +32,7 @@ $modifiers: (
   default-elevation: 'm',
   breakpoint: breakpoint.$breakpoint-map,
   animation: animation.$animation-map,
+  animation-import: animation.$animation-import-map,
   //
   // Dynamic
   //
@@ -70,5 +72,7 @@ $modifiers: (
   highlight: highlight.$highlight-map,
   default-highlight: 'bold',
   position: position.$position-map,
-  default-position: 'top'
+  default-position: 'top',
+  vertical-alignment: vertical-alignment.$vertical-alignment-map,
+  default-vertical-alignment: 'middle'
 );

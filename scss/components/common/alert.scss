@@ -1,16 +1,13 @@
 @use '../../mixins/flavors' as *;
 @use '../../utilities/base' as *;
+@use '../../utilities/modifiers' as *;
 
 $component-modifiers: [color, fill, margin, padding, size, corner, border] !default;
 
 @mixin alert($configuration: (), $modifiers: ()) {
   @include flavors-and-types(alert, $configuration, $modifiers, $component-modifiers);
-
-  // TODO : Get padding configuration from parent and merge for the icons
-  // TODO : Provide some way to get children config for icon and dismiss (flat or nested?)
-
-  @include flavors-and-types(alert__icon, $configuration, $modifiers, [padding, position]);
-  @include flavors-and-types(alert__dismiss, $configuration, $modifiers, [padding, position]);
+  @include flavors-and-types(alert__icon, $configuration, $modifiers, [position]);
+  @include flavors-and-types(alert__dismiss, $configuration, $modifiers, [position]);
 
   .alert {
     display: flex;
@@ -21,35 +18,39 @@ $component-modifiers: [color, fill, margin, padding, size, corner, border] !defa
     }
 
     .alert__icon {
-      align-self: flex-start; // TODO : Check if this is set by default
+      margin-right: 1em; // TODO : Migrate alert icon to gap system
     }
 
     .alert__dismiss {
-      align-self: flex-start;
+      margin-left: 1em; // TODO : Migrate alert dismiss to gap system
       cursor: pointer;
     }
 
-    // TODO : If has icon, remove padding on the side of the icon wall (right or left)
-    // TODO : Apply padding to the alert_icon component
-    // TODO : Do the same for alert dismiss
+    $padding: get-default-flavor($configuration, 'padding');
+    $padding: get-default-flavor($modifiers, 'padding') !default;
+    @include alert-dismiss($padding);
 
-    @each $size, $padding in map-get-default($modifiers, padding) {
-      &.padding--#{$size} {
-        $padding-x: if(is-list($padding), nth($padding, 2), $padding);
-        $padding-y: if(is-list($padding), nth($padding, 1), $padding);
-
-        .alert__icon {
-          margin-left: -$padding-x * .2;
-          padding-right: $padding-x * .8;
-        }
-
-        .alert__dismiss {
-          margin-right: -$padding-x;
-          margin-top: -$padding-y;
-          margin-bottom: -$padding-y;
-          padding: $padding-y $padding-x * .8;
+    @each $key, $value in map-exclude-prefixed-keys($configuration, default-) {
+      &--#{$key} {
+        $padding: get-default-flavor($value, 'padding');
+        @if not is-null($padding) {
+          @include alert-dismiss($padding);
         }
       }
     }
+
+    @each $key, $value in get-flavors($modifiers, 'padding') {
+      &.padding--#{$key} {
+        @include alert-dismiss($value);
+      }
+    }
   }
+}
+
+@mixin alert-dismiss($padding: []) {
+  $padding-x: get-padding-x($padding);
+  $padding-y: get-padding-y($padding);
+  margin-right: -$padding-x;
+  margin-top: -$padding-y;
+  margin-bottom: -$padding-y;
 }

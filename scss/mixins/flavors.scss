@@ -24,7 +24,6 @@
     );
     @include default-types($types, $modifiers, $non-overridable-flavors);
   }
-
 }
 
 @function get-non-overridable-modifiers($types: (), $modifiers: (), $default-modifiers: (), $component-modifiers: ()) {
@@ -44,7 +43,7 @@
   @return $flavors;
 }
 
-@function types-contains-flavor($types: (), $flavor) {
+@function types-contains-flavor($types: (), $flavor: '') {
   @each $type, $type-configuration in $types {
     @if in-list(map-keys($type-configuration), default-#{$flavor}) {
       @return true;
@@ -64,12 +63,11 @@
   $configured-keys: map-keys($default-modifiers);
 
   @each $modifier in modifiers.$all {
-    @if not in-list($configured-keys, $modifier) {
+    @if not in-list($configured-keys, $modifier) and in-list($component-modifiers, $modifier) {
       $flavor: get-default-flavor($modifiers, $modifier);
       $default-modifiers: map-set($default-modifiers, $modifier, $flavor);
     }
   }
-  $default-modifiers: map-filter-keys($default-modifiers, $component-modifiers);
   @each $modifier, $default in $default-modifiers {
     @if in-list(map-keys($non-overridable-flavors), $modifier) {
       &:not([class*=#{$class}--]) {

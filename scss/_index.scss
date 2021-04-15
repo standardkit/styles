@@ -11,6 +11,8 @@ $breakpoint-map: () !default;
 $breakpoint-options: () !default;
 $animation-map: () !default;
 $animation-options: () !default;
+$animation-import-map: () !default;
+$animation-import-options: () !default;
 
 $border-map: () !default;
 $border-options: () !default;
@@ -42,6 +44,7 @@ $alignment-options: () !default;
 $case-options: () !default;
 $highlight-options: () !default;
 $position-options: () !default;
+$vertical-alignment-options: () !default;
 
 $base: () !default;
 $options: () !default;
@@ -64,6 +67,8 @@ $breakpoint-map: $breakpoint-map,
 $breakpoint-options: $breakpoint-options,
 $animation-map: $animation-map,
 $animation-options: $animation-options,
+$animation-import-map: $animation-import-map,
+$animation-import-options: $animation-import-options,
 
 $border-map: $border-map,
 $border-options: $border-options,
@@ -95,6 +100,7 @@ $alignment-options: $alignment-options,
 $case-options: $case-options,
 $highlight-options: $highlight-options,
 $position-options: $position-options,
+$vertical-alignment-options: $vertical-alignment-options,
 
 $base: $base,
 $options: $options,

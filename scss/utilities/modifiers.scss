@@ -1,3 +1,5 @@
+@use 'base' as *;
+
 // TODO : Remove this file and all code in favor of mixins for components / flavors
 
 @function get-color($colors: (), $color: primary, $key: main) {
@@ -15,9 +17,10 @@
   @return map-get($paddings, $padding);
 }
 
-// TODO : Refactor this with new theme setup
-@function get-padding-x($paddings: (), $size: m) {
-  $padding: map-get($paddings, $size);
+@function get-padding-x($padding: []) {
+  @if not is-list($padding) or length($padding) == 1 {
+    @return $padding;
+  }
   @return nth($padding, 2);
 }
 

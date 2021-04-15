@@ -1,0 +1,21 @@
+@mixin mix-animation($animation-map: ()) {
+  @each $key, $value in $animation-map {
+    .animation--#{$key} {
+      animation: $value;
+    }
+  }
+}
+
+@mixin mix-animation-import($animation-import-map: ()) {
+  @each $key in map-keys($animation-import-map) {
+
+    @if $key == 'spin' {
+      @keyframes spin {
+        to {
+          -webkit-transform: rotate(360deg);
+        }
+      }
+    }
+  }
+}
+

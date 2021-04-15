@@ -1,0 +1,18 @@
+@use '../utilities/base' as *;
+
+@mixin mix-highlight($highlight-map: ()) {
+
+  @each $key in map-keys($highlight-map) {
+    .highlight--#{$key} {
+      @if $key == 'bold' {
+        font-weight: bold;
+      } @else if $key == 'underline' {
+        text-decoration: underline;
+      } @else if $key == 'italic' {
+        font-style: italic;
+      } @else if $key == 'strike' {
+        text-decoration: line-through;
+      }
+    }
+  }
+}

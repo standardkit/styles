@@ -4,14 +4,16 @@ $all: [
   // Complex Modifiers
   color,
   fill,
-  elevation,
+  elevation, // TODO : Rename to shadow?
   breakpoint,
   animation,
+  animation-import,
 
   // Dynamic Modifiers
   border,
   corner,
   font,
+  font-import,
   margin,
   padding,
   size,
@@ -27,7 +29,8 @@ $all: [
   alignment,
   case,
   highlight,
-  position
+  position,
+  vertical-alignment
 
 ] !default;
 
@@ -52,7 +55,14 @@ $sets: (
     basic: start s m l,
     minimal: start m
   ),
-  animation: (), // TODO : Fill animation sets
+  animation: (
+    basic: spin,
+    minimal: spin
+  ),
+  animation-import: (
+    basic: spin,
+    minimal: spin
+  ),
   //
   // Dynamic Modifiers
   //
@@ -121,7 +131,11 @@ $sets: (
   ),
   position: (
     basic: top bottom middle,
-    minimal: top middle
+    minimal: top
+  ),
+  vertical-alignment: (
+    basic: top bottom middle,
+    minimal: middle
   )
 ) !default;
 

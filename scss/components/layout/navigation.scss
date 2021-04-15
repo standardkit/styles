@@ -1,27 +1,31 @@
-.navigation {
-  display: flex;
-  flex-direction: column;
+@use '../../mixins/flavors' as *;
 
+@mixin navigation($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('navigation', $configuration, $modifiers, ['color', 'fill']);
+
+  .navigation {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@mixin navigation-item($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('navigation-item', $configuration, $modifiers,
+    ['margin', 'fill', 'padding', 'size', 'color', 'hover', 'font']);
   .navigation-item {
     display: block;
-    padding: get-padding();
-    margin-left: - get-padding-x();
-    margin-right: - get-padding-x();
-    color: get-color(primary, complement-contrast); // TODO : Configure
 
     .navigation-item__icon {
-      margin-right: 1rem; // TODO: use configuration
-    }
-
-    &.navigation-item--active {
-      background-color: get-color(primary); // TODO : Configure
-      color: get-color(primary, contrast);
+      margin-right: 1em; // TODO: Migrate to 'gap' system for icons
     }
   }
+}
 
-  .navigation-title {
-    @extend .font--title;
-    color: get-color(primary); // TODO : Configure
-    margin: get-margin(vertical-m); // TODO : Configure
-  }
+@mixin navigation-item--active($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('navigation-item--active', $configuration, $modifiers, ['fill', 'color', 'hover']);
+}
+
+
+@mixin navigation-title($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('navigation-title', $configuration, $modifiers, ['font', 'size', 'margin', 'color']);
 }

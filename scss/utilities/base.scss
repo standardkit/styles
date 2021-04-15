@@ -150,7 +150,6 @@
 }
 
 @function get-modifier-options($theme, $modifier) {
-  $modifier: strip-suffix($modifier, -type);
   @return map-get-default($theme, #{$modifier}-options);
 }
 

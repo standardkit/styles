@@ -1,24 +1,5 @@
-.highlight {
-  &--color {
-    color: get-color(primary);
-  }
+@use '../../mixins/flavors' as *;
 
-  &--bold {
-    font-weight: bold;
-  }
-
-  &--code {
-    background-color: get-color(primary); // TODO : Different fill styles
-    color: get-color(primary, contrast);
-    @include default-padding(xs);
-    @extend .font--monospace;
-  }
-
-  &--underline {
-    text-decoration: underline;
-  }
-
-  &--italic {
-    font-style: italic;
-  }
+@mixin highlight($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('highlight', $configuration, $modifiers, ['highlight', 'color', 'fill', 'padding', 'font']);
 }

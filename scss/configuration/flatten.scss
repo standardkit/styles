@@ -201,8 +201,8 @@
   @return $components;
 }
 
-@function get-component-types($component) {
-  $component: map-exclude-keys($component, [extend]);
+@function get-component-types($configuration: ()) {
+  $component: map-exclude-keys($configuration, [extend]);
   @return map-exclude-prefixed-keys($component, default-);
 }
 

@@ -2,19 +2,22 @@ $components: (
   //
   // Common
   //
-  alert: (default-color: info, default-fill: plain),
-  alert-icon: (default-position: top),
-  button: (default-fill: fill, default-color: primary),
-  code-block: (default-font: monospace, default-fill: plain, default-color: text),
+  alert: (default-color: 'info', default-fill: 'plain'),
+  alert-icon: (default-position: 'top'),
+  alert-dismiss: (default-position: 'top'),
+  bar: (default-vertical-alignment: 'middle'),
+  button: (default-fill: 'fill', default-color: 'primary'),
+  code-block: (default-font: 'monospace', default-fill: 'plain', default-color: 'text'),
   //
   // Form
   //
-  input: (default-color: input),
+  input: (default-color: 'input'),
   //
   // Typography
   //
-  title: (default-size: h1),
-  subtitle: (default-size: h2),
+  link: (),
+  title: (default-size: 'h1'),
+  subtitle: (default-size: 'h2'),
   //
   // Tables & Lists
   //
@@ -24,3 +27,5 @@ $components: (
   //
   card-layout: ()
 );
+
+// TODO : Complete the default configuration for all components in default theme

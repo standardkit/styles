@@ -27,7 +27,7 @@
     $modifiers: map-set($modifiers, 'elevation', $elevation-map);
 
     // Fill Types
-    $fill-map: map-get-default($modifiers, 'fill');
+    $fill-map: get-flavors($modifiers, 'fill');
     $fill-map: fill.complete-fill-sets($fill-map);
     $modifiers: map-set($modifiers, 'fill', $fill-map);
 

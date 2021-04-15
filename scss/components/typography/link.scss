@@ -1,3 +1,5 @@
-.link {
-  color: get-color(link);
+@use '../../mixins/flavors' as *;
+
+@mixin link($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('link', $configuration, $modifiers, ['font', 'color', 'highlight', 'case']);
 }

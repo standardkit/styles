@@ -1,38 +1,29 @@
 @use '../../mixins/flavors' as *;
 
 @mixin modal($configuration: (), $modifiers: ()) {
-  @include flavors-and-types(modal__container, $configuration, $modifiers, [padding]);
-  @include flavors-and-types(modal, $configuration, $modifiers, [corner, elevation, size, color, fill]);
+  @include flavors-and-types('modal__container', $configuration, $modifiers, ['alignment', 'vertical-alignment']);
+  @include flavors-and-types('modal', $configuration, $modifiers,
+    ['corner', 'elevation', 'width', 'color', 'fill', 'margin']);
+  @include flavors-and-types('modal__content', $configuration, $modifiers, ['padding']);
+  @include flavors-and-types('modal__header', $configuration, $modifiers, ['padding']);
 
-  @include flavors-and-types(modal__content, $configuration, $modifiers, [padding]);
-  @include flavors-and-types(modal__header, $configuration, $modifiers, [padding]);
-}
-
-
-.modal__container {
-  display: flex;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(black, .3); // TODO : Make configurable
-  left: 0;
-  top: 0;
-  z-index: 10; // TODO : Put in list and make configurable
-  justify-content: center;
-  align-items: center;
-}
-
-.modal {
-  position: relative;
-  top: -10%; // TODO : Make configurable
-  min-width: 24rem;
-
-  .modal__content {
-    border-top: 1px solid rgba(get-color(text), 10%); // TODO : Make configurable
+  .modal__container {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(black, .3); // TODO : Future make background opacity configurable
+    left: 0;
+    top: 0;
+    z-index: 10; // TODO : Put in list and make configurable, maybe as modifier?
   }
-}
 
-.modal__close {
-  font-size: 1.5em;
-  padding: get-padding-y(); // TODO : Check if its there, use padding from config and reset in parent
+  .modal {
+    position: relative; // TODO : Check if relative position on modal is necessary
+    overflow: hidden;
+  }
+
+  .modal__close {
+    // TODO : Check padding for modal close
+  }
 }

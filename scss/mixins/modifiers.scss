@@ -6,7 +6,8 @@
   // Complex Modifiers
   @include modifiers.mix-color-fill(get-flavors($modifiers, 'color'), get-flavors($modifiers, 'fill'));
   @include modifiers.mix-elevation(get-flavors($modifiers, 'elevation'));
-  //@include modifiers.mix-animation(get-flavors($modifiers, animation)); // TODO : Implement animation mixin
+  @include modifiers.mix-animation(get-flavors($modifiers, 'animation'));
+  @include modifiers.mix-animation-import(get-flavors($modifiers, 'animation-import'));
 
   // Dynamic Modifiers
   @include modifiers.mix-border(get-flavors($modifiers, 'border'));
@@ -25,8 +26,9 @@
   @include modifiers.mix-hover(get-flavors($modifiers, 'hover'));
 
   // Static Modifiers
-  @include modifiers.mix-alignment(get-flavors($modifiers, alignment));
-  @include modifiers.mix-case(get-flavors($modifiers, case));
-  //@include modifiers.mix-highlights(get-flavors($modifiers, highlight)); // TODO : Implement highlight mixin
-  @include modifiers.mix-position(get-flavors($modifiers, position));
+  @include modifiers.mix-alignment(get-flavors($modifiers, 'alignment'));
+  @include modifiers.mix-case(get-flavors($modifiers, 'case'));
+  @include modifiers.mix-highlight(get-flavors($modifiers, 'highlight'));
+  @include modifiers.mix-position(get-flavors($modifiers, 'position'));
+  @include modifiers.mix-vertical-alignment(get-flavors($modifiers, 'vertical-alignment'));
 }

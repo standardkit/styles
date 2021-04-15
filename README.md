@@ -407,8 +407,9 @@ For these modifiers you can not add your own flavors. However, you can of course
 individual standard flavors.
 - alignment
 - case
-- position
 - highlight
+- position
+- vertical-alignment
 
 ### Complex Modifiers
 

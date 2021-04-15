@@ -1,6 +1,5 @@
 @use '../../mixins/flavors' as *;
 
 @mixin code-block($configuration: (), $modifiers: ()) {
-  @include flavors-and-types(code-block, $configuration, $modifiers, [color, fill, padding, margin, font]);
+  @include flavors-and-types(code-block, $configuration, $modifiers, ['color', 'fill', 'padding', 'font']);
 }
-

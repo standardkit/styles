@@ -1,5 +1,8 @@
-.label {
-  @include default-text-size();
-  @include default-padding(xs);
-  @include default-text-margin();
+@use '../../mixins/flavors' as *;
+
+$component-modifiers: [size, margin, margin];
+
+@mixin label($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('label', $configuration, $modifiers, $component-modifiers);
 }
+

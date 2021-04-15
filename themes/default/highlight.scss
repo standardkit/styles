@@ -1,1 +1,6 @@
-$highlight-map: (); // TODO : Add highlight flavors to default theme
+$highlight-map: (
+  italic: 'italic',
+  bold: 'bold',
+  underline: 'underline',
+  strike: 'strike'
+);

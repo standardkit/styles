@@ -1,25 +1,10 @@
-.navigation-bar {
-  display: flex;
-  padding: 1rem;
-  width: 100vw;
+@use '../../mixins/flavors' as *;
 
-  align-items: center;
-  box-sizing: border-box;
+@mixin navigation-bar($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('navigation-bar', $configuration, $modifiers, ['color', 'fill', 'padding']);
 
-  border-bottom: 1px solid; // TODO: put in variable
-
-  // TODO: Temporary solution
-  .brand {
+  .navigation-bar {
     display: flex;
     align-items: center;
-    font-size: 1.2rem; // TODO : Configurable
-
-    .image {
-      height: 1.7em; // TODO : Based on line-height
-      margin-right: 1em; // TODO : Configurable
-    }
   }
-
-  @include mix-color-fill(primary, fill, navigation-bar); // TODO : Configurable
 }
-

@@ -1,5 +1,5 @@
-.divider {
-  border: 1px solid rgba(get-color(text), 10%); // TODO : Make configurable
+@use '../../mixins/flavors' as *;
 
-  @include default-margin(vertical-m);
+@mixin divider($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('divider', $configuration, $modifiers, ['margin', 'border', 'color']);
 }

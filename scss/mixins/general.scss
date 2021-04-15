@@ -2,7 +2,7 @@
 }
 
 
-@mixin mix-theme($modifiers:(), $options:()) {
+@mixin mix-theme($modifiers: (), $options: ()) {
   // TODO : Check the font imports, and based on option include then
   //* {
   // TODO : Make default font and get from configuration make sure it is there (text)

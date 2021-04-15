@@ -29,6 +29,13 @@ $animation-map: () !default;
 $animation-options: () !default;
 $modifiers: map-deep-merge($modifiers, (animation: $animation-map, animation-options: $animation-options));
 
+// TODO : Move animation import to static modifiers
+$animation-import-map: () !default;
+$animation-import-options: () !default;
+$modifiers: map-deep-merge(
+    $modifiers, (animation-import: $animation-import-map, animation-import-options: $animation-import-options)
+);
+
 
 // Dynamic Modifiers
 
@@ -88,12 +95,14 @@ $alignment-options: () !default;
 $case-options: () !default;
 $highlight-options: () !default;
 $position-options: () !default;
+$vertical-alignment-options: () !default;
 
 $modifiers: map-deep-merge($modifiers, (
   alignment-options: $alignment-options,
   case-options: $case-options,
   highlight-options: $highlight-options,
-  position-options: $position-options
+  position-options: $position-options,
+  vertical-alignment-options: $vertical-alignment-options
 ));
 
 $options: () !default;

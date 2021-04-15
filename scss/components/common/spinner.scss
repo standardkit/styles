@@ -1,83 +1,17 @@
 @use '../../mixins/flavors' as *;
 
 @mixin spinner($configuration: (), $modifiers: ()) {
-  @include flavors-and-types(spinner__container, $configuration, $modifiers, [size, margin, fill, color]);
-}
+  @include flavors-and-types('spinner', $configuration, $modifiers,
+    ['margin', 'size', 'border', 'animation', 'color', 'fill']);
 
-// TODO : Fix the color situation
-
-.spinner__container {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  // TODO : Check if spinner works without container
 
   .spinner {
     display: inline-flex;
     width: 2em;
     height: 2em;
-    border: 3px solid;
     border-radius: 50%;
-    animation: spin 1s ease-in-out infinite;
-    -webkit-animation: spin 1s ease-in-out infinite;
-  }
-
-  &:not([class*=fill--]):not([class*=spinner--]) {
-    .spinner {
-      border-color: get-color(primary, complement);
-      border-top-color: get-color(primary);
-    }
-  }
-
-  // TODO : Fix spinner color fill situation
-  &[class*=fill--]:not([class*=spinner--]) {
-    @each $key, $value in $fill-map {
-      &.fill--#{$key} {
-        .spinner {
-          border-color: get-color(primary, map-get($value, background));
-          border-top-color: get-color(primary, map-get($value, text));
-        }
-      }
-    }
-  }
-
-  &[class*=spinner--]:not([class*=fill--]) {
-    background-color: transparent;
-    @each $type, $color-map in $colors {
-      &.spinner--#{$type} {
-        .spinner {
-          border-color: get-color($type, complement);
-          border-top-color: get-color($type);
-        }
-      }
-    }
-  }
-
-  @each $fill, $fill-map in $fill-types {
-    @each $color, $color-map in $colors {
-      &.fill--#{$color}--#{$fill} {
-        background-color: transparent;
-      }
-      &.spinner--#{$color}.fill--#{$fill} {
-        background-color: transparent;
-
-        .spinner {
-          border-color: get-color($color, map-get($fill-map, background));
-          border-top-color: get-color($color, map-get($fill-map, text));
-        }
-      }
-    }
+    background-color: transparent !important;
+    border-top: 0 !important;
   }
 }
-
-@keyframes spin {
-  to {
-    -webkit-transform: rotate(360deg);
-  }
-}
-
-@-webkit-keyframes spin {
-  to {
-    -webkit-transform: rotate(360deg);
-  }
-}
-

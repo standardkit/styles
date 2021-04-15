@@ -4,7 +4,7 @@
 // TODO : breakpoints in flavors
 
 @mixin flavors-and-types($class: '', $configuration: (), $modifiers: (), $component-modifiers: []) {
-  .#{$class} {
+  @at-root .#{$class} {
 
     $default-modifiers: map-filter-prefixed-keys($configuration, default-);
     $types: map-exclude-prefixed-keys($configuration, default-);
@@ -98,6 +98,7 @@
 
 @mixin default-flavor($modifier, $flavor) {
   &:not([class*='#{$modifier}--']) {
+    // TODO : Extend the modifier/flavor pair for the specific theme (e.g. using a % selector theme--modifier--flavor)
     @extend .#{$modifier}--#{$flavor} !optional;
   }
 }

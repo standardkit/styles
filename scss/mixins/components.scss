@@ -18,6 +18,7 @@
 @use '../components/layout/navigation' as *;
 @use '../components/layout/navigation-bar' as *;
 @use '../components/layout/section' as *;
+@use '../components/layout/sidebar' as *;
 @use '../components/layout/spacer' as *;
 @use '../components/typography/highlight' as *;
 @use '../components/typography/link' as *;
@@ -56,10 +57,15 @@
   @include brand(map-get-default($components, 'brand'), $modifiers);
   @include card-layout(map-get-default($components, 'card-layout'), $modifiers);
   @include dashboard-layout(map-get-default($components, 'dashboard-layout'), $modifiers);
+  @include dashboard-layout-content(map-get-default($components, 'dashboard-layout-content'), $modifiers);
   @include divider(map-get-default($components, 'divider'), $modifiers);
   @include navigation(map-get-default($components, 'navigation'), $modifiers);
+  @include navigation-item(map-get-default($components, 'navigation-item'), $modifiers);
+  @include navigation-item--active(map-get-default($components, 'navigation-item-active'), $modifiers);
+  @include navigation-title(map-get-default($components, 'navigation-title'), $modifiers);
   @include navigation-bar(map-get-default($components, 'navigation-bar'), $modifiers);
   @include section(map-get-default($components, 'section'), $modifiers);
+  @include sidebar(map-get-default($components, 'sidebar'), $modifiers);
   @include spacer(map-get-default($components, 'spacer'), $modifiers);
 
   // Typography

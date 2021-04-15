@@ -3,30 +3,30 @@
 
 @function complete-color-sets($color-map: (), $options: null) {
 
-  @each $key, $color in $color-map {
-    @if not is-map($color) {
-      $color-map: map-set($color-map, $key, generate-color-set($color, $options));
+  @each $color-key, $color-set in $color-map {
+    @if not is-map($color-set) {
+      $color-map: map-set($color-map, $color-key, generate-color-set($color-set, $options));
     } @else {
-      @if not map-has-key($color, main) and not map-has-key($color, complement) {
-        @error 'Key "main" or "complement" not defined in map "#{$key}"';
+      @if not map-has-key($color-set, 'main') and not map-has-key($color-set, 'complement') {
+        @error 'Key "main" or "complement" not defined in map "#{$color-key}"';
       }
-      @if not map-has-key($color, main) {
-        $main: generate-complement-color(map-get($color, complement), $options);
-        $color: map-set($color, complement, $main);
+      @if not map-has-key($color-set, 'main') {
+        $main: generate-complement-color(map-get($color-set, 'complement'), $options);
+        $color: map-set($color-set, 'main', $main);
       }
-      @if not map-has-key($color, contrast) {
-        $contrast: generate-contrast-color(map-get($color, main), $options);
-        $color: map-set($color, complement, $contrast);
+      @if not map-has-key($color-set, 'contrast') {
+        $contrast: generate-contrast-color(map-get($color-set, 'main'), $options);
+        $color: map-set($color-set, 'contrast', $contrast);
       }
-      @if not map-has-key($color, complement) {
-        $complement: generate-complement-color(map-get($color, main), $options);
-        $color: map-set($color, complement, $complement);
+      @if not map-has-key($color-set, 'complement') {
+        $complement: generate-complement-color(map-get($color-set, 'main'), $options);
+        $color: map-set($color-set, 'complement', $complement);
       }
-      @if not map-has-key($color, complement-contrast) {
-        $complement-contrast: generate-contrast-color(map-get($color, complement), $options);
-        $color: map-set($color, complement-contrast, $complement-contrast);
+      @if not map-has-key($color-set, 'complement-contrast') {
+        $complement-contrast: generate-contrast-color(map-get($color-set, 'complement'), $options);
+        $color: map-set($color-set, 'complement-contrast', $complement-contrast);
       }
-      $color-map: map-set($color-map, $key, $color);
+      $color-map: map-set($color-map, $color-key, $color-set);
     }
   }
   @return $color-map;

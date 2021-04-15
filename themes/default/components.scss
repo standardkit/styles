@@ -2,22 +2,24 @@ $components: (
   //
   // Common
   //
-  alert: (default-color: 'info', default-fill: 'plain'),
+  alert: (default-color: 'info', default-fill: 'plain', default-margin: 'vertical-m'),
   //alert-icon: (default-position: 'top'),
   //alert-dismiss: (default-position: 'top'),
   bar: (default-vertical-alignment: 'middle'),
+  brand: (default-font: 'title', default-size: 'l'),
   button: (default-fill: 'fill', default-color: 'primary'),
   code-block: (default-font: 'monospace', default-fill: 'plain'),
+  divider: (default-color: 'text', default-fill: 'complement', default-border: 's', default-margin: 'vertical-m'),
   //
   // Form
   //
-  input: (default-color: 'text'),
+  input: (default-color: 'text', default-fill: 'plain'),
   //
   // Typography
   //
   link: (),
-  title: (default-size: 'h1'),
-  subtitle: (default-size: 'h2'),
+  title: (default-size: 'h1', default-margin: 'vertical-m'),
+  subtitle: (default-size: 'h2', default-margin: 'vertical-m'),
   //
   // Tables & Lists
   //
@@ -25,7 +27,12 @@ $components: (
   //
   // Layout
   //
-  card-layout: ()
+  card-layout: (),
+  navigation-bar: (default-padding: 'xl', default-fill: 'fill'),
+  dashboard-layout-content: (default-color: 'text', default-fill: 'contrast', default-padding: 'l'),
+  // TODO : Check fill and color on sidebar makes the background white on the bottom (whats going on)
+  navigation-item-active: (default-fill: 'contrast'),
+  section: (default-margin: 'vertical-m')
 );
 
 // TODO : Complete the default configuration for all components in default theme

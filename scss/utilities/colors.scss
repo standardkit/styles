@@ -26,18 +26,19 @@ $color-options: (
 
 @function generate-complement-color($color, $options: $color-options) {
   @if is-bright($color, $options) {
-    @return generate-value-variant($color, get-color-option($options, complement-value-percentage));
+    @return generate-value-variant($color, get-color-option($options, 'complement-value-percentage'));
   } @else {
-    @return generate-value-variant($color, 100% - get-color-option($options, complement-value-percentage));
+    @return generate-value-variant($color, 100% - get-color-option($options, 'complement-value-percentage'));
   }
 }
 
 @function generate-contrast-color($color, $options: $color-options) {
-  $color: invert($color);
+  $percentage: get-color-option($options, 'contrast-value-percentage');
+  $desaturated: desaturate($color, 100%);
   @if is-bright($color, $options) {
-    @return generate-value-variant($color, get-color-option($options, contrast-value-percentage));
+    @return generate-value-variant($desaturated, $percentage);
   } @else {
-    @return generate-value-variant($color, 100% - get-color-option($options, contrast-value-percentage));
+    @return generate-value-variant($desaturated, 100% - $percentage);
   }
 }
 

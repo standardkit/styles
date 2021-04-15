@@ -10,11 +10,11 @@
   $default-theme: map-get($themes, 'default');
   // Include each theme configuration
   @if length($themes) == 1 {
-    @include theme($default-theme);
+    @include theme('default', $default-theme);
   } @else {
     @each $theme, $configuration in $themes {
-      .theme--#{$theme} {
-        @include theme($configuration);
+      @at-root .theme--#{$theme} {
+        @include theme($theme, $configuration, false);
       }
     }
     $default-options: map-get-default($default-theme, options);

@@ -1,12 +1,27 @@
 @use '../../mixins/flavors' as *;
 
 @mixin dashboard-layout($configuration: (), $modifiers: ()) {
-  @include flavors-and-types('dashboard-layout', $configuration, $modifiers, []);
+  @include flavors-and-types('dashboard-layout', $configuration, $modifiers, ['size']);
 
   .dashboard-layout {
+    display: flex;
     height: 100vh;
     overflow: hidden;
-    display: flex;
     flex-direction: column;
+
+    .dashboard-layout__body {
+      display: flex;
+      flex-direction: row;
+      height: 100%;
+    }
+
+    .dashboard-layout__content {
+      height: 100%;
+      overflow: auto;
+    }
   }
+}
+
+@mixin dashboard-layout-content($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('dashboard-layout__content', $configuration, $modifiers, ['padding', 'color', 'fill']);
 }

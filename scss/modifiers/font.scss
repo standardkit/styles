@@ -3,12 +3,16 @@
 @mixin mix-font($font-map: ()) {
   @each $key, $value in $font-map {
     .font--#{$key} {
-      @if is-list($value) {
-        font-family: zip($value);
-      } @else {
-        font-family: $value;
-      }
+      @include render-font($value);
     }
+  }
+}
+
+@mixin render-font($font) {
+  @if is-list($font) {
+    font-family: zip($font);
+  } @else {
+    font-family: $font;
   }
 }
 

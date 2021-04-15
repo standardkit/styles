@@ -46,11 +46,13 @@
 }
 
 @mixin alert-dismiss-padding($padding: []) {
-  $padding-x: get-padding-x($padding);
-  $padding-y: get-padding-y($padding);
-  margin-right: -$padding-x;
-  margin-top: -$padding-y;
-  margin-bottom: -$padding-y;
+  .alert__dismiss {
+    $padding-x: get-padding-x($padding);
+    $padding-y: get-padding-y($padding);
+    margin-right: -$padding-x;
+    margin-top: -$padding-y;
+    margin-bottom: -$padding-y;
+  }
 }
 
 @mixin alert-icon($configuration: (), $modifiers: ()) {

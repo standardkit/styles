@@ -1,8 +1,30 @@
-@mixin mix-general($theme: ()) {
+@use '../utilities/base' as *;
+@use 'flavors' as *;
+@use '../modifiers/font' as *;
+@use '../modifiers/size' as *;
+
+@mixin mix-general($theme: '', $configuration: (), $singular: true) {
+  $modifiers: map-get-default($configuration, 'modifiers');
+  @if $theme == 'default' and $singular {
+    * {
+      $fonts: get-flavors($modifiers, 'font');
+      $default-font: get-default-flavor($modifiers, 'font');
+      @include render-font(map-get($fonts, $default-font));
+      $sizes: get-flavors($modifiers, 'size');
+      $default-size: get-default-flavor($modifiers, 'size');
+      font-size: map-get($sizes, $default-size);
+    }
+  } @else {
+    @include flavors-and-types('theme--#{$theme}', (), $modifiers, ['size', 'font']);
+  }
 }
 
 
 @mixin mix-theme($modifiers: (), $options: ()) {
+  * {
+
+    @extend .font--text;
+  }
   // TODO : Check the font imports, and based on option include then
   //* {
   // TODO : Make default font and get from configuration make sure it is there (text)

@@ -1,10 +1,10 @@
 @use '../../mixins/flavors' as *;
 
 @mixin navigation-bar($configuration: (), $modifiers: ()) {
-  @include flavors-and-types('navigation-bar', $configuration, $modifiers, ['color', 'fill', 'padding']);
+  @include flavors-and-types('navigation-bar', $configuration, $modifiers,
+    ['color', 'fill', 'padding', 'vertical-alignment']);
 
   .navigation-bar {
     display: flex;
-    align-items: center;
   }
 }

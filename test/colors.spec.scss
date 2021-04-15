@@ -1,34 +1,12 @@
 @use '../scss/utilities/colors';
 @use '../node_modules/sass-true' as *;
 
-@include describe('generate-complement-color()') {
-  // TODO : Implement
-}
-
 @include describe('generate-contrast-color()') {
-  // TODO : Implement
-}
 
-@include describe('generate-value-variant()') {
-  // TODO : Implement
-}
+  @include it('should generate a dark color as contrast for a light color') {
+    $color: white;
+    $result: colors.generate-contrast-color($color);
 
-@include describe('generate-color-set()') {
-  // TODO : Implement
-}
-
-@include describe('get-brightness()') {
-  // TODO : Implement
-}
-
-@include describe('is-bright()') {
-  // TODO : Implement
-}
-
-@include describe('get-color-option()') {
-  // TODO : Implement
-}
-
-@include describe('get-weight()') {
-  // TODO : Implement
+    @include assert-false(colors.is-bright($result));
+  }
 }

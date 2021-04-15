@@ -1,10 +1,10 @@
 @use '../modifiers';
 @use '../utilities/base' as *;
 
-@mixin mix-modifiers($modifiers: ()) {
+@mixin mix-modifiers($theme: '', $modifiers: ()) {
 
   // Complex Modifiers
-  @include modifiers.mix-color-fill(get-flavors($modifiers, 'color'), get-flavors($modifiers, 'fill'));
+  @include modifiers.mix-color-fill($theme, get-flavors($modifiers, 'color'), get-flavors($modifiers, 'fill'));
   @include modifiers.mix-elevation(get-flavors($modifiers, 'elevation'));
   @include modifiers.mix-animation(get-flavors($modifiers, 'animation'));
   @include modifiers.mix-animation-import(get-flavors($modifiers, 'animation-import'));

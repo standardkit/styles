@@ -6,9 +6,9 @@
 @mixin theme($theme: ()) {
   @include general.mix-general($theme);
 
-  $modifiers: map-get-default($theme, modifiers);
+  $modifiers: map-get-default($theme, 'modifiers');
   @include modifiers.mix-modifiers($modifiers);
 
-  $components: map-get-default($theme, components);
+  $components: map-get-default($theme, 'components');
   @include components.mix-components($components, $modifiers);
 }

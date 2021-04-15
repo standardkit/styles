@@ -1,29 +1,28 @@
 @use '../../mixins/flavors' as *;
 
 @mixin list($configuration: (), $modifiers: ()) {
-  @include flavors-and-types(list, $configuration, $modifiers, [elevation, corner]);
-  @include flavors-and-types(list-item, $configuration, $modifiers, [color, fill]);
-  @include flavors-and-types(list-item__content, $configuration, $modifiers, [padding]);
-  @include flavors-and-types(list-item__icon, $configuration, $modifiers, [padding, position]);
+  @include flavors-and-types('list', $configuration, $modifiers, ['corner', 'border']);
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-collapse: collapse; // TODO : Check if border collapse works on list
+  }
 }
 
-
-.list {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+@mixin list-item($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('list-item', $configuration, $modifiers, ['color', 'fill', 'padding', 'border']);
 
   .list-item {
     display: flex;
-    flex-direction: row;
-
-    .list-item__content {
-      flex: 1 1 auto;
-      flex-direction: column;
-    }
 
     .list-item__icon {
-      padding-right: 0; // TODO : Make configurable and depending on side of icon
+      margin-right: 1em; // TODO : Make list item icon use the (new) gap modifier/system
     }
   }
+}
+
+@mixin list-item-icon($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('list-item__icon', $configuration, $modifiers, ['position']);
 }

@@ -1,82 +1,12 @@
-.dashboard-layout {
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+@use '../../mixins/flavors' as *;
 
-  .dashboard-layout__header {
-    position: sticky;
-    top: 0;
-  }
+@mixin dashboard-layout($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('dashboard-layout', $configuration, $modifiers, []);
 
-  main {
-    display: flex;
-    flex-direction: row;
+  .dashboard-layout {
+    height: 100vh;
     overflow: hidden;
-    position: relative;
-    height: 100%;
-    overflow-y: auto;
-
-    .dashboard-layout__sidebar {
-      position: sticky;
-      top: 0;
-    }
-
-    .dashboard-layout__content {
-      height: 100%;
-      padding: 2rem;
-      flex-grow: 1;
-    }
-  }
-
-  // TODO: Move basic functionality to sidebar.scss and only keep overrides here
-  .sidebar {
     display: flex;
     flex-direction: column;
-    min-width: 16rem;
-    @include default-padding();
-    height: 100%;
-    overflow-y: auto;
-    background-color: get-color(primary, complement);
-  }
-
-  .navigation-bar__toggle {
-    display: none;
-    padding: 0 .75rem; // TODO: use configuration
-    margin-left: .25rem;
-    margin-right: 0.5rem;
-    cursor: pointer;
-  }
-
-  @each $breakpoint, $value in $default-breakpoints {
-    &.dashboard-layout__expand--#{$breakpoint} {
-
-      @include breakpoint(--){
-
-      }
-      @media only screen and (max-width: map-get($default-breakpoints, $breakpoint)) {
-        .navigation-bar__toggle {
-          display: block;
-        }
-
-        .dashboard-layout__sidebar.dashboard-layout__sidebar--expanded {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          overflow-y: scroll;
-          background: get-color(text, contrast); // TODO : Connect color to sidebar stuff
-
-          .sidebar {
-            width: 100%;
-          }
-        }
-
-        .dashboard-layout__sidebar:not(.dashboard-layout__sidebar--expanded) {
-          display: none;
-        }
-      }
-    }
   }
 }

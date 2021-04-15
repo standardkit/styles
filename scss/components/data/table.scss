@@ -1,39 +1,22 @@
 @use '../../mixins/flavors' as *;
 
 @mixin table($configuration: (), $modifiers: ()) {
-  @include flavors-and-types(table, $configuration, $modifiers, [margin, color, fill]);
-  @include flavors-and-types(table-title, $configuration, $modifiers, [font]);
-  @include flavors-and-types(table-cell, $configuration, $modifiers, [padding]);
+  @include flavors-and-types('table', $configuration, $modifiers, ['margin']);
+  // TODO : Allow flavors and types function to have first argument as list, for nested selectors (muy nice)
+  //  This allows us to do table > td and still have the modifiers on the right class? not sure about overrides
+
+  .table {
+    display: flex;
+    overflow-y: scroll;
+    border-collapse: collapse;
+
+    td {
+      white-space: nowrap;
+    }
+  }
 }
 
 
-.table {
-
-  width: 100%;
-  overflow-y: scroll;
-  padding: 0;
-  border-collapse: collapse;
-
-  &--striped {
-    td {
-      border-bottom: 1px solid rgba(get-color(text), 10%);
-    }
-  }
-
-
-  &--fit {
-    width: unset;
-    overflow: auto;
-  }
-
-  thead {
-    td, th {
-      border-bottom: 1px solid rgba(get-color(text), 10%);
-      font-weight: bold;
-    }
-  }
-
-  td {
-    white-space: nowrap;
-  }
+@mixin table-cell($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('table-cell', $configuration, $modifiers, ['padding', 'color', 'fill']);
 }

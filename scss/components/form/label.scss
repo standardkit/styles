@@ -1,8 +1,6 @@
 @use '../../mixins/flavors' as *;
 
-$component-modifiers: [size, margin, margin];
-
 @mixin label($configuration: (), $modifiers: ()) {
-  @include flavors-and-types('label', $configuration, $modifiers, $component-modifiers);
+  @include flavors-and-types('label', $configuration, $modifiers, []);
 }
 

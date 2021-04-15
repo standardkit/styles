@@ -1,0 +1,6 @@
+@use '../../mixins/flavors' as *;
+
+@mixin card($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('card', $configuration, $modifiers,
+    ['corner', 'border', 'elevation', 'color', 'fill', 'padding', 'margin', 'width']);
+}

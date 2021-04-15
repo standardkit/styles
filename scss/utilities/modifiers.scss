@@ -1,20 +1,11 @@
 @use 'base' as *;
 
-// TODO : Remove this file and all code in favor of mixins for components / flavors
-
-@function get-color($colors: (), $color: primary, $key: main) {
-  @if $key == none {
+@function get-color($color-set: (), $fill-set: (), $key: '') {
+  @if $key == 'none' {
     @return transparent;
+  } @else {
+    @return map-get($color-set, map-get($fill-set, $key));
   }
-  @return map-get(map-get($colors, $color), $key);
-}
-
-@function get-margin($margins: (), $margin: m) {
-  @return map-get($margins, $margin);
-}
-
-@function get-padding($paddings: (), $padding: m) {
-  @return map-get($paddings, $padding);
 }
 
 @function get-padding-x($padding: []) {
@@ -24,7 +15,12 @@
   @return nth($padding, 2);
 }
 
-@function get-padding-y($paddings: (), $size: m) {
-  $padding: map-get($paddings, $size);
-  @return nth($padding, 1);
+@function get-padding-y($padding: []) {
+  @if $padding == [] {
+    @return null;
+  } @else if is-list($padding) {
+    @return nth($padding, 1);
+  } @else {
+    @return $padding;
+  }
 }

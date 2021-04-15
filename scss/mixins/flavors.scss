@@ -70,7 +70,7 @@
   }
   @each $modifier, $default in $default-modifiers {
     @if in-list(map-keys($non-overridable-flavors), $modifier) {
-      &:not([class*=#{$class}--]) {
+      &:not([class*='#{$class}--']) {
         @include default-flavor($modifier, $default);
       }
     } @else {
@@ -97,7 +97,7 @@
 
 
 @mixin default-flavor($modifier, $flavor) {
-  &:not([class*=#{$modifier}--]) {
+  &:not([class*='#{$modifier}--']) {
     @extend .#{$modifier}--#{$flavor} !optional;
   }
 }

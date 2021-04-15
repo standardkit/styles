@@ -1,11 +1,25 @@
 @use '../../mixins/flavors' as *;
+@use '../../utilities/base' as *;
 
 @mixin modal($configuration: (), $modifiers: ()) {
-  @include flavors-and-types('modal__container', $configuration, $modifiers, ['alignment', 'vertical-alignment']);
   @include flavors-and-types('modal', $configuration, $modifiers,
     ['corner', 'elevation', 'width', 'color', 'fill', 'margin']);
-  @include flavors-and-types('modal__content', $configuration, $modifiers, ['padding']);
-  @include flavors-and-types('modal__header', $configuration, $modifiers, ['padding']);
+  @include flavors-and-types('modal__content', map-filter-keys($configuration, ['padding']), $modifiers, ['padding']);
+  @include flavors-and-types('modal__header', map-filter-keys($configuration, ['padding']), $modifiers, ['padding']);
+
+
+  .modal {
+    position: relative; // TODO : Check if relative position on modal is necessary
+    overflow: hidden;
+  }
+
+  .modal__close {
+    // TODO : Check padding for modal close
+  }
+}
+
+@mixin modal-container($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('modal__container', $configuration, $modifiers, ['alignment', 'vertical-alignment']);
 
   .modal__container {
     display: flex;
@@ -16,14 +30,5 @@
     left: 0;
     top: 0;
     z-index: 10; // TODO : Put in list and make configurable, maybe as modifier?
-  }
-
-  .modal {
-    position: relative; // TODO : Check if relative position on modal is necessary
-    overflow: hidden;
-  }
-
-  .modal__close {
-    // TODO : Check padding for modal close
   }
 }

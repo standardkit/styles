@@ -3,15 +3,15 @@ $components: (
   // Common
   //
   alert: (default-color: 'info', default-fill: 'plain'),
-  alert-icon: (default-position: 'top'),
-  alert-dismiss: (default-position: 'top'),
+  //alert-icon: (default-position: 'top'),
+  //alert-dismiss: (default-position: 'top'),
   bar: (default-vertical-alignment: 'middle'),
   button: (default-fill: 'fill', default-color: 'primary'),
-  code-block: (default-font: 'monospace', default-fill: 'plain', default-color: 'text'),
+  code-block: (default-font: 'monospace', default-fill: 'plain'),
   //
   // Form
   //
-  input: (default-color: 'input'),
+  input: (default-color: 'text'),
   //
   // Typography
   //

@@ -1,0 +1,12 @@
+@use '../../mixins/flavors' as *;
+
+@mixin sidebar($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('sidebar', $configuration, $modifiers, ['padding', 'fill', 'color', 'width']);
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+  }
+}

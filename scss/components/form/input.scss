@@ -1,9 +1,7 @@
 @use '../../mixins/flavors' as *;
 
-$component-modifiers: [padding, border, color, fill, corner, size, margin, width];
-
 @mixin input($configuration: (), $modifiers: ()) {
-  @include flavors-and-types('input', $configuration, $modifiers, $component-modifiers);
+  @include flavors-and-types('input', $configuration, $modifiers, ['padding', 'border', 'color', 'fill', 'corner']);
 
   .input {
     display: inline-flex;

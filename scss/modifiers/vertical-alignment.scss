@@ -1,7 +1,7 @@
 @mixin mix-vertical-alignment($vertical-alignment-map: ()) {
   @each $key, $value in $vertical-alignment-map {
     @if $value != none {
-      .alignment--#{$key} {
+      .vertical-alignment--#{$key} {
         align-items: $value;
       }
     }

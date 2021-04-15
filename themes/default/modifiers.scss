@@ -32,6 +32,7 @@ $modifiers: (
   default-elevation: 'm',
   breakpoint: breakpoint.$breakpoint-map,
   animation: animation.$animation-map,
+  default-animation: 'spin',
   animation-import: animation.$animation-import-map,
   //
   // Dynamic

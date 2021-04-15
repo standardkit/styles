@@ -1,7 +1,7 @@
 $font-map: (
-  title: 'Roboto Slab' serif,
-  text: 'Open Sans' sans-serif,
-  monospace: 'Roboto Mono' monospace
+  title: ['Roboto Slab', serif],
+  text: ['Open Sans', sans-serif],
+  monospace: ['Roboto Mono', monospace]
 );
 
 $font-imports: (

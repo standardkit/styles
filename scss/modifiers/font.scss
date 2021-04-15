@@ -1,7 +1,13 @@
+@use '../utilities/base' as *;
+
 @mixin mix-font($font-map: ()) {
   @each $key, $value in $font-map {
     .font--#{$key} {
-      font-family: $value;
+      @if is-list($value) {
+        font-family: zip($value);
+      } @else {
+        font-family: $value;
+      }
     }
   }
 }

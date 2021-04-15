@@ -7,7 +7,7 @@
 
   // TODO : Add base mixin, for configuration and css shared across themes
 
-  $default-theme: map-get($themes, default);
+  $default-theme: map-get($themes, 'default');
   // Include each theme configuration
   @if length($themes) == 1 {
     @include theme($default-theme);
@@ -17,10 +17,9 @@
         @include theme($configuration);
       }
     }
-
     $default-options: map-get-default($default-theme, options);
     @if not map-get($default-options, exclude-default-theme-selector) == true {
-      :not([class*=theme--]) {
+      :not([class*='theme--']) {
         @extend .theme--default;
       }
     }

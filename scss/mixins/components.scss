@@ -2,6 +2,7 @@
 @use '../components/common/alert' as *;
 @use '../components/common/bar' as *;
 @use '../components/common/button' as *;
+@use '../components/common/card' as *;
 @use '../components/common/code-block' as *;
 @use '../components/common/image' as *;
 @use '../components/common/modal' as *;
@@ -28,16 +29,24 @@
 
   // Common
   @include alert(map-get-default($components, 'alert'), $modifiers);
+  @include alert-icon(map-get-default($components, 'alert-icon'), $modifiers);
+  @include alert-dismiss(map-get-default($components, 'alert-dismiss'), $modifiers);
+  @include alert(map-get-default($components, 'alert'), $modifiers);
   @include bar(map-get-default($components, 'bar'), $modifiers);
   @include button(map-get-default($components, 'button'), $modifiers);
+  @include card(map-get-default($components, 'card'), $modifiers);
   @include code-block(map-get-default($components, 'code-block'), $modifiers);
   @include image(map-get-default($components, 'image'), $modifiers);
   @include modal(map-get-default($components, 'modal'), $modifiers);
+  @include modal-container(map-get-default($components, 'modal-container'), $modifiers);
   @include spinner(map-get-default($components, 'spinner'), $modifiers);
 
   // Data
   @include list(map-get-default($components, 'list'), $modifiers);
+  @include list-item(map-get-default($components, 'list-item'), $modifiers);
+  @include list-item-icon(map-get-default($components, 'list-item-icon'), $modifiers);
   @include table(map-get-default($components, 'table'), $modifiers);
+  @include table-cell(map-get-default($components, 'table-cell'), $modifiers);
 
   // Form
   @include input(map-get-default($components, 'input'), $modifiers);
@@ -60,3 +69,4 @@
   @include subtitle(map-get-default($components, 'subtitle'), $modifiers);
   @include title(map-get-default($components, 'title'), $modifiers);
 }
+

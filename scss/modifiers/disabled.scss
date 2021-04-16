@@ -1,0 +1,23 @@
+@use '../utilities/base' as *;
+
+$opacity-prefix: opacity--;
+$grayscale-prefix: grayscale--;
+
+@mixin mix-disabled($disabled-map: ()) {
+
+  @each $key, $value in $disabled-map {
+
+
+    // TODO : Add multiple effect possibility for disabled
+
+    .disabled--#{$key}:disabled {
+      cursor: not-allowed;
+      @if str-has-prefix($value, $opacity-prefix) {
+        opacity: percentage(str-to-number(strip-prefix($value, $opacity-prefix)) / 100);
+
+      } @else if str-has-prefix($value, $grayscale-prefix) {
+        filter: brightness(100%) grayscale(percentage(str-to-number(strip-prefix($value, $grayscale-prefix)) / 100));
+      }
+    }
+  }
+}

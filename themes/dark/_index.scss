@@ -1,0 +1,13 @@
+$theme-configuration: (
+  options: (
+    prefer-dark-colors: true
+  ),
+  modifiers: (
+    color: (
+      text: whitesmoke
+    ),
+    hover: (
+      brightness: darker--15
+    )
+  )
+);

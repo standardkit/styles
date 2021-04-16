@@ -1,0 +1,37 @@
+@use '../utilities/base' as *;
+@use 'flavors' as *;
+@use '../modifiers/font' as *;
+@use '../modifiers/size' as *;
+
+@mixin mix-general($theme: '', $configuration: (), $singular: true) {
+  $modifiers: map-get-default($configuration, 'modifiers');
+  @if $theme == 'default' and $singular {
+    * {
+      $fonts: get-flavors($modifiers, 'font');
+      $default-font: get-default-flavor($modifiers, 'font');
+      @include render-font(map-get($fonts, $default-font));
+      $sizes: get-flavors($modifiers, 'size');
+      $default-size: get-default-flavor($modifiers, 'size');
+      font-size: map-get($sizes, $default-size);
+    }
+  } @else {
+    @include flavors-and-types('theme--#{$theme}', (), $modifiers, ['size', 'font']);
+  }
+}
+
+
+@mixin mix-theme($modifiers: (), $options: ()) {
+  * {
+
+    @extend .font--text;
+  }
+  // TODO : Check the font imports, and based on option include then
+  //* {
+  // TODO : Make default font and get from configuration make sure it is there (text)
+  //@extend .font--text !optional; // TODO  Get default font, get default text color
+  // Not using type-color-fill for * selector
+  //background-color: get-color(get-flavors($modifiers, color), primary, contrast); // TODO : use configured color, put this on a layout component
+  // we can fix this with components putting class on the body
+  //color: get-color(get-flavors($modifiers, color), text); // TODO : use configured color / fill combination
+  //}
+}

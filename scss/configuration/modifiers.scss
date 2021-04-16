@@ -1,0 +1,41 @@
+@use '../utilities/base' as *;
+
+@use 'breakpoint';
+@use 'color';
+@use 'elevation';
+@use 'fill';
+
+// Checks naming conflicts and completeness of complex modifiers
+// If found incomplete, based on theme options it completes them
+@function check-and-complete-modifiers($themes: ()) {
+  @each $theme, $configuration in $themes {
+
+    $modifiers: map-get-default($configuration, 'modifiers');
+    $options: map-get-default($configuration, 'options');
+
+    // Breakpoints
+    $check: breakpoint.check-configuration($modifiers);
+
+    // Colors
+    $color-map: get-flavors($modifiers, 'color');
+    $color-map: color.complete-color-sets($color-map, $options);
+    $modifiers: map-set($modifiers, 'color', $color-map);
+
+    // Elevation Types
+    $elevation-map: get-flavors($modifiers, 'elevation');
+    $elevation-map: elevation.complete-elevation-sets($elevation-map, $options);
+    $modifiers: map-set($modifiers, 'elevation', $elevation-map);
+
+    // Fill Types
+    $fill-map: get-flavors($modifiers, 'fill');
+    $fill-map: fill.complete-fill-sets($fill-map);
+    $modifiers: map-set($modifiers, 'fill', $fill-map);
+
+    // TODO : Add hover / disabled / active prefixed naming flavor checks
+
+    // Save new settings
+    $configuration: map-set($configuration, 'modifiers', $modifiers);
+    $themes: map-set($themes, $theme, $configuration);
+  }
+  @return $themes;
+}

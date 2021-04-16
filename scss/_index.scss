@@ -1,0 +1,125 @@
+$log-level: null !default;
+@use 'utilities/log' with ($log-level: $log-level);
+
+$color-map: () !default;
+$color-options: () !default;
+$fill-map: () !default;
+$fill-options: () !default;
+$elevation-map: () !default;
+$elevation-options: () !default;
+$breakpoint-map: () !default;
+$breakpoint-options: () !default;
+$animation-map: () !default;
+$animation-options: () !default;
+$animation-import-map: () !default;
+$animation-import-options: () !default;
+
+$border-map: () !default;
+$border-options: () !default;
+$corner-map: () !default;
+$corner-options: () !default;
+$font-map: () !default;
+$font-options: () !default;
+$font-import-map: () !default;
+$font-import-options: () !default;
+$margin-map: () !default;
+$margin-options: () !default;
+$padding-map: () !default;
+$padding-options: () !default;
+$size-map: () !default;
+$size-options: () !default;
+$width-map: () !default;
+$width-options: () !default;
+
+$active-map: () !default;
+$active-options: () !default;
+$disabled-map: () !default;
+$disabled-options: () !default;
+$focus-map: () !default;
+$focus-options: () !default;
+$hover-map: () !default;
+$hover-options: () !default;
+
+$alignment-options: () !default;
+$case-options: () !default;
+$highlight-options: () !default;
+$position-options: () !default;
+$vertical-alignment-options: () !default;
+
+$base: () !default;
+$options: () !default;
+$modifiers: () !default;
+$types: () !default;
+$components: () !default;
+
+$configuration: () !default;
+
+$themes: () !default;
+
+@use 'configuration/normalize' with (
+$color-map: $color-map,
+$color-options: $color-options,
+$fill-map: $fill-map,
+$fill-options: $fill-options,
+$elevation-map: $elevation-map,
+$elevation-options: $elevation-options,
+$breakpoint-map: $breakpoint-map,
+$breakpoint-options: $breakpoint-options,
+$animation-map: $animation-map,
+$animation-options: $animation-options,
+$animation-import-map: $animation-import-map,
+$animation-import-options: $animation-import-options,
+
+$border-map: $border-map,
+$border-options: $border-options,
+$corner-map: $corner-map,
+$corner-options: $corner-options,
+$font-map: $font-map,
+$font-options: $font-options,
+$font-import-map: $font-import-map,
+$font-import-options: $font-import-options,
+$margin-map: $margin-map,
+$margin-options: $margin-options,
+$padding-map: $padding-map,
+$padding-options: $padding-options,
+$size-map: $size-map,
+$size-options: $size-options,
+$width-map: $width-map,
+$width-options: $width-options,
+
+$active-map: $active-map,
+$active-options: $active-options,
+$disabled-map: $disabled-map,
+$disabled-options: $disabled-options,
+$focus-map: $focus-map,
+$focus-options: $focus-options,
+$hover-map: $hover-map,
+$hover-options: $hover-options,
+
+$alignment-options: $alignment-options,
+$case-options: $case-options,
+$highlight-options: $highlight-options,
+$position-options: $position-options,
+$vertical-alignment-options: $vertical-alignment-options,
+
+$base: $base,
+$options: $options,
+$modifiers: $modifiers,
+$types: $types,
+$components: $components,
+
+$configuration: $configuration,
+
+$themes: $themes
+);
+
+$themes: normalize.$themes;
+
+@use 'configuration/flatten' as *;
+$themes: flatten-themes($themes);
+
+@use 'configuration/modifiers' as *;
+$themes: check-and-complete-modifiers($themes);
+
+@use 'mixins/standardkit' as *;
+@include standardkit($themes);

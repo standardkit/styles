@@ -1,0 +1,5 @@
+@use '../../mixins/flavors' as *;
+
+@mixin paragraph($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('paragraph', $configuration, $modifiers, ['font', 'size', 'margin']);
+}

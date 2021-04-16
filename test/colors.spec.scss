@@ -1,0 +1,12 @@
+@use '../scss/utilities/colors';
+@use '../node_modules/sass-true' as *;
+
+@include describe('generate-contrast-color()') {
+
+  @include it('should generate a dark color as contrast for a light color') {
+    $color: white;
+    $result: colors.generate-contrast-color($color);
+
+    @include assert-false(colors.is-bright($result));
+  }
+}

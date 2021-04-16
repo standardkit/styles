@@ -1,0 +1,26 @@
+@use '../../mixins/flavors' as *;
+@use '../../utilities/base' as *;
+@use '../../modifiers/breakpoint' as *;
+
+@mixin navigation-bar($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('navigation-bar', $configuration, $modifiers,
+    ['color', 'fill', 'padding', 'vertical-alignment']);
+
+  .navigation-bar {
+    display: flex;
+
+    .navigation-bar__toggle {
+      width: 1.25em;
+      height: 1.25em;
+      cursor: pointer;
+      margin-right: 1em; // TODO : Add gap system for navigation bar toggle
+
+      // TODO : Make the m configurable for breakpoint of expand/collapse
+      @include breakpoint(get-flavors($modifiers, 'breakpoint'), m) {
+        display: none;
+      }
+    }
+
+
+  }
+}

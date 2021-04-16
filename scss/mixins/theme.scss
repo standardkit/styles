@@ -1,0 +1,14 @@
+@use '../utilities/base' as *;
+@use 'general';
+@use 'modifiers';
+@use 'components';
+
+@mixin theme($theme: '', $configuration: (), $singular: true) {
+  @include general.mix-general($theme, $configuration, $singular);
+
+  $modifiers: map-get-default($configuration, 'modifiers');
+  @include modifiers.mix-modifiers($theme, $modifiers);
+
+  $components: map-get-default($configuration, 'components');
+  @include components.mix-components($components, $modifiers);
+}

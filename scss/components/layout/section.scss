@@ -1,0 +1,5 @@
+@use '../../mixins/flavors' as *;
+
+@mixin section($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('section', $configuration, $modifiers, ['margin']);
+}

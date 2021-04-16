@@ -1,0 +1,9 @@
+@mixin mix-alignment($alignment-map: ()) {
+  @each $key, $value in $alignment-map {
+    @if $value != none {
+      .alignment--#{$key} {
+        justify-content: $value;
+      }
+    }
+  }
+}

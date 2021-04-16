@@ -1,0 +1,34 @@
+@use '../modifiers';
+@use '../utilities/base' as *;
+
+@mixin mix-modifiers($theme: '', $modifiers: ()) {
+
+  // Complex Modifiers
+  @include modifiers.mix-color-fill($theme, get-flavors($modifiers, 'color'), get-flavors($modifiers, 'fill'));
+  @include modifiers.mix-elevation(get-flavors($modifiers, 'elevation'));
+  @include modifiers.mix-animation(get-flavors($modifiers, 'animation'));
+  @include modifiers.mix-animation-import(get-flavors($modifiers, 'animation-import'));
+
+  // Dynamic Modifiers
+  @include modifiers.mix-border(get-flavors($modifiers, 'border'));
+  @include modifiers.mix-corner(get-flavors($modifiers, 'corner'));
+  @include modifiers.mix-font(get-flavors($modifiers, 'font'));
+  @include modifiers.mix-font-import(get-flavors($modifiers, 'font-import'));
+  @include modifiers.mix-margin(get-flavors($modifiers, 'margin'));
+  @include modifiers.mix-padding(get-flavors($modifiers, 'padding'));
+  @include modifiers.mix-size(get-flavors($modifiers, 'size'));
+  @include modifiers.mix-width(get-flavors($modifiers, 'width'));
+
+  // State Modifiers
+  //@include modifiers.mix-active(get-flavors($modifiers, 'active')); // TODO : Implement active mixin
+  @include modifiers.mix-disabled(get-flavors($modifiers, 'disabled'));
+  //@include modifiers.mix-focus(get-flavors($modifiers, 'focus')); // TODO : Implement focus mixin
+  @include modifiers.mix-hover(get-flavors($modifiers, 'hover'));
+
+  // Static Modifiers
+  @include modifiers.mix-alignment(get-flavors($modifiers, 'alignment'));
+  @include modifiers.mix-case(get-flavors($modifiers, 'case'));
+  @include modifiers.mix-highlight(get-flavors($modifiers, 'highlight'));
+  @include modifiers.mix-position(get-flavors($modifiers, 'position'));
+  @include modifiers.mix-vertical-alignment(get-flavors($modifiers, 'vertical-alignment'));
+}

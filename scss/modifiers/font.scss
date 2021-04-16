@@ -1,0 +1,23 @@
+@use '../utilities/base' as *;
+
+@mixin mix-font($font-map: ()) {
+  @each $key, $value in $font-map {
+    .font--#{$key} {
+      @include render-font($value);
+    }
+  }
+}
+
+@mixin render-font($font) {
+  @if is-list($font) {
+    font-family: zip($font);
+  } @else {
+    font-family: $font;
+  }
+}
+
+@mixin mix-font-import($font-import-map: ()) {
+  @each $key, $value in $font-import-map {
+    @import url($value);
+  }
+}

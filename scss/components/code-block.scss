@@ -1,5 +1,0 @@
-.code-block {
-  background-color: get-color(text, complement); // TODO : Different fill styles?
-  @include default-padding();
-  @extend .font--monospace;
-}

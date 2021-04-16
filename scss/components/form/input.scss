@@ -1,0 +1,10 @@
+@use '../../mixins/flavors' as *;
+
+@mixin input($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('input', $configuration, $modifiers, ['padding', 'border', 'color', 'fill', 'corner']);
+
+  .input {
+    display: inline-flex;
+    flex-direction: row;
+  }
+}

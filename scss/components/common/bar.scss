@@ -1,0 +1,10 @@
+@use '../../mixins/flavors' as *;
+
+@mixin bar($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('bar', $configuration, $modifiers, ['alignment', 'vertical-alignment']);
+
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}

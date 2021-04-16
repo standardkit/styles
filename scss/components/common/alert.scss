@@ -1,0 +1,64 @@
+@use '../../mixins/flavors' as *;
+@use '../../utilities/base' as *;
+@use '../../utilities/modifiers' as *;
+
+@mixin alert($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('alert', $configuration, $modifiers, ['color', 'fill', 'padding', 'corner', 'border']);
+
+  .alert {
+    display: flex;
+    align-items: center;
+
+    .alert__content {
+      flex-grow: 1;
+    }
+
+    .alert__icon {
+      margin-right: 1em; // TODO : Migrate alert icon to gap system
+    }
+
+    .alert__dismiss {
+      margin-left: 1em; // TODO : Migrate alert dismiss to gap system
+      cursor: pointer;
+    }
+
+    $padding-map: get-flavors($modifiers, 'padding');
+
+    $padding: get-default-flavor($configuration, 'padding');
+    $padding: get-default-flavor($modifiers, 'padding') !default;
+    @include alert-dismiss-padding(map-get($padding-map, $padding));
+
+    @each $key, $value in map-exclude-prefixed-keys($configuration, default-) {
+      &--#{$key} {
+        $padding: get-default-flavor($value, 'padding');
+        @if not is-null($padding) {
+          @include alert-dismiss-padding(map-get($padding-map, $padding));
+        }
+      }
+    }
+
+    @each $key, $value in $padding-map {
+      &.padding--#{$key} {
+        @include alert-dismiss-padding($value);
+      }
+    }
+  }
+}
+
+@mixin alert-dismiss-padding($padding: []) {
+  .alert__dismiss {
+    $padding-x: get-padding-x($padding);
+    $padding-y: get-padding-y($padding);
+    margin-right: -$padding-x;
+    margin-top: -$padding-y;
+    margin-bottom: -$padding-y;
+  }
+}
+
+@mixin alert-icon($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('alert__icon', $configuration, $modifiers, []);
+}
+
+@mixin alert-dismiss($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('alert__dismiss', $configuration, $modifiers, ['padding']);
+}

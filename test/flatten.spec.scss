@@ -1,0 +1,303 @@
+@use '../node_modules/sass-true' as *;
+@use '../scss/configuration/flatten';
+
+@include describe('flatten-default-flavor()') {
+  $flavors: (primary: blue, secondary: red, tertiary: purple);
+  @include it('should set the first possible flavor from the list if default is not set') {
+    $flavor: flatten.flatten-default-flavor(color, $flavors, (), (), true);
+    @include assert-equal($flavor, primary);
+  }
+  @include it('should set the first possible flavor from the list if base default does not exist') {
+    $flavor: flatten.flatten-default-flavor(color, $flavors, (default-color: custom), (), true);
+    @include assert-equal($flavor, primary);
+  }
+  @include it('should set the first possible flavor from the list if configured default does not exist') {
+    $flavor: flatten.flatten-default-flavor(color, $flavors, (), (default-color: custom), true);
+    @include assert-equal($flavor, primary);
+  }
+  @include it('should set the default to configured option if it exists') {
+    $flavor: flatten.flatten-default-flavor(color, $flavors, (), (default-color: secondary));
+    @include assert-equal($flavor, secondary);
+  }
+  @include it('should set the default to base option if it exists') {
+    $flavor: flatten.flatten-default-flavor(color, $flavors, (default-color: secondary), ());
+    @include assert-equal($flavor, secondary);
+  }
+  @include it('should set override the base option') {
+    $flavor: flatten.flatten-default-flavor(color, $flavors, (default-color: secondary), (default-color: tertiary));
+    @include assert-equal($flavor, tertiary);
+  }
+  @include it('should fallback to base option if configured default does not exist') {
+    $flavor: flatten.flatten-default-flavor(color, $flavors, (default-color: secondary), (default-color: custom));
+    @include assert-equal($flavor, secondary);
+  }
+  @include it('should fallback to first possible flavor if base & configured don\'t exist') {
+    $flavor: flatten.flatten-default-flavor(color, $flavors, (default-color: fake), (default-color: custom), true);
+    @include assert-equal($flavor, primary);
+  }
+  @include it('should return null if flavor doesn\'t exist') {
+    $flavor: flatten.flatten-default-flavor(color, $flavors, (), (default-color:fake));
+    @include assert-equal($flavor, null);
+  }
+}
+
+@include describe('flatten-components()') {
+  $modifiers: (
+    color: (primary: red, secondary: blue, tertiary: purple),
+    margin: (none: 0, xs: 1rem, xl: 2rem),
+    padding: (m: 2rem, xl: 4rem),
+    size: (m: 1rem, l: 2rem)
+  );
+  @include it('should merge base & theme components and not fallback to first possible flavor for modifier') {
+    $base: (alert: (default-color: secondary, default-margin: xl), button: (default-padding: xl));
+    $theme: (alert: (default-margin: xs, default-padding: fake), button: (default-color: tertiary));
+
+    $result: (
+      alert: (default-color: secondary, default-margin: xs),
+      button: (default-padding: xl, default-color: tertiary)
+    );
+    $components: flatten.flatten-components($base, $theme, $modifiers, ());
+
+    @include assert-equal($components, $result);
+  }
+  @include it('should merge types and be able to extend them') {
+    $types: (
+      custom: (default-color: secondary),
+      other: (default-margin: xl)
+    );
+    $base-components: (
+      button: (
+        custom: (default-margin: xs, default-padding: m),
+        basething: (default-color: primary, default-padding: m),
+        base-extend: (extend: custom)
+      )
+    );
+    $theme-components: (
+      button: (
+        custom: (default-padding: xl),
+        extended: (extend: other, default-color: tertiary),
+        extend-base: (extend: basething, default-padding: xl)
+      )
+    );
+    $expected: (
+      button: (
+        custom: (default-color: secondary, default-margin: xs, default-padding: xl),
+        other: (default-margin: xl),
+        basething: (default-color: primary, default-padding: m),
+        base-extend: (default-color: secondary, default-margin: xs, default-padding: xl),
+        extended: (default-color: tertiary, default-margin: xl),
+        extend-base: (default-color: primary, default-padding: xl) // padding fout
+      )
+    );
+    $result: flatten.flatten-components($base-components, $theme-components, $modifiers, $types);
+    @include assert-equal($result, $expected);
+  }
+  @include it('should extend base types from type and include the base types') {
+    $types: (custom: (default-color: primary));
+    $result: flatten.flatten-components((button: (extend: custom)), (), $modifiers, $types);
+    @include assert-equal($result, (button: (default-color: primary, custom: (default-color: primary))));
+  }
+  @include it('should work when you use circular extension') {
+    $type-configuration: (
+      button: (
+        one: (extend: three, default-color: primary, default-size: m),
+        two: (extend: one, default-color: secondary, default-padding: xl),
+        three: (extend: two, default-color: tertiary, default-margin: xs)
+      )
+    );
+    $expected: (
+      button: (
+        one:(default-color: primary, default-size: m, default-padding: xl, default-margin: xs),
+        two:(default-color: secondary, default-size: m, default-padding: xl, default-margin: xs),
+        three:(default-color: tertiary, default-size: m, default-padding: xl, default-margin: xs)
+      )
+    );
+    $result: flatten.flatten-components((), $type-configuration, $modifiers, ());
+    @include assert-equal($result, $expected);
+  }
+}
+
+@include describe('flatten-options()') {
+  $base: (options: (setting: false, custom: red));
+  $theme: (options: (setting: true, primary: blue));
+  @include it('should merge all options and theme should override base options') {
+    $options: flatten.flatten-options($base, $theme);
+    @include assert-equal($options, (setting: true, custom: red, primary: blue));
+  }
+  @include it('should work if theme options are empty') {
+    $options: flatten.flatten-options($base, ());
+    @include assert-equal($options, (setting: false, custom: red));
+  }
+  @include it('should work if base options are empty') {
+    $options: flatten.flatten-options((), $theme);
+    @include assert-equal($options, (setting: true, primary: blue));
+  }
+  @include it('should work if both are empty') {
+    $options: flatten.flatten-options((), ());
+    @include assert-equal($options, ());
+  }
+}
+
+@include describe('flatten-modifier()') {
+  $base-flavors: (primary: blue, secondary: red, tertiary: purple);
+  $custom-flavors: (custom: hotpink);
+  $sets: (minimal: primary, basic: tertiary secondary);
+  @include it('should just return all the custom flavors if merge == "replace" in modifier options') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (), (merge: replace));
+    @include assert-equal($flavors, (custom: hotpink));
+  }
+  @include it('should just return all the custom flavors if merge-modifiers == "replace" in theme options') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (merge-modifiers: replace), ());
+    @include assert-equal($flavors, (custom: hotpink));
+  }
+  @include it('should return all flavors if I just specify some custom flavors') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (), ());
+    @include assert-equal($flavors, (primary: blue, secondary: red, tertiary: purple, custom: hotpink));
+  }
+  @include it('should return no base flavors if modifier-sets == "none"') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (modifier-sets: none), ());
+    @include assert-equal($flavors, (custom: hotpink));
+  }
+  @include it('should return no base flavors if modifier set == "none"') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (), (set: none));
+    @include assert-equal($flavors, (custom: hotpink));
+  }
+  @include it('should minimal basic set + custom flavors if modifier set == "minimal"') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (), (set: minimal));
+    @include assert-equal($flavors, (primary: blue, custom: hotpink));
+  }
+  @include it('should override theme set') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (modifier-sets: all), (set: minimal));
+    @include assert-equal($flavors, (primary: blue, custom: hotpink));
+  }
+  @include it('should fallback on theme modifier-sets') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (modifier-sets: basic), ());
+    @include assert-equal($flavors, (secondary: red, custom: hotpink, tertiary: purple));
+  }
+  @include it('should add includes to the set') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets,
+      (modifier-sets: minimal), (include: tertiary)
+    );
+    @include assert-equal($flavors, (primary: blue, custom: hotpink, tertiary: purple));
+  }
+  @include it('should remove excludes') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (), (exclude: tertiary primary));
+    @include assert-equal($flavors, (secondary: red, custom: hotpink));
+  }
+  @include it('should remove excluded include') {
+    $flavors: flatten.flatten-modifier($base-flavors, $custom-flavors, $sets, (),
+      (set: minimal, include: tertiary, exclude: tertiary)
+    );
+    @include assert-equal($flavors, (primary: blue, custom: hotpink));
+  }
+}
+
+@include describe('flatten-modifiers()') {
+  @include it('should merge & process the base & theme properly') {
+    $base-modifiers: (
+      color: (primary: blue, secondary: red, tertiary: purple),
+      default-color: secondary,
+      padding: (none: 0, xl: 1rem),
+      default-padding: none
+    );
+    $modifiers: (
+      color: (custom: purple, tertiary: hotpink),
+      color-options: (set: basic, exclude: secondary),
+      padding: (huge: 2rem),
+      padding-options: (include: none xl),
+      default-padding: xl
+    );
+    $options: ();
+    $result: flatten.flatten-modifiers($base-modifiers, $modifiers, $options);
+    $expected: (
+      color: (primary: blue, custom: purple, tertiary: hotpink),
+      default-color: primary,
+      padding:(none: 0, xl: 1rem, huge: 2rem),
+      default-padding: xl
+    );
+    @include assert-equal($result, $expected);
+  }
+  @include it('should result in empty map if nothing is specified') {
+    $modifiers: flatten.flatten-modifiers((), (), ());
+    @include assert-equal($modifiers, ());
+  }
+}
+
+@include describe('flatten-types()') {
+  $base-types: (custom: (default-color: secondary), other: (default-margin: fake));
+  $modifiers: (color: (primary: red, secondary: blue), margin: (small: 1rem, big: 2rem));
+
+  @include it('should merge theme and base, removing impossible flavors') {
+    $theme-types: (custom: (default-color: primary, default-margin: small), other: (default-color: primary));
+    $result: flatten.flatten-types($base-types, $theme-types, $modifiers);
+    $expected: (
+      custom: (default-color: primary, default-margin: small),
+      other: (default-color: primary)
+    );
+    @include assert-equal($result, $expected);
+  }
+  @include it('extends another type if it exists') {
+    $theme-types: (
+      base: (default-color: primary),
+      one: (extend: base, default-margin: small),
+      two: (extend: custom));
+    $result: flatten.flatten-types($base-types, $theme-types, $modifiers);
+    $expected: (
+      custom: (default-color: secondary),
+      other: (),
+      base: (default-color: primary),
+      one: (default-color: primary, default-margin: small),
+      two: (default-color: secondary)
+    );
+    @include assert-equal($result, $expected);
+  }
+  @include it('extends another type if it exists and not extended already') {
+    $types: (loop: (extend: loop, default-color: primary));
+    $result: flatten.flatten-types((), $types, $modifiers);
+    @include assert-equal($result, (loop: (default-color: primary)));
+  }
+}
+
+@include describe('check-defaults()') {
+  $modifiers: (color: (primary: red), padding: (big: 1rem));
+  @include it('should remove non-existing defaults') {
+    $default-flavors: (default-color: primary, default-padding: fake, default-margin: also-fake);
+    $expected: (default-color: primary);
+    $result: flatten.check-defaults($default-flavors, $modifiers);
+    @include assert-equal($result, $expected);
+  }
+  @include it('should keep trivial entries that are not valid components or defaults at all') {
+    $default-flavors: (default-color: primary, default-padding: fake, extend: something, default-fake: keep-entry);
+    $expected: (default-color: primary, extend: something, default-fake: keep-entry);
+    $result: flatten.check-defaults($default-flavors, $modifiers);
+    @include assert-equal($result, $expected);
+  }
+}
+
+@include describe('check-component-configurations()') {
+  @include it('should remove invalid defaults and remove empty maps') {
+    $components: (button: (default-color: primary, default-margin: fake), alert: (default-padding: fake));
+    $modifiers: (color: (primary: red), padding: (big: 1rem));
+    $expected: (button: (default-color: primary));
+    $result: flatten.check-component-configurations($components, $modifiers);
+    @include assert-equal($result, $expected);
+  }
+  @include it('should remove invalid defaults and remove empty maps per custom type') {
+    $components: (button: (cta: (default-color: primary, default-margin: fake), save: (default-padding: fake)));
+    $modifiers: (color: (primary: red), padding: (big: 1rem));
+    $expected: (button: (cta: (default-color: primary)));
+    $result: flatten.check-component-configurations($components, $modifiers);
+    @include assert-equal($result, $expected);
+  }
+
+}
+
+@include describe('flatten-theme()') {
+  // TODO : Implement
+  // TODO : Change flatten to reflect this structure
+}
+
+@include describe('flatten-themes()') {
+  // TODO : Implement function / move it from configuration to a function
+  // TODO : Implement
+}

@@ -1,0 +1,6 @@
+@use '../../mixins/flavors' as *;
+
+@mixin button($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('button', $configuration, $modifiers,
+    ['color', 'fill', 'corner', 'border', 'padding', 'hover', 'disabled']);
+}

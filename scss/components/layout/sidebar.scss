@@ -1,0 +1,26 @@
+@use '../../mixins/flavors' as *;
+@use '../../utilities/base' as *;
+@use '../../modifiers/breakpoint' as *;
+
+@mixin sidebar($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('sidebar', $configuration, $modifiers, ['fill', 'color', 'width']);
+
+  .sidebar {
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  // TODO : Make the m configurable for breakpoint of expand/collapse
+  @include breakpoint(get-flavors($modifiers, 'breakpoint'), --m) {
+    .sidebar {
+      display: none;
+    }
+    .dashboard-layout--expand .sidebar {
+      display: flex;
+      width:100vw;
+      max-width: 100%;
+    }
+  }
+}

@@ -1,0 +1,26 @@
+@use 'base' as *;
+
+@function get-color($color-set: (), $fill-set: (), $key: '') {
+  @if $key == 'none' {
+    @return transparent;
+  } @else {
+    @return map-get($color-set, map-get($fill-set, $key));
+  }
+}
+
+@function get-padding-x($padding: []) {
+  @if not is-list($padding) or length($padding) == 1 {
+    @return $padding;
+  }
+  @return nth($padding, 2);
+}
+
+@function get-padding-y($padding: []) {
+  @if $padding == [] {
+    @return null;
+  } @else if is-list($padding) {
+    @return nth($padding, 1);
+  } @else {
+    @return $padding;
+  }
+}

@@ -1,0 +1,8 @@
+@mixin mix-width($width-map: ()) {
+  @each $key, $value in $width-map {
+    .width--#{$key} {
+      width: 100%;
+      max-width: $value;
+    }
+  }
+}

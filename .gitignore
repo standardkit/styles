@@ -1,3 +1,5 @@
 .idea/
 node_modules/
-dist/
+css/
+html/
+test/test.css*

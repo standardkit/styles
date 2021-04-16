@@ -1,10 +1,12 @@
 {
   "name": "@standardkit/styles",
-  "version": "0.0.15",
-  "description": "SCSS framework for the StandardKit Design & Component System",
+  "version": "0.1.0",
+  "description": "SCSS framework for the StandardKit Design & Build System",
   "scripts": {
-    "watch": "sass --watch scss/style.scss dist/style.css -s compressed",
-    "build": "sass scss/style.scss dist/style.css -s compressed"
+    "watch-dev": "sass --watch scss/_index.scss css/dev.css",
+    "build-dev": "sass scss/_index.scss css/dev.css",
+    "build": "sass build:css -s compressed",
+    "test": "sass test/test.scss test/test.css"
   },
   "repository": {
     "type": "git",
@@ -21,6 +23,7 @@
   },
   "homepage": "https://standardkit.io",
   "devDependencies": {
-    "sass": "^1.32.8"
+    "sass": "^1.32.8",
+    "sass-true": "^6.0.1"
   }
 }

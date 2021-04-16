@@ -1,0 +1,7 @@
+@mixin mix-size($size-map: ()) {
+  @each $key, $value in $size-map {
+    .size--#{$key} {
+      font-size: $value;
+    }
+  }
+}

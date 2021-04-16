@@ -1,0 +1,129 @@
+@use '../utilities/base' as *;
+
+// Flat Configuration: simplest level of input for the user
+
+$base: () !default;
+
+$modifiers: () !default; // All modifiers
+
+
+// Complex Modifiers
+
+$color-map: () !default;
+$color-options: () !default;
+$modifiers: map-deep-merge($modifiers, (color: $color-map, color-options: $color-options));
+
+$fill-map: () !default;
+$fill-options: () !default;
+$modifiers: map-deep-merge($modifiers, (fill: $fill-map, fill-options: $fill-options));
+
+$elevation-map: () !default;
+$elevation-options: () !default;
+$modifiers: map-deep-merge($modifiers, (elevation: $elevation-map, elevation-options: $elevation-options));
+
+$breakpoint-map: () !default;
+$breakpoint-options: () !default;
+$modifiers: map-deep-merge($modifiers, (breakpoint: $breakpoint-map, breakpoint-options: $breakpoint-options));
+
+$animation-map: () !default;
+$animation-options: () !default;
+$modifiers: map-deep-merge($modifiers, (animation: $animation-map, animation-options: $animation-options));
+
+// TODO : Move animation import to static modifiers
+$animation-import-map: () !default;
+$animation-import-options: () !default;
+$modifiers: map-deep-merge(
+    $modifiers, (animation-import: $animation-import-map, animation-import-options: $animation-import-options)
+);
+
+
+// Dynamic Modifiers
+
+$border-map: () !default;
+$border-options: () !default;
+$modifiers: map-deep-merge($modifiers, (border: $border-map, border-options: $border-options));
+
+$corner-map: () !default;
+$corner-options: () !default;
+$modifiers: map-deep-merge($modifiers, (corner: $corner-map, corner-options: $corner-options));
+
+$font-map: () !default;
+$font-options: () !default;
+$modifiers: map-deep-merge($modifiers, (font: $font-map, font-options: $font-options));
+
+$font-import-map: () !default;
+$font-import-options: () !default;
+$modifiers: map-deep-merge($modifiers, (font-import: $font-import-map, font-import-options: $font-import-options));
+
+$margin-map: () !default;
+$margin-options: () !default;
+$modifiers: map-deep-merge($modifiers, (margin: $margin-map, margin-options: $margin-options));
+
+$padding-map: () !default;
+$padding-options: () !default;
+$modifiers: map-deep-merge($modifiers, (padding: $padding-map, padding-options: $padding-options));
+
+$size-map: () !default;
+$size-options: () !default;
+$modifiers: map-deep-merge($modifiers, (size: $size-map, size-options: $size-options));
+
+$width-map: () !default;
+$width-options: () !default;
+$modifiers: map-deep-merge($modifiers, (width: $width-map, width-options: $width-options));
+
+
+// State Modifiers
+
+$active-map: () !default;
+$active-options: () !default;
+$modifiers: map-deep-merge($modifiers, (active: $active-map, active-options: $active-options));
+
+$disabled-map: () !default;
+$disabled-options: () !default;
+$modifiers: map-deep-merge($modifiers, (disabled: $disabled-map, disabled-options: $disabled-options));
+
+$focus-map: () !default;
+$focus-options: () !default;
+$modifiers: map-deep-merge($modifiers, (focus: $focus-map, focus-options: $focus-options));
+
+$hover-map: () !default;
+$hover-options: () !default;
+$modifiers: map-deep-merge($modifiers, (hover: $hover-map, hover-options: $hover-options));
+
+// Static Modifiers
+$alignment-options: () !default;
+$case-options: () !default;
+$highlight-options: () !default;
+$position-options: () !default;
+$vertical-alignment-options: () !default;
+
+$modifiers: map-deep-merge($modifiers, (
+  alignment-options: $alignment-options,
+  case-options: $case-options,
+  highlight-options: $highlight-options,
+  position-options: $position-options,
+  vertical-alignment-options: $vertical-alignment-options
+));
+
+$options: () !default;
+$components: () !default;
+$types: () !default;
+
+// Single Theme: Merged all the 'simple' options into one object
+$configuration: () !default;
+
+// Multi Theme: Define a lot of themes at once
+$themes: () !default;
+
+// Merge the simple options on top of the single configuration
+$configuration: map-deep-merge($configuration, (
+  base: $base,
+  options: $options,
+  modifiers: $modifiers,
+  types: $types,
+  components: $components
+));
+$configuration: map-deep-clean($configuration, false);
+
+// Merge the configuration on top of the default theme
+$themes: map-deep-merge($themes, (default: $configuration));

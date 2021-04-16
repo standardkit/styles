@@ -12,12 +12,14 @@
     .dashboard-layout__body {
       display: flex;
       flex-direction: row;
-      height: 100%;
+      flex-grow: 1;
+      overflow: hidden;
     }
 
     .dashboard-layout__content {
-      height: 100%;
-      overflow: auto;
+      flex-grow: 1;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@standardkit/styles",
-  "version": "0.0.15",
+  "version": "0.1.0",
   "description": "SCSS framework for the StandardKit Design & Build System",
   "scripts": {
     "watch-dev": "sass --watch scss/_index.scss css/dev.css",

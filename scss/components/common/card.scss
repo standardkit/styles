@@ -2,5 +2,5 @@
 
 @mixin card($configuration: (), $modifiers: ()) {
   @include flavors-and-types('card', $configuration, $modifiers,
-    ['corner', 'border', 'elevation', 'color', 'fill', 'padding', 'margin', 'width']);
+    ['corner', 'elevation', 'padding', 'margin']);
 }

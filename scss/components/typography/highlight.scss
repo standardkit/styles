@@ -1,5 +1,5 @@
 @use '../../mixins/flavors' as *;
 
 @mixin highlight($configuration: (), $modifiers: ()) {
-  @include flavors-and-types('highlight', $configuration, $modifiers, ['highlight', 'color', 'fill', 'padding', 'font']);
+  @include flavors-and-types('highlight', $configuration, $modifiers, ['highlight']);
 }

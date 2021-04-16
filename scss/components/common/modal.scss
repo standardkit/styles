@@ -1,22 +1,22 @@
 @use '../../mixins/flavors' as *;
 @use '../../utilities/base' as *;
+@use '../../utilities/modifiers' as *;
 
 @mixin modal($configuration: (), $modifiers: ()) {
-  @include flavors-and-types('modal', $configuration, $modifiers,
-    ['corner', 'elevation', 'width', 'color', 'fill', 'margin']);
-  @include flavors-and-types('modal__content', map-filter-keys($configuration, ['padding']), $modifiers, ['padding']);
-  @include flavors-and-types('modal__header', map-filter-keys($configuration, ['padding']), $modifiers, ['padding']);
-
+  @include flavors-and-types('modal', $configuration, $modifiers, ['corner', 'elevation', 'margin', 'padding']);
 
   .modal {
-    position: relative; // TODO : Check if relative position on modal is necessary
     overflow: hidden;
-  }
+    position: relative;
 
-  .modal__close {
-    // TODO : Check padding for modal close
+    .modal__close {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
   }
 }
+
 
 @mixin modal-container($configuration: (), $modifiers: ()) {
   @include flavors-and-types('modal__container', $configuration, $modifiers, ['alignment', 'vertical-alignment']);
@@ -31,4 +31,9 @@
     top: 0;
     z-index: 10; // TODO : Put in list and make configurable, maybe as modifier?
   }
+}
+
+// TODO : Make the configuration shared somehow to avoid duplicate and weird nesting stuff
+@mixin modal-close($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('modal__close', $configuration, $modifiers, ['padding']);
 }

@@ -39,6 +39,7 @@
   @include code-block(map-get-default($components, 'code-block'), $modifiers);
   @include image(map-get-default($components, 'image'), $modifiers);
   @include modal(map-get-default($components, 'modal'), $modifiers);
+  @include modal-close(map-get-default($components, 'modal-close'), $modifiers);
   @include modal-container(map-get-default($components, 'modal-container'), $modifiers);
   @include spinner(map-get-default($components, 'spinner'), $modifiers);
 

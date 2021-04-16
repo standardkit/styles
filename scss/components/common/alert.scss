@@ -60,5 +60,5 @@
 }
 
 @mixin alert-dismiss($configuration: (), $modifiers: ()) {
-  @include flavors-and-types('alert__dismiss', $configuration, $modifiers, []);
+  @include flavors-and-types('alert__dismiss', $configuration, $modifiers, ['padding']);
 }

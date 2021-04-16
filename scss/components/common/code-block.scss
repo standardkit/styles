@@ -2,4 +2,8 @@
 
 @mixin code-block($configuration: (), $modifiers: ()) {
   @include flavors-and-types('code-block', $configuration, $modifiers, ['color', 'fill', 'padding', 'font']);
+
+  .code-block {
+    overflow-x: auto;
+  }
 }

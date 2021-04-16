@@ -12,14 +12,12 @@ $color-prefix: color--;
 @mixin mix-hover($hover-map: ()) {
 
   @each $type, $hover in $hover-map {
-    .hover--#{$type} {
-      &:hover {
-        @if not is-list($hover) {
-          $hover: ($hover);
-        }
-        @each $effect in $hover {
-          @include apply-effect($effect);
-        }
+    .hover--#{$type}:not([disabled]):hover {
+      @if not is-list($hover) {
+        $hover: ($hover);
+      }
+      @each $effect in $hover {
+        @include apply-effect($effect);
       }
     }
   }

@@ -12,19 +12,19 @@
       }
       @if not map-has-key($color-set, 'main') {
         $main: generate-complement-color(map-get($color-set, 'complement'), $options);
-        $color: map-set($color-set, 'main', $main);
+        $color-set: map-set($color-set, 'main', $main);
       }
       @if not map-has-key($color-set, 'contrast') {
         $contrast: generate-contrast-color(map-get($color-set, 'main'), $options);
-        $color: map-set($color-set, 'contrast', $contrast);
+        $color-set: map-set($color-set, 'contrast', $contrast);
       }
       @if not map-has-key($color-set, 'complement') {
         $complement: generate-complement-color(map-get($color-set, 'main'), $options);
-        $color: map-set($color-set, 'complement', $complement);
+        $color-set: map-set($color-set, 'complement', $complement);
       }
       @if not map-has-key($color-set, 'complement-contrast') {
         $complement-contrast: generate-contrast-color(map-get($color-set, 'complement'), $options);
-        $color: map-set($color-set, 'complement-contrast', $complement-contrast);
+        $color-set: map-set($color-set, 'complement-contrast', $complement-contrast);
       }
       $color-map: map-set($color-map, $color-key, $color-set);
     }

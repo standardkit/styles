@@ -6,12 +6,14 @@
   //  This allows us to do table > td and still have the modifiers on the right class? not sure about overrides
 
   .table {
-    display: flex;
-    overflow-y: scroll;
+    width: 100%;
+    overflow-x: scroll;
     border-collapse: collapse;
 
+    // TODO : Fix
     td {
       white-space: nowrap;
+      padding: .5em .8em;
     }
   }
 }

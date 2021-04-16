@@ -17,7 +17,7 @@ $separator: -- !default;
   } @else if $separator-index == 1 {
     $max-breakpoint: str-slice($breakpoint, str-length($separator) + 1);
     $max-width: map-get($breakpoint-map, $max-breakpoint);
-    @media (max-width: $max-width - 1px) {
+    @media (max-width: $max-width) { // TODO : Take into account for breakpoints the inclusivity of exact points
       @content;
     }
   } @else {
@@ -25,7 +25,7 @@ $separator: -- !default;
     $max-breakpoint: str-slice($breakpoint, str-length($separator) + $separator-index);
     $min-width: map-get($breakpoint-map, $min-breakpoint);
     $max-width: map-get($breakpoint-map, $max-breakpoint);
-    @media (min-width: $min-breakpoint) and (max-width: $max-width - 1px) {
+    @media (min-width: $min-breakpoint) and (max-width: $max-width) {
       @content;
     }
   }

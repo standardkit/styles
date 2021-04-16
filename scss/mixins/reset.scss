@@ -1,0 +1,41 @@
+// NOTE: Use :has() when it is available & supported (2022 ?)
+@mixin reset() {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    overflow-x: hidden;
+    min-height: 100%;
+    font-size: 1rem;
+  }
+
+  input,
+  textarea,
+  button,
+  select,
+  label,
+  a {
+    outline: none;
+    text-decoration: none;
+  }
+
+  button,
+  select {
+    cursor: pointer;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
+  }
+}

@@ -1,7 +1,13 @@
-build : ; npm run build
+.PHONY: build test
 
-watch : ; npm run watch
+build : ; make test && npm run build
+
+test : ; npm run test
+
+dev : ; npm run build-dev
+
+watch : ; npm run watch-dev
 
 server : ; php -S localhost:19111
 
-publish : ; npm run build && npm publish --access public
+publish : ; make build && npm publish --access public

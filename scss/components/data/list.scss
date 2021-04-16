@@ -1,0 +1,28 @@
+@use '../../mixins/flavors' as *;
+
+@mixin list($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('list', $configuration, $modifiers, ['corner', 'border']);
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-collapse: collapse; // TODO : Check if border collapse works on list
+  }
+}
+
+@mixin list-item($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('list-item', $configuration, $modifiers, ['color', 'fill', 'padding', 'border']);
+
+  .list-item {
+    display: flex;
+
+    .list-item__icon {
+      margin-right: 1em; // TODO : Make list item icon use the (new) gap modifier/system
+    }
+  }
+}
+
+@mixin list-item-icon($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('list-item__icon', $configuration, $modifiers, ['position']);
+}

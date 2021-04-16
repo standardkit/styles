@@ -1,7 +1,12 @@
+$padding-aspect-factor: 1.6 !default; // TODO : Make configurable
+
+// TODO : Create utility classes to customize top, left, bottom, right : margin-top--none
+//  Check build size impact
+
 @function complete-paddings($paddings) {
   @each $key, $padding in $paddings {
     @if not nth($padding, 2) {
-      $padding: append([$padding], $padding * 1.6);
+      $padding: append([$padding], $padding * $padding-aspect-factor);
       $paddings: map-merge($paddings, ($key:$padding));
     }
   }

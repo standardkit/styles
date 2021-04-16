@@ -1,0 +1,32 @@
+@use '../utilities/base' as *;
+
+$separator: -- !default;
+
+// Breaks down the $breakpoint parameter to use the proper media query
+// Without separator present, it just takes the value as min-width
+// With the separator present, it takes the second value as max-width
+// If present, it takes the first value as min-width as well
+@mixin breakpoint($breakpoint-map: (), $breakpoint: '') {
+  $separator-index: str-index($breakpoint, $separator);
+
+  @if is-null($separator-index) or $separator-index + str-length($separator) == str-length($breakpoint) + 1 {
+    $min-width: map-get($breakpoint-map, $breakpoint);
+    @media (min-width: $min-width) {
+      @content;
+    }
+  } @else if $separator-index == 1 {
+    $max-breakpoint: str-slice($breakpoint, str-length($separator) + 1);
+    $max-width: map-get($breakpoint-map, $max-breakpoint);
+    @media (max-width: $max-width) { // TODO : Take into account for breakpoints the inclusivity of exact points
+      @content;
+    }
+  } @else {
+    $min-breakpoint: str-slice($breakpoint, 1, $separator-index);
+    $max-breakpoint: str-slice($breakpoint, str-length($separator) + $separator-index);
+    $min-width: map-get($breakpoint-map, $min-breakpoint);
+    $max-width: map-get($breakpoint-map, $max-breakpoint);
+    @media (min-width: $min-breakpoint) and (max-width: $max-width) {
+      @content;
+    }
+  }
+}

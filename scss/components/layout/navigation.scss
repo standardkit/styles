@@ -1,0 +1,32 @@
+@use '../../mixins/flavors' as *;
+
+@mixin navigation($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('navigation', $configuration, $modifiers, ['color', 'fill']);
+
+  .navigation {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@mixin navigation-item($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('navigation-item', $configuration, $modifiers,
+    ['fill', 'color', 'padding', 'size', 'hover', 'font']);
+  .navigation-item {
+    display: block;
+
+    .navigation-item__icon {
+      margin-right: 1em; // TODO: Migrate to 'gap' system for icons
+    }
+  }
+}
+
+// TODO : Straighten out color dispatching from navigation to all items (defaults not the configured ones)
+@mixin navigation-item--active($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('navigation-item--active', $configuration, $modifiers, ['fill', 'color', 'hover']);
+}
+
+
+@mixin navigation-title($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('navigation-title', $configuration, $modifiers, ['fill', 'font', 'size', 'margin', 'color']);
+}

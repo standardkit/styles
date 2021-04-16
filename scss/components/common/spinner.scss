@@ -1,0 +1,17 @@
+@use '../../mixins/flavors' as *;
+
+@mixin spinner($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('spinner', $configuration, $modifiers,
+    ['margin', 'size', 'border', 'animation', 'color', 'fill']);
+
+  // TODO : Check if spinner works without container
+
+  .spinner {
+    display: inline-flex;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    background-color: transparent !important;
+    border-top: 0 !important;
+  }
+}

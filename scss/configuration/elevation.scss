@@ -1,13 +1,6 @@
-$theme-elevations: () !default; // Supplied by user imported theme
-$elevations: () !default; // Custom overrides created by user
+@function complete-elevation-sets($elevation-types: (), $options: ()) {
+  // TODO : Implement
+  //  Requires configurable elevation utility & research
 
-// Map the user elevations onto the user supplied theme
-$elevations: map-deep-merge($theme-elevations, $elevations);
-
-// Import the default theme
-@use '../themes/default/elevation' as theme;
-
-// Map user configuration onto default theme
-$elevations: map-deep-merge(theme.$theme-elevations, $elevations);
-
-// TODO : Make a generic function to do theme configuration merging
+  @return $elevation-types;
+}

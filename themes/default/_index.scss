@@ -1,0 +1,8 @@
+@use 'components';
+@use 'modifiers';
+
+$theme-configuration: (
+  options: (),
+  modifiers: modifiers.$modifiers,
+  components: components.$components
+);

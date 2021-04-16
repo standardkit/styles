@@ -1,0 +1,5 @@
+@mixin spacer($configuration: (), $modifiers: ()) {
+  .spacer {
+    flex-grow: 1;
+  }
+}

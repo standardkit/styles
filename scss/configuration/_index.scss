@@ -1,9 +1,7 @@
-@import 'colors';
-@import 'grid';
-@import 'margin';
-@import 'position';
-@import 'padding';
-@import 'corners';
-@import 'elevation';
-@import 'typography';
-@import 'width';
+@forward 'breakpoint';
+@forward 'color';
+@forward 'elevation';
+@forward 'fill';
+@forward 'flatten';
+@forward 'modifiers';
+@forward 'normalize';

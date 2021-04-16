@@ -1,5 +1,0 @@
-@each $key, $elevation in $elevations {
-  .elevation--#{$key} {
-    box-shadow: get-elevation($elevation);
-  }
-}

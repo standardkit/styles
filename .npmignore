@@ -1,6 +1,9 @@
 .idea/
 node_modules/
+test/
 .editorconfig
 .gitignore
 Makefile
 package-lock.json
+css/dev.css
+html/

@@ -1,0 +1,15 @@
+@use '../../mixins/flavors' as *;
+
+@mixin card-layout($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('card-layout', $configuration, $modifiers, ['color', 'fill', 'alignment']);
+
+  .card-layout {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10%;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+  }
+}

@@ -1,0 +1,79 @@
+@use 'active';
+@use 'alignment';
+@use 'animation';
+@use 'border';
+@use 'breakpoint';
+@use 'case';
+@use 'color';
+@use 'corner';
+@use 'disabled';
+@use 'elevation';
+@use 'fill';
+@use 'focus';
+@use 'font';
+@use 'highlight';
+@use 'hover';
+@use 'margin';
+@use 'padding';
+@use 'position';
+@use 'size';
+@use 'vertical-alignment';
+@use 'width';
+
+$modifiers: (
+  //
+  // Complex
+  //
+  color: color.$color-map,
+  default-color: 'primary',
+  fill: fill.$fill-map,
+  default-fill: 'fill',
+  elevation: elevation.$elevation-map,
+  default-elevation: 'm',
+  breakpoint: breakpoint.$breakpoint-map,
+  animation: animation.$animation-map,
+  default-animation: 'spin',
+  animation-import: animation.$animation-import-map,
+  //
+  // Dynamic
+  //
+  corner: corner.$corner-map,
+  default-corner: 'm',
+  border: border.$border-map,
+  default-border: 'm',
+  font: font.$font-map,
+  font-import: font.$font-imports,
+  default-font: 'text',
+  margin: margin.$margin-map,
+  default-margin: 'm',
+  padding: padding.$padding-map,
+  default-padding: 'm',
+  size: size.$size-map,
+  default-size: 'm',
+  width: width.$width-map,
+  default-width: 'm',
+  //
+  // State
+  //
+  active: active.$active-map,
+  default-active: 'fill',
+  disabled: disabled.$disabled-map,
+  default-disabled: 'opacity',
+  focus: focus.$focus-map,
+  default-focus: 'outline',
+  hover: hover.$hover-map,
+  default-hover: 'brightness',
+  //
+  // Static
+  //
+  alignment: alignment.$alignment-map,
+  default-alignment: 'none',
+  case: case.$case-map,
+  default-case: 'none',
+  highlight: highlight.$highlight-map,
+  default-highlight: 'bold',
+  position: position.$position-map,
+  default-position: 'top',
+  vertical-alignment: vertical-alignment.$vertical-alignment-map,
+  default-vertical-alignment: 'middle'
+);

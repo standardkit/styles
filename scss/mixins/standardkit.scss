@@ -1,0 +1,27 @@
+@use 'reset' as *;
+@use 'theme' as *;
+@use '../utilities/base' as *;
+
+@mixin standardkit($themes: ()) {
+  @include reset();
+
+  // TODO : Add base mixin, for configuration and css shared across themes
+
+  $default-theme: map-get($themes, 'default');
+  // Include each theme configuration
+  @if length($themes) == 1 {
+    @include theme('default', $default-theme);
+  } @else {
+    @each $theme, $configuration in $themes {
+      @at-root .theme--#{$theme} {
+        @include theme($theme, $configuration, false);
+      }
+    }
+    $default-options: map-get-default($default-theme, options);
+    @if not map-get($default-options, exclude-default-theme-selector) == true {
+      :not([class*='theme--']) {
+        @extend .theme--default;
+      }
+    }
+  }
+}

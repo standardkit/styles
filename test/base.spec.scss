@@ -1,0 +1,198 @@
+@use '../node_modules/sass-true' as *;
+@use '../scss/utilities/base';
+
+@include describe('map-deep-merge()') {
+  @include it('should deep merge options map (theme normalization bug)') {
+    $configuration: (options: ());
+    $themes: (default: (options: (modifier-sets: basic)));
+
+    $result: base.map-deep-merge($themes, (default: $configuration));
+    $expected: (default: (options: (modifier-sets: basic)));
+    @include assert-equal($result, $expected);
+  }
+  @include it('should combine two maps into one') {
+    $map1: (one: true);
+    $map2: (two: false);
+    $result: base.map-deep-merge($map1, $map2);
+    $expected: (one: true, two: false);
+    @include assert-equal($result, $expected);
+  }
+  @include it('should combine values of two nested maps into one') {
+    $map1: (one: true, three: (four: yes, six: default));
+    $map2: (two: false, three: (five: no, six: override));
+    $result: base.map-deep-merge($map1, $map2);
+    $expected: (one: true, two: false, three: (four: yes, five: no, six: override));
+    @include assert-equal($result, $expected);
+  }
+}
+
+@include describe('map-get-default()') {
+  @include it('should return empty map by default') {
+    $result: base.map-get-default((hello: abc), fake);
+    @include assert-equal($result, ());
+  }
+  @include it('should return value when it is available') {
+    $result: base.map-get-default((hello: abc), hello);
+    @include assert-equal($result, abc);
+  }
+  @include it('should return my custom default when value is not there') {
+    $result: base.map-get-default((hello: abc), fake, default-value);
+    @include assert-equal($result, default-value);
+  }
+}
+
+@include describe('map-exclude-keys()') {
+  // TODO : Implement
+}
+
+@include describe('map-filter-keys()') {
+  // TODO : Implement
+}
+
+@include describe('in-list()') {
+  $list: primary secondary tertiary;
+  @include it('should return true when item is in the list') {
+    @include assert-true(base.in-list($list, primary));
+  }
+  @include it('should return true when item is second in the list') {
+    @include assert-true(base.in-list($list, secondary));
+  }
+  @include it('should return true when item is last in the list') {
+    @include assert-true(base.in-list($list, tertiary));
+  }
+  @include it('should return false when item is not in the list') {
+    @include assert-false(base.in-list($list, custom));
+  }
+}
+
+@include describe('map-set()') {
+  @include it('should set a variable that wasn\'t there before') {
+    $result: base.map-set((), 'margin', 1rem);
+    @include assert-equal($result, (margin: 1rem));
+  }
+  @include it('should override a variable that was already set') {
+    $result: base.map-set((color: blue), 'color', red);
+    @include assert-equal($result, (color: red));
+  }
+  $map: (color: (primary: (one: red, two: blue)));
+  @include it('should work on maps') {
+    $result: base.map-set($map, 'color', (primary: blue, secondary: red));
+    @include assert-equal($result, (color: (primary: blue, secondary: red)));
+  }
+  @include it('should work on nested maps') {
+    $result: base.map-set($map, 'color', (primary: (one: black, two: white), secondary: red));
+    @include assert-equal($result, (color: (primary: (one: black, two: white), secondary: red)));
+  }
+}
+
+@include describe('is-map()') {
+  // TODO : Implement
+}
+
+@include describe('is-list()') {
+  @include it('should return true on space separated list') {
+    @include assert-true(base.is-list(abc def efg));
+  }
+  @include it('should return true on comma separated list') {
+    @include assert-true(base.is-list([abc, def, efg]));
+  }
+  @include it('should return false on map') {
+    @include assert-false(base.is-list((abc: true)));
+  }
+  @include it('should return false on string') {
+    @include assert-false(base.is-list(hello));
+  }
+  @include it('should return false on number') {
+    @include assert-false(base.is-list(10));
+  }
+}
+
+@include describe('is-string()') {
+  // TODO : Implement
+}
+
+@include describe('is-null()') {
+  // TODO : Implement
+}
+
+@include describe('strip-suffix()') {
+  @include it('should strip my suffix') {
+    $string: somethingsuffix;
+    $string: base.strip-suffix($string, suffix);
+
+    @include assert-equal($string, something);
+  }
+  @include it('should strip no characters if it does not exist') {
+    $string: something;
+    $string: base.strip-suffix($string, fake);
+
+    @include assert-equal($string, something);
+  }
+}
+
+@include describe('get-flavors()') {
+  @include it('should return a map of the given modifiers flavors') {
+    $modifiers: (color: (primary: white, secondary: black));
+    $flavors: base.get-flavors($modifiers, 'color');
+
+    @include assert-equal($flavors, (primary: white, secondary: black));
+  }
+
+  @include it('should return an empty map if the theme doesn\'t have the modifier') {
+    $modifiers: (margin: (m: 1rem));
+    $flavors: base.get-flavors($modifiers, 'color');
+
+    @include assert-equal($flavors, ());
+  }
+}
+
+@include describe('get-default-flavor()') {
+  @include it('should return a map of the given modifiers flavors') {
+    $theme: (color: (primary: white, secondary: black));
+    $flavors: base.get-flavors($theme, 'color');
+
+    @include assert-equal($flavors, (primary: white, secondary: black));
+  }
+
+  @include it('should return an empty map if the theme doesn\'t have the modifier') {
+    $theme: (margin: (m: 1rem));
+    $flavors: base.get-flavors($theme, 'color');
+
+    @include assert-equal($flavors, ());
+  }
+}
+
+@include describe('get-modifier-options()') {
+  @include it('should return a map of the modifiers options') {
+    $theme: (color-options: (use: all, include: [first, last]));
+    $options: base.get-modifier-options($theme, 'color');
+
+    @include assert-equal($options, (use: all, include: [first, last]));
+  }
+
+  @include it('should return an empty map if the theme doesn\'t have the modifier options') {
+    $theme: (margin-options: (use: all));
+    $options: base.get-modifier-options($theme, 'color');
+
+    @include assert-equal($options, ());
+  }
+
+  // TODO : Create base test for -type and -type without options to get options method
+  @include it('Should take into account the -type suffix') {
+    $theme: (fill-options: (use: all, include: [first, last]));
+    $options: base.get-modifier-options($theme, 'fill');
+
+    @include assert-equal($options, (use: all, include: [first, last]));
+  }
+}
+
+@include describe('map-deep-clean()') {
+  @include it('should remove my single entry') {
+    $result: base.map-deep-clean((default-color: null));
+    @include assert-equal($result, ());
+  }
+  @include it('should remove my nested entry and the resulting empty map') {
+    $result: base.map-deep-clean((something: true, else: (default-color: null)));
+    @include assert-equal($result, (something: true));
+  }
+}

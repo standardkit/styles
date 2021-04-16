@@ -1,0 +1,47 @@
+$components: (
+  //
+  // Common
+  //
+  alert: (default-color: 'info', default-fill: 'plain', default-margin: 'vertical-m'),
+  alert-icon: (default-position: 'top'),
+  alert-dismiss: (default-position: 'top'),
+  bar: (default-vertical-alignment: 'middle'),
+  brand: (default-font: 'title', default-size: 'l'),
+  button: (default-fill: 'fill', default-color: 'primary'),
+  card: (default-color: 'text', default-fill: 'contrast'),
+  code-block: (default-font: 'monospace', default-fill: 'plain'),
+  divider: (default-color: 'text', default-fill: 'plain', default-border: 's', default-margin: 'vertical-m'),
+  modal-container: (default-alignment: 'center'),
+  modal: (default-color: 'text', default-fill: 'contrast'),
+  modal-close: (default-size: 'l'),
+  //
+  // Form
+  //
+  input: (default-color: 'text', default-fill: 'plain'),
+  label: (default-margin: 'vertical-m'),
+  //
+  // Typography
+  //
+  link: (),
+  title: (default-size: 'h1', default-margin: 'vertical-m'),
+  subtitle: (default-size: 'h2', default-margin: 'vertical-m'),
+  //
+  // Tables & Lists
+  //
+  table: (),
+  //
+  // Layout
+  //
+  card-layout: (),
+  navigation-bar: (default-padding: 'xl', default-fill: 'fill'),
+  dashboard-layout-content: (default-color: 'text', default-fill: 'contrast', default-padding: 'l'),
+  sidebar: (default-fill: 'complain'),
+  navigation:(default-fill: 'complain'),
+  navigation-item: (default-fill: 'complain'),
+  navigation-title: (default-fill: 'plain'),
+  // TODO : Check fill and color on sidebar makes the background white on the bottom (whats going on)
+  navigation-item-active: (default-fill: 'fill'),
+  section: (default-margin: 'vertical-m')
+);
+
+// TODO : Complete the default configuration for all components in default theme

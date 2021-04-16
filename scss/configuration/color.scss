@@ -1,0 +1,33 @@
+@use '../utilities/base' as *;
+@use '../utilities/colors' as *;
+
+@function complete-color-sets($color-map: (), $options: null) {
+
+  @each $color-key, $color-set in $color-map {
+    @if not is-map($color-set) {
+      $color-map: map-set($color-map, $color-key, generate-color-set($color-set, $options));
+    } @else {
+      @if not map-has-key($color-set, 'main') and not map-has-key($color-set, 'complement') {
+        @error 'Key "main" or "complement" not defined in map "#{$color-key}"';
+      }
+      @if not map-has-key($color-set, 'main') {
+        $main: generate-complement-color(map-get($color-set, 'complement'), $options);
+        $color-set: map-set($color-set, 'main', $main);
+      }
+      @if not map-has-key($color-set, 'contrast') {
+        $contrast: generate-contrast-color(map-get($color-set, 'main'), $options);
+        $color-set: map-set($color-set, 'contrast', $contrast);
+      }
+      @if not map-has-key($color-set, 'complement') {
+        $complement: generate-complement-color(map-get($color-set, 'main'), $options);
+        $color-set: map-set($color-set, 'complement', $complement);
+      }
+      @if not map-has-key($color-set, 'complement-contrast') {
+        $complement-contrast: generate-contrast-color(map-get($color-set, 'complement'), $options);
+        $color-set: map-set($color-set, 'complement-contrast', $complement-contrast);
+      }
+      $color-map: map-set($color-map, $color-key, $color-set);
+    }
+  }
+  @return $color-map;
+}

@@ -1,0 +1,7 @@
+@mixin mix-margin($margin-map: ()) {
+  @each $key, $value in $margin-map {
+    .margin--#{$key} {
+      margin: $value;
+    }
+  }
+}

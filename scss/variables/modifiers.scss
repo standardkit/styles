@@ -1,0 +1,144 @@
+// includes the modifiers to which you can not add custom flavors
+
+$all: [
+  // Complex Modifiers
+  color,
+  fill,
+  elevation, // TODO : Rename to shadow?
+  breakpoint,
+  animation,
+  animation-import,
+
+  // Dynamic Modifiers
+  border,
+  corner,
+  font,
+  font-import,
+  margin,
+  padding,
+  size,
+  width,
+
+  // State Modifiers
+  active,
+  disabled,
+  focus,
+  hover,
+
+  // Static Modifiers
+  alignment,
+  case,
+  highlight,
+  position,
+  vertical-alignment
+
+] !default;
+
+
+$sets: (
+  //
+  // Complex Modifiers
+  //
+  color: (
+    basic: error warning success info primary text,
+    minimal: text primary
+  ),
+  fill: (
+    basic: fill plain outline,
+    minimal: fill outline
+  ),
+  elevation: (
+    basic: none s m l,
+    minimal: m
+  ),
+  breakpoint: (
+    basic: start s m l,
+    minimal: start m
+  ),
+  animation: (
+    basic: spin,
+    minimal: spin
+  ),
+  animation-import: (
+    basic: spin,
+    minimal: spin
+  ),
+  //
+  // Dynamic Modifiers
+  //
+  border: (
+    basic: none s m l,
+    minimal: m
+  ),
+  corner: (
+    basic: square s m l round,
+    minimal: m
+  ),
+  font: (
+    basic: title text monospace,
+    minimal: text
+  ),
+  font-import: (
+    basic: roboto-slab open-sans roboto-mono,
+    minimal: open-sans
+  ),
+  margin: (
+    basic: none s m l,
+    minimal: m
+  ),
+  padding: (
+    basic: none s m l,
+    minimal: m
+  ),
+  size: (
+    basic: s m l,
+    minimal: m
+  ),
+  width: (
+    basic: s m l full,
+    minimal: m
+  ),
+  //
+  // State Modifiers
+  //
+  active: (), // TODO : Fill active state sets
+  disabled: (
+    basic: opacity grayscale,
+    minimal: opacity,
+  ),
+  focus: (
+    basic: outline elevation, // TODO : Implement focus sets
+    minimal: outline,
+  ),
+  hover: (
+    basic: fill brightness outline,
+    minimal: brightness,
+  ),
+  //
+  // Static Modifiers
+  //
+  alignment: (
+    basic: left center right space-between,
+    minimal: left center right
+  ),
+  case: (
+    basic: lowercase uppercase,
+    minimal: uppercase
+  ),
+  highlight: (
+    basic: bold color,
+    minimal: bold color
+  ),
+  position: (
+    basic: top bottom middle,
+    minimal: top
+  ),
+  vertical-alignment: (
+    basic: top bottom middle,
+    minimal: middle
+  )
+) !default;
+
+$color-keys: [main, complement, contrast, complement-contrast];
+$fill-keys: [text, background, border];
+$elevation-keys: []; // TODO : Implement

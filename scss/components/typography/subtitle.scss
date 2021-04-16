@@ -1,0 +1,5 @@
+@use '../../mixins/flavors' as *;
+
+@mixin subtitle($configuration: (), $modifiers: ()) {
+  @include flavors-and-types('subtitle', $configuration, $modifiers, ['font', 'size', 'margin']);
+}

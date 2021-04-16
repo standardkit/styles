@@ -1,0 +1,25 @@
+@use '../utilities/modifiers' as *;
+
+@mixin mix-color-fill($theme: '', $color-map: (), $fill-map: ()) {
+  @include create-color-fill-compound-selectors($theme, $color-map, $fill-map);
+  @each $color in map-keys($color-map) {
+    @each $fill in map-keys($fill-map) {
+      .color--#{$color}.fill--#{$fill} {
+        @extend %color-fill--#{$theme}--#{$color}--#{$fill} !optional;
+      }
+    }
+  }
+}
+
+// Create extendable classes for each color & fill combination
+@mixin create-color-fill-compound-selectors($theme: '', $color-map: (), $fill-map: ()) {
+  @each $color, $color-set in $color-map {
+    @each $fill, $fill-set in $fill-map {
+      %color-fill--#{$theme}--#{$color}--#{$fill} {
+        color: get-color($color-set, $fill-set, 'text');
+        border-color: get-color($color-set, $fill-set, 'border');
+        background-color: get-color($color-set, $fill-set, 'background');
+      }
+    }
+  }
+}

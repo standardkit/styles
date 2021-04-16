@@ -1,0 +1,14 @@
+@use '../utilities/base' as *;
+
+@mixin mix-border($border-map: ()) {
+  @each $key, $value in $border-map {
+    .border--#{$key} {
+      @if is-list($value) and length($value) > 1 {
+        border-width: nth($value, 1);
+        border-style: nth($value, 2);
+      } @else {
+        border: $value;
+      }
+    }
+  }
+}

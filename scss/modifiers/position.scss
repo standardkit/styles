@@ -1,0 +1,7 @@
+@mixin mix-position($position-map: ()) {
+  @each $key, $value in $position-map {
+    .position--#{$key} {
+      align-self: $value;
+    }
+  }
+}

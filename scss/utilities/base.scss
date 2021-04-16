@@ -1,0 +1,177 @@
+@use 'log';
+
+@function map-deep-merge($parent-map, $child-map) {
+
+  @each $key, $value in $child-map {
+    $parent-value: map-get($parent-map, $key);
+
+    @if (is-map($parent-value) or $parent-value == ()) and (is-map($value) or $value == ()) {
+      $new-value: map-deep-merge($parent-value, $value);
+      $parent-map: map-set($parent-map, $key, $new-value);
+    } @else {
+      $parent-map: map-set($parent-map, $key, $value);
+    }
+  }
+  @return $parent-map;
+}
+
+@function map-get-default($map, $key, $default: ()) {
+  $value: map-get($map, $key);
+  $value: $default !default;
+
+  @return $value;
+}
+
+@function map-exclude-keys($map, $keys: []) {
+  @each $key, $value in $map {
+    @if index($keys, $key) {
+      $map: map-remove($map, $key);
+    }
+  }
+  @return $map;
+}
+
+@function map-exclude-prefixed-keys($map, $prefix) {
+  @each $key in map-keys($map) {
+    @if str-index($key, $prefix) == 1 {
+      $map: map-remove($map, $key);
+    }
+  }
+  @return $map;
+}
+
+@function map-filter-keys($map, $keys: []) {
+  $new-map: ();
+  @each $key in $keys {
+    @if map-has-key($map, $key) {
+      $new-map: map-merge($new-map, ($key: map-get($map, $key)));
+    }
+  }
+  @return $new-map;
+}
+
+@function map-filter-prefixed-keys($map, $prefix) {
+  @each $key in map-keys($map) {
+    @if str-index($key, $prefix) != 1 {
+      $map: map-remove($map, $key);
+    }
+  }
+  @return $map;
+}
+
+@function map-strip-key-prefix($map: (), $prefix: '') {
+  @each $key, $value in $map {
+    @if str-has-prefix($key, $prefix) {
+      $map: map-set($map, strip-prefix($key, $prefix), $value);
+      $map: map-remove($map, $key);
+    }
+  }
+  @return $map;
+}
+
+@function in-list($list, $key) {
+  @return not is-null(index($list, $key));
+}
+
+@function map-set($map, $key, $value) {
+  @return map-merge($map, ($key: $value));
+}
+
+@function is-map($variable) {
+  @return type-of($variable) == 'map';
+}
+
+@function is-list($variable) {
+  @return type-of($variable) == 'list';
+}
+
+@function is-string($variable) {
+  @return type-of($variable) == 'string';
+}
+
+@function is-null($variable) {
+  @return type-of($variable) == 'null';
+}
+
+@function if-not-null-else($variable, $default) {
+  @if is-null($variable) {
+    @return $default;
+  }
+  @return $variable;
+}
+
+@function strip-suffix($string, $suffix) {
+  $index: str-index($string, $suffix);
+  @if is-null($index) or str-length($string) != $index - 1 + str-length($suffix) {
+    @return $string;
+  }
+  @return str-slice($string, 1, $index - 1);
+}
+
+@function strip-prefix($string: '', $prefix: '') {
+  $index: str-index($string, $prefix);
+  @if $index != 1 {
+    @return $string;
+  }
+  @return str-slice($string, str-length($prefix) + 1);
+}
+
+@function str-has-prefix($string: '', $prefix: '') {
+  @return str-index($string, $prefix) == 1;
+}
+
+@function str-to-number($string: '') {
+  $strings: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9';
+  $numbers: 0 1 2 3 4 5 6 7 8 9;
+  $result: 0;
+
+  @for $index from 1 through str-length($string) {
+    $character: str-slice($string, $index, $index);
+    $character-index: index($strings, $character);
+
+    @if not $character-index {
+      $log: log.error('Invalid character "#{$character}" in string "#{$string}" for number conversion');
+      @return false;
+    }
+
+    $number: nth($numbers, $character-index);
+    $result: $result * 10 + $number;
+  }
+
+  @return $result;
+}
+
+@function get-flavors($modifiers, $modifier) {
+  @return map-get-default($modifiers, $modifier);
+}
+
+@function get-default-flavor($modifiers, $modifier) {
+  @return map-get($modifiers, default-#{$modifier});
+}
+
+@function get-modifier-options($theme, $modifier) {
+  @return map-get-default($theme, #{$modifier}-options);
+}
+
+@function map-deep-clean($map: (), $log: true) {
+  @each $key, $value in $map {
+    @if is-null($value) or $value == () {
+      @if $log {
+        $log: log.info('Removing null value "#{$key}" from configuration...');
+      }
+      $map: map-remove($map, $key);
+    } @else if is-map($value) {
+      $value: map-deep-clean($value);
+      @if $value == () {
+        @if $log {
+          $log: log.info('Removing empty map "#{$key}" from configuration...');
+        }
+        $map: map-remove($map, $key);
+      } @else {
+        $map: map-set($map, $key, $value);
+      }
+    }
+  }
+  @return $map;
+}
+
